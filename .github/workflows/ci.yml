@@ -1,0 +1,107 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: querypilot-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  backend:
+    name: Backend and policy
+    runs-on: ubuntu-latest
+    services:
+      product-postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: product_test
+          POSTGRES_USER: product_owner
+          POSTGRES_PASSWORD: local-test-password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U product_owner -d product_test"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: backend/requirements/development.txt
+      - run: pip install --require-hashes -r backend/requirements/development.txt
+      - run: python scripts/checks/check_repository.py
+      - run: python -m pytest -q backend/tests --junitxml=artifacts/generated/pytest.xml
+      - name: Actual product owner policies and concurrency quotas
+        env:
+          QUERY_PRODUCT_TEST_ADMIN_URL: postgresql://product_owner:local-test-password@127.0.0.1:5432/product_test
+        run: python scripts/checks/product_rls.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-evidence
+          path: artifacts/generated/
+  frontend:
+    name: Frontend build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm audit --audit-level=moderate
+      - run: node --check public/uploads/app.js
+      - run: npm run build
+  containers:
+    name: Containers and PostgreSQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install --require-hashes -r backend/requirements/development.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: scripts/deployment/compose.sh up --build -d --wait db api worker frontend
+      - run: scripts/deployment/compose.sh --profile test run --build --rm tests
+      - name: Database-enforced authority and four-worker queue
+        env:
+          MIGRATION_DATABASE_URL: postgresql+psycopg://migration_owner:local-owner-password-only@127.0.0.1:5437/querypilot
+          DATABASE_URL: postgresql+psycopg://querypilot_app:local-app-password-only@127.0.0.1:5437/querypilot
+          WAREHOUSE_DATABASE_URL: postgresql+psycopg://querypilot_reader:local-reader-password-only@127.0.0.1:5437/querypilot
+        run: |
+          scripts/deployment/compose.sh stop worker
+          python scripts/deployment/postgres_rehearsal.py
+          python scripts/evaluation/comparison_benchmark.py
+          scripts/deployment/compose.sh start worker
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: npm install --prefix /tmp/product-a11y --ignore-scripts --no-audit --no-fund axe-core@4.14.0
+      - name: Product upload, history, recovery and accessibility
+        run: python scripts/demos/product_browser.py --url http://127.0.0.1:3007 --axe /tmp/product-a11y/node_modules/axe-core/axe.min.js
+      - name: Real multi-format uploads and worksheet accessibility
+        run: python scripts/demos/import_browser.py --url http://127.0.0.1:3007 --axe /tmp/product-a11y/node_modules/axe-core/axe.min.js
+      - run: python scripts/demos/browser_smoke.py
+      - name: API restart and persisted run smoke
+        run: python scripts/deployment/restart_smoke.py
+      - name: Container diagnostics
+        if: always()
+        run: scripts/deployment/compose.sh ps -a && scripts/deployment/compose.sh logs --no-color --tail=100
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: container-evidence
+          path: artifacts/generated/
+      - run: scripts/deployment/compose.sh down -v
+        if: always()

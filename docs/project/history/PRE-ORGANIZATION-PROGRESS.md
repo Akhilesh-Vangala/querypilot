@@ -1,0 +1,35 @@
+> Historical record. [Current project overview](../../../README.md) and [current handoff](../HANDOFF.md) take precedence.
+
+# Verified progress
+
+## October 14, 2026 — Analytics workbench upgrade
+
+Original main 449398c: 30 backend tests and frontend build pass. Preserved original history, warehouse fixture and known-case evaluator.
+
+Local upgraded verification: 12/12 known cases through the new LangGraph flow on actual PostgreSQL; four concurrent worker claimants, all 12 cases completed; three real database role denial checks; idempotency, cross-user history denial, stale lease fencing and application-session recovery pass. Actual Chromium analyst journey passes: five-row result, SQL and public plan, execution-hash drawer with Escape/focus behavior, retained history after reload, five metric cards and no mobile overflow or page errors. Frontend build passes and npm audit reports zero vulnerabilities after explicit dependency upgrades.
+
+OpenTelemetry exports only operational span attributes; provider mock-transport tests make zero paid requests. Live model benchmark and persistent monitored cloud operation remain unverified. See PLAN for active publication gates; final commit/CI/deployment evidence is appended after verification.
+
+Actual [PR CI38523033934](https://github.com/Akhilesh-Vangala/querypilot/actions/runs/38523033934) passes all required native/frontend/container jobs at b807b04. Container runtime and tests built/run;72tests also pass inside containers. Real Compose PostgreSQL role/4worker rehearsal, Chromium and API restart with preserved history all pass; downloaded reports retained locally. Initial YAML quote and Linux-only greenlet lock resolution failures were fixed and rerun without weakening hash verification.
+
+Public synthetic demo deployed at https://querypilot-five.vercel.app. Preview API cookie login/query/five-row evidence/shared-history isolation pass. Final public browser/main-bound promotion checks and protected merge follow. Security follow-up blocks qualified custom functions/types and checks for executable custom public functions, strengthening the approved-builtins boundary. This does not add live-model or persistent-cloud claims.
+
+Public [Vercel demo](https://querypilot-five.vercel.app) passes external readiness/cookie/five-row query/shared-history/live-gate HTTP checks. Browser captures are actual public synthetic/demo execution. The stricter public journey caught an Escape focus-return failure and asynchronous metric-load timing; final browser completion is pending those corrections. This supersedes the premature full-public-browser/focus completion claim. Native74tests and actual PostgreSQL custom-function-role-denial pass. Final protected-head/current-main checks remain pending.
+
+Keyboard correction verified locally: explicit launcher focus restoration plus asynchronous browser expectations pass the complete native Chromium journey. Public redeployment and remote exact-head checks are pending before counting final browser completion.
+
+## Verified implementation delivery — October 14, 2026
+
+Protected [PR1](https://github.com/Akhilesh-Vangala/querypilot/pull/1) is merged after exact-head CI38524325102. Exact tested/merged trees match; original449398c ancestry is preserved; owned feature branch removed only after equality verification. Main45826c7fd53c13f016d7ac0fcf9b472f6cb66af1 [CI38524748660](https://github.com/Akhilesh-Vangala/querypilot/actions/runs/38524748660) passes native74tests, frontend build/audit, actual non-root containers/74container tests, four-worker Postgres/authority/custom-function/lease checks, Chromium and API restart preservation. Downloaded reports and completion collector pass.
+
+Corrected public [Vercel demo](https://querypilot-five.vercel.app) passes actual external HTTP and Chromium checks including Escape focus restoration, asynchronous catalog loading, retained browser-session history and mobile layout. Main-bound Vercel status succeeds. This supersedes earlier packaging, keyboard and pending-deployment states. GitHub About/homepage/topics updated to match the implemented product. Private generated session secret is configured only in Vercel/ignored local configuration; no provider keys uploaded. No paid model calls or persistent cloud backend. See docs/EVIDENCE.md and remaining PLAN gates.
+
+## Executable comparison increment — local verification
+
+Added strict executable metric comparisons, a compile/execute/reconcile/report LangGraph subworkflow, native provider call-ID tool feedback, weighted contribution accounting, descriptive three-factor claims Shapley, a dedicated comparison page, verification tab and downloadable/offline-recomputed evidence. Local suites verify independent unequal-data metric oracles and failure/coverage/denominator/tampering cases; actual PostgreSQL completes12original +10comparison cases through4claimants in two admission-bounded batches. All10comparison cases match independent quarterly SQL. Actual Chromium verifies15claims checks,5segments,3factors,export/offline recheck,future-period withholding and mobile/no-JS-error behavior. Native totals/current-head CI links follow after observation. No live requests or persistent monitored cloud backend. See [technical scope](../../architecture/SEMANTIC-INVESTIGATIONS.md).
+
+## Verified executable comparison delivery
+
+Protected [PR14](https://github.com/Akhilesh-Vangala/querypilot/pull/14) merged with exact tested headb034df3 after all required [CI38655793257](https://github.com/Akhilesh-Vangala/querypilot/actions/runs/38655793257) jobs passed. Trees match. Implementation main d68e7e4 [CI38656156145](https://github.com/Akhilesh-Vangala/querypilot/actions/runs/38656156145) also passes every required job. Both actual native and container runs execute137distinct tests, including62new semantic/accounting cases;137is the unique total, not274. Downloaded Postgres/comparison/browser/restart artifacts confirm22queued cases with4claimants/3role denials,10of10comparison oracle matches,15claims checks/5segments/3factors,export/offline recheck andAPIrestart history. The initial script-import container failure was fixed by packaging the reusable verifier; no skipped test or weakened check.
+
+Public Vercel deploymentdpl_3mNtjeuAS3pG5fpgPBvKSuufD4kJ matches implementation-main status. Actual public Chromium comparison/verification/export/offline recalculation/future-period withholding/mobile journey passes; current README comparison screenshot is from this public synthetic run. Preview URLs redirect to Vercel SSO and are not counted as public browser evidence. Evidence-only follow-up updates records without runtime changes. Live quality, monitored persistent cloud and user-feedback gates remain open; no paid model requests.
