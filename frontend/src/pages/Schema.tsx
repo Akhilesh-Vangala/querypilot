@@ -1,0 +1,52 @@
+import { useEffect, useState } from "react";
+import { api, TableInfo } from "../api";
+
+export default function Schema() {
+  const [tables, setTables] = useState<TableInfo[]>([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    api
+      .schema()
+      .then((data) => setTables(data.tables))
+      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load schema"));
+  }, []);
+
+  return (
+    <>
+      <div className="card">
+        <h2>Warehouse schema</h2>
+        <p className="muted" style={{ marginTop: 0 }}>
+          Star schema for contact-lens and IOL operations. Facts are weekly grain over 80 weeks.
+        </p>
+        {error ? <p className="error">{error}</p> : null}
+      </div>
+      {tables.map((table) => (
+        <div className="card" key={table.name}>
+          <h2>
+            {table.name}{" "}
+            <span className="muted" style={{ fontWeight: 400 }}>
+              {table.row_count.toLocaleString()} rows
+            </span>
+          </h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Column</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {table.columns.map((col) => (
+                <tr key={col.name}>
+                  <td className="mono">{col.name}</td>
+                  <td className="muted">{col.type}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+    </>
+  );
+}
