@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: querypilot
+      POSTGRES_PASSWORD: querypilot
+      POSTGRES_DB: querypilot
+    ports:
+      - "5437:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U querypilot"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: ./backend
+    ports:
+      - "8007:8007"
+    environment:
+      DATABASE_URL: postgresql+psycopg://querypilot:querypilot@db:5432/querypilot
+      JWT_SECRET: dev-secret-change-in-production
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "python seed.py && uvicorn app.main:app --host 0.0.0.0 --port 8007"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3007:80"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
