@@ -10,13 +10,13 @@ from .auth import hash_password
 from .models import (
     AskLog,
     DimDate,
-    DimDc,
-    DimPlant,
-    DimSku,
-    FactFreight,
-    FactInventory,
-    FactProduction,
-    FactSales,
+    DimEmployerGroup,
+    DimProvider,
+    DimRegion,
+    FactCareCoordination,
+    FactClaims,
+    FactNetworkCapacity,
+    FactReferrals,
     User,
 )
 
@@ -24,58 +24,60 @@ N_WEEKS = 80
 WEEK_START = date(2025, 1, 6)
 RNG_SEED = 42
 
-FAMILIES = ("Daily Disposable", "Monthly", "Toric", "Multifocal", "IOL")
+SPECIALTIES = ("Primary Care", "Cardiology", "Orthopedic Surgery", "Endocrinology", "Oncology")
 
-# Family-level scrap is fixed so Toric remains the worst even after per-row noise.
-SCRAP_RATE = {
-    "Daily Disposable": 0.020,
-    "Monthly": 0.025,
-    "Toric": 0.085,
-    "Multifocal": 0.035,
-    "IOL": 0.015,
+# Specialty-level decline rate is fixed so Orthopedic Surgery remains the
+# worst even after per-row noise -- referrals to ortho surgeons are
+# realistically harder to convert (prior-auth, scheduling backlogs).
+DECLINE_RATE = {
+    "Primary Care": 0.020,
+    "Cardiology": 0.025,
+    "Orthopedic Surgery": 0.085,
+    "Endocrinology": 0.035,
+    "Oncology": 0.015,
 }
 
-UNIT_PRICE = {
-    "Daily Disposable": 0.85,
-    "Monthly": 2.40,
-    "Toric": 1.55,
-    "Multifocal": 1.90,
-    "IOL": 420.0,
+AVG_CLAIM_USD = {
+    "Primary Care": 145.0,
+    "Cardiology": 410.0,
+    "Orthopedic Surgery": 620.0,
+    "Endocrinology": 260.0,
+    "Oncology": 3800.0,
 }
 
-SKUS = [
-    (1, "DT1-90", "Daily Disposable", "Dailies Total1"),
-    (2, "DT1-30", "Daily Disposable", "Dailies Total1"),
-    (3, "P1-90", "Daily Disposable", "Precision1"),
-    (4, "AO-M30", "Monthly", "Air Optix"),
-    (5, "AO-HYDRA", "Monthly", "Air Optix"),
-    (6, "AO-TORIC", "Toric", "Air Optix"),
-    (7, "P1-TORIC", "Toric", "Precision1"),
-    (8, "DT1-TORIC", "Toric", "Dailies Total1"),
-    (9, "DT1-MF", "Multifocal", "Dailies Total1"),
-    (10, "AO-MF", "Multifocal", "Air Optix"),
-    (11, "CLAREON", "IOL", "Clareon"),
-    (12, "VIVITY", "IOL", "Vivity"),
+PROVIDERS = [
+    (1, "1003800001", "Primary Care", "Meridian Family Health"),
+    (2, "1003800002", "Primary Care", "Meridian Family Health"),
+    (3, "1003800003", "Primary Care", "Lakeside Primary Care"),
+    (4, "1003800004", "Cardiology", "Heartland Cardiology Group"),
+    (5, "1003800005", "Cardiology", "Heartland Cardiology Group"),
+    (6, "1003800006", "Orthopedic Surgery", "Summit Orthopedic Partners"),
+    (7, "1003800007", "Orthopedic Surgery", "Bayview Orthopedics"),
+    (8, "1003800008", "Orthopedic Surgery", "Summit Orthopedic Partners"),
+    (9, "1003800009", "Endocrinology", "Metro Endocrine Associates"),
+    (10, "1003800010", "Endocrinology", "Metro Endocrine Associates"),
+    (11, "1003800011", "Oncology", "Riverside Oncology Center"),
+    (12, "1003800012", "Oncology", "Crestview Cancer Institute"),
 ]
 
-PLANTS = [
-    (1, "FTW", "Fort Worth", "US"),
-    (2, "SGP", "Singapore", "SG"),
+REGIONS = [
+    (1, "NE", "Northeast", "US"),
+    (2, "WC", "West Coast", "US"),
 ]
 
-DCS = [
-    (1, "DFW", "Dallas", "Americas"),
-    (2, "RTM", "Rotterdam", "EMEA"),
-    (3, "SHA", "Shanghai", "APAC"),
+EMPLOYER_GROUPS = [
+    (1, "ACME", "Acme Manufacturing", "Manufacturing"),
+    (2, "NORTHWIND", "Northwind Retail", "Retail"),
+    (3, "VERTEX", "Vertex Technologies", "Technology"),
 ]
 
-LANE_COST_PER_UNIT = {
-    (1, 1): 0.12,  # FTW -> DFW
-    (1, 2): 0.55,  # FTW -> RTM
-    (1, 3): 0.80,  # FTW -> SHA
-    (2, 1): 0.70,  # SGP -> DFW
-    (2, 2): 0.60,  # SGP -> RTM
-    (2, 3): 0.18,  # SGP -> SHA
+COORDINATION_COST_PER_CASE = {
+    (1, 1): 12.0,  # NE region, Acme members
+    (1, 2): 55.0,  # NE region, Northwind members
+    (1, 3): 80.0,  # NE region, Vertex members
+    (2, 1): 70.0,  # WC region, Acme members
+    (2, 2): 60.0,  # WC region, Northwind members
+    (2, 3): 18.0,  # WC region, Vertex members
 }
 
 DEMO_USERS = [
@@ -99,7 +101,8 @@ def _quarter(month: int) -> int:
 
 
 def _seasonal(quarter: int) -> float:
-    # Q4 demand is lifted and Q1 is dampened so Q4 revenue > Q1 is a stable pattern.
+    # Q4 claims volume is lifted (deductibles met, elective care scheduled
+    # before year-end) and Q1 is dampened -- a stable, realistic pattern.
     if quarter == 4:
         return 1.40
     if quarter == 1:
@@ -110,7 +113,7 @@ def _seasonal(quarter: int) -> float:
 
 
 def warehouse_is_empty(session: Session) -> bool:
-    return session.scalar(select(func.count()).select_from(DimSku)) == 0
+    return session.scalar(select(func.count()).select_from(DimProvider)) == 0
 
 
 def seed_users(session: Session) -> None:
@@ -149,131 +152,136 @@ def seed_warehouse(session: Session) -> None:
             )
         )
     session.add_all(dates)
-    session.add_all([DimSku(sku_id=i, sku_code=c, family=f, brand=b) for i, c, f, b in SKUS])
-    session.add_all([DimPlant(plant_id=i, plant_code=c, name=n, country=co) for i, c, n, co in PLANTS])
-    session.add_all([DimDc(dc_id=i, dc_code=c, name=n, region=r) for i, c, n, r in DCS])
+    session.add_all(
+        [DimProvider(provider_id=i, npi=n, specialty=s, group_name=g) for i, n, s, g in PROVIDERS]
+    )
+    session.add_all([DimRegion(region_id=i, region_code=c, name=n, country=co) for i, c, n, co in REGIONS])
+    session.add_all(
+        [DimEmployerGroup(employer_id=i, employer_code=c, name=n, industry=ind) for i, c, n, ind in EMPLOYER_GROUPS]
+    )
     session.flush()
 
-    sales: list[FactSales] = []
-    production: list[FactProduction] = []
-    inventory: list[FactInventory] = []
-    freight: list[FactFreight] = []
+    claims: list[FactClaims] = []
+    referrals: list[FactReferrals] = []
+    capacity: list[FactNetworkCapacity] = []
+    coordination: list[FactCareCoordination] = []
 
-    stockout_by_dc: dict[int, int] = {dc_id: 0 for dc_id, *_ in DCS}
+    closed_panel_by_employer: dict[int, int] = {employer_id: 0 for employer_id, *_ in EMPLOYER_GROUPS}
 
     for date_id in range(1, N_WEEKS + 1):
         d = WEEK_START + timedelta(weeks=date_id - 1)
         season = _seasonal(_quarter(d.month))
 
-        for sku_id, _code, family, _brand in SKUS:
+        for provider_id, _npi, specialty, _group in PROVIDERS:
             base = {
-                "Daily Disposable": 48000,
-                "Monthly": 9000,
-                "Toric": 14000,
-                "Multifocal": 7000,
-                "IOL": 220,
-            }[family]
+                "Primary Care": 48000,
+                "Cardiology": 9000,
+                "Orthopedic Surgery": 14000,
+                "Endocrinology": 7000,
+                "Oncology": 220,
+            }[specialty]
             noise = rng.uniform(0.88, 1.12)
 
-            plants_for_sku = [1, 2]
-            if family == "IOL":
-                plants_for_sku = [1]
+            regions_for_provider = [1, 2]
+            if specialty == "Oncology":
+                regions_for_provider = [1]
 
-            for plant_id in plants_for_sku:
-                units = int(base * noise * season)
-                if family == "Daily Disposable":
-                    # Fort Worth produces more dailies than Singapore.
-                    units = int(units * (1.85 if plant_id == 1 else 1.00))
-                elif plant_id == 1:
-                    units = int(units * 1.15)
-                scrap = int(units * SCRAP_RATE[family] + rng.randint(-8, 8))
-                scrap = max(0, min(scrap, max(units - 1, 0)))
-                hours = round(units / 1250.0 + rng.uniform(-2.0, 2.0), 2)
-                hours = max(hours, 0.5)
-                production.append(
-                    FactProduction(
+            for region_id in regions_for_provider:
+                vol = int(base * noise * season)
+                if specialty == "Primary Care":
+                    # Northeast has denser primary-care networks than West Coast.
+                    vol = int(vol * (1.85 if region_id == 1 else 1.00))
+                elif region_id == 1:
+                    vol = int(vol * 1.15)
+                declined = int(vol * DECLINE_RATE[specialty] + rng.randint(-8, 8))
+                declined = max(0, min(declined, max(vol - 1, 0)))
+                wait_days = round(vol / 1250.0 + rng.uniform(-2.0, 2.0), 2)
+                wait_days = max(wait_days, 0.5)
+                referrals.append(
+                    FactReferrals(
                         date_id=date_id,
-                        sku_id=sku_id,
-                        plant_id=plant_id,
-                        units=units,
-                        hours=hours,
-                        scrap_units=scrap,
+                        provider_id=provider_id,
+                        region_id=region_id,
+                        referrals=vol,
+                        avg_wait_days=wait_days,
+                        declined_referrals=declined,
                     )
                 )
 
-            for dc_id, *_ in DCS:
-                dc_share = {1: 0.48, 2: 0.32, 3: 0.20}[dc_id]
-                sold = int(base * 0.92 * season * dc_share * rng.uniform(0.9, 1.1))
-                price = UNIT_PRICE[family] * rng.uniform(0.97, 1.03)
-                sales.append(
-                    FactSales(
+            for employer_id, *_ in EMPLOYER_GROUPS:
+                employer_share = {1: 0.48, 2: 0.32, 3: 0.20}[employer_id]
+                claim_count = int(base * 0.92 * season * employer_share * rng.uniform(0.9, 1.1))
+                avg_cost = AVG_CLAIM_USD[specialty] * rng.uniform(0.97, 1.03)
+                claims.append(
+                    FactClaims(
                         date_id=date_id,
-                        sku_id=sku_id,
-                        dc_id=dc_id,
-                        units=sold,
-                        revenue_usd=round(sold * price, 2),
+                        provider_id=provider_id,
+                        employer_id=employer_id,
+                        claim_count=claim_count,
+                        claims_paid_usd=round(claim_count * avg_cost, 2),
                     )
                 )
 
-                closing = int(sold * rng.uniform(0.8, 2.4))
-                stockout_p = {1: 0.02, 2: 0.03, 3: 0.06}[dc_id]
-                if family == "Toric":
-                    stockout_p += 0.04
-                stockout = rng.random() < stockout_p
-                if stockout:
-                    closing = 0
-                    stockout_by_dc[dc_id] += 1
-                inventory.append(
-                    FactInventory(
+                open_slots = int(claim_count * rng.uniform(0.8, 2.4))
+                closed_p = {1: 0.02, 2: 0.03, 3: 0.06}[employer_id]
+                if specialty == "Orthopedic Surgery":
+                    closed_p += 0.04
+                panel_closed = rng.random() < closed_p
+                if panel_closed:
+                    open_slots = 0
+                    closed_panel_by_employer[employer_id] += 1
+                capacity.append(
+                    FactNetworkCapacity(
                         date_id=date_id,
-                        sku_id=sku_id,
-                        dc_id=dc_id,
-                        closing_units=closing,
-                        stockout_flag=stockout,
+                        provider_id=provider_id,
+                        employer_id=employer_id,
+                        open_panel_slots=open_slots,
+                        panel_closed_flag=panel_closed,
                     )
                 )
 
-        for plant_id, *_ in PLANTS:
-            for dc_id, *_ in DCS:
-                shipped = int(18000 * rng.uniform(0.7, 1.3) * season * (1.2 if plant_id == 1 else 0.9))
-                rate = LANE_COST_PER_UNIT[(plant_id, dc_id)] * rng.uniform(0.95, 1.05)
-                freight.append(
-                    FactFreight(
+        for region_id, *_ in REGIONS:
+            for employer_id, *_ in EMPLOYER_GROUPS:
+                case_volume = int(18000 * rng.uniform(0.7, 1.3) * season * (1.2 if region_id == 1 else 0.9))
+                rate = COORDINATION_COST_PER_CASE[(region_id, employer_id)] * rng.uniform(0.95, 1.05)
+                coordination.append(
+                    FactCareCoordination(
                         date_id=date_id,
-                        plant_id=plant_id,
-                        dc_id=dc_id,
-                        units=max(shipped, 1),
-                        cost_usd=round(shipped * rate, 2),
+                        region_id=region_id,
+                        employer_id=employer_id,
+                        cases=max(case_volume, 1),
+                        coordination_cost_usd=round(case_volume * rate, 2),
                     )
                 )
 
-    # Guarantee every DC has at least one stockout week so the golden question is non-empty.
-    for dc_id, count in stockout_by_dc.items():
+    # Guarantee every employer group has at least one closed-panel week so
+    # the golden question is non-empty.
+    for employer_id, count in closed_panel_by_employer.items():
         if count == 0:
-            for row in inventory:
-                if row.dc_id == dc_id:
-                    row.stockout_flag = True
-                    row.closing_units = 0
+            for row in capacity:
+                if row.employer_id == employer_id:
+                    row.panel_closed_flag = True
+                    row.open_panel_slots = 0
                     break
 
-    session.add_all(sales)
-    session.add_all(production)
-    session.add_all(inventory)
-    session.add_all(freight)
+    session.add_all(claims)
+    session.add_all(referrals)
+    session.add_all(capacity)
+    session.add_all(coordination)
     session.commit()
 
 
 def seed_all(session: Session, *, refresh_warehouse: bool = False) -> None:
     if refresh_warehouse:
-        session.query(FactFreight).delete()
-        session.query(FactInventory).delete()
-        session.query(FactProduction).delete()
-        session.query(FactSales).delete()
+        session.query(FactCareCoordination).delete()
+        session.query(FactNetworkCapacity).delete()
+        session.query(FactReferrals).delete()
+        session.query(FactClaims).delete()
         session.query(AskLog).delete()
         session.query(DimDate).delete()
-        session.query(DimSku).delete()
-        session.query(DimPlant).delete()
-        session.query(DimDc).delete()
+        session.query(DimProvider).delete()
+        session.query(DimRegion).delete()
+        session.query(DimEmployerGroup).delete()
         session.commit()
     if warehouse_is_empty(session):
         seed_warehouse(session)

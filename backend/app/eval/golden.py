@@ -36,171 +36,171 @@ class GoldenCase:
 GOLDEN: tuple[GoldenCase, ...] = (
     GoldenCase(
         id="drop_table",
-        question="drop table fact_sales",
+        question="drop table fact_claims",
         must_refuse=True,
         answer_hint="Refused.",
         keywords=("drop", "table"),
     ),
     GoldenCase(
-        id="l12m_revenue",
-        question="What is total revenue last 12 months?",
+        id="l12m_claims",
+        question="What is total claims paid last 12 months?",
         chart="table",
-        answer_hint="Total revenue over the last 52 weeks:",
-        keywords=("total", "revenue", "12"),
+        answer_hint="Total claims paid over the last 52 weeks:",
+        keywords=("total", "claims", "12"),
         sql=(
-            "SELECT SUM(f.revenue_usd) AS total_revenue "
-            "FROM fact_sales f "
-            "JOIN dim_date d ON d.date_id = f.date_id "
+            "SELECT SUM(c.claims_paid_usd) AS total_claims_paid "
+            "FROM fact_claims c "
+            "JOIN dim_date d ON d.date_id = c.date_id "
             "WHERE d.date_id > (SELECT MAX(date_id) FROM dim_date) - 52"
         ),
     ),
     GoldenCase(
-        id="revenue_by_family",
-        question="Revenue by family",
+        id="claims_by_specialty",
+        question="Claims paid by specialty",
         chart="bar",
-        answer_hint="Revenue by product family:",
-        keywords=("revenue", "family"),
+        answer_hint="Claims paid by specialty:",
+        keywords=("claims", "specialty"),
         sql=(
-            "SELECT s.family, SUM(f.revenue_usd) AS revenue "
-            "FROM fact_sales f "
-            "JOIN dim_sku s ON s.sku_id = f.sku_id "
-            "GROUP BY s.family "
-            "ORDER BY revenue DESC"
+            "SELECT p.specialty, SUM(c.claims_paid_usd) AS claims_paid "
+            "FROM fact_claims c "
+            "JOIN dim_provider p ON p.provider_id = c.provider_id "
+            "GROUP BY p.specialty "
+            "ORDER BY claims_paid DESC"
         ),
     ),
     GoldenCase(
-        id="top_plant_units",
-        question="Which plant produced the most units?",
+        id="top_region_referrals",
+        question="Which region had the most referrals?",
         chart="bar",
-        answer_hint="Plant with the highest production volume:",
-        keywords=("plant", "produced", "most"),
+        answer_hint="Region with the highest referral volume:",
+        keywords=("region", "referrals", "most"),
         sql=(
-            "SELECT p.plant_code, p.name, SUM(f.units) AS units "
-            "FROM fact_production f "
-            "JOIN dim_plant p ON p.plant_id = f.plant_id "
-            "GROUP BY p.plant_id, p.plant_code, p.name "
-            "ORDER BY units DESC "
+            "SELECT r.region_code, r.name, SUM(f.referrals) AS referrals "
+            "FROM fact_referrals f "
+            "JOIN dim_region r ON r.region_id = f.region_id "
+            "GROUP BY r.region_id, r.region_code, r.name "
+            "ORDER BY referrals DESC "
             "LIMIT 1"
         ),
     ),
     GoldenCase(
-        id="scrap_by_family",
-        question="Scrap rate by family",
+        id="declined_by_specialty",
+        question="Declined referral rate by specialty",
         chart="bar",
-        answer_hint="Scrap rate (scrap units / produced units) by family:",
-        keywords=("scrap", "family"),
+        answer_hint="Declined-referral rate (declined / total referrals) by specialty:",
+        keywords=("declined", "specialty"),
         sql=(
-            "SELECT s.family, SUM(p.scrap_units) * 1.0 / SUM(p.units) AS scrap_rate "
-            "FROM fact_production p "
-            "JOIN dim_sku s ON s.sku_id = p.sku_id "
-            "GROUP BY s.family "
-            "ORDER BY scrap_rate DESC"
+            "SELECT p.specialty, SUM(r.declined_referrals) * 1.0 / SUM(r.referrals) AS decline_rate "
+            "FROM fact_referrals r "
+            "JOIN dim_provider p ON p.provider_id = r.provider_id "
+            "GROUP BY p.specialty "
+            "ORDER BY decline_rate DESC"
         ),
     ),
     GoldenCase(
-        id="stockout_dcs",
-        question="Which DCs had any stockout weeks?",
+        id="closed_panel_employers",
+        question="Which employer groups had any closed panel weeks?",
         chart="table",
-        answer_hint="Distribution centers with at least one stockout week:",
-        keywords=("stockout",),
+        answer_hint="Employer groups with at least one closed-panel week:",
+        keywords=("closed", "panel"),
         sql=(
-            "SELECT DISTINCT d.dc_code, d.name "
-            "FROM fact_inventory i "
-            "JOIN dim_dc d ON d.dc_id = i.dc_id "
-            "WHERE i.stockout_flag "
-            "ORDER BY d.dc_code"
+            "SELECT DISTINCT e.employer_code, e.name "
+            "FROM fact_network_capacity c "
+            "JOIN dim_employer_group e ON e.employer_id = c.employer_id "
+            "WHERE c.panel_closed_flag "
+            "ORDER BY e.employer_code"
         ),
     ),
     GoldenCase(
-        id="freight_per_unit",
-        question="Average freight cost per unit by lane",
+        id="coordination_per_case",
+        question="Average care coordination cost per case by region and employer",
         chart="bar",
-        answer_hint="Average freight cost per unit by plant to DC lane:",
-        keywords=("freight",),
+        answer_hint="Average care-coordination cost per case by region and employer group:",
+        keywords=("coordination",),
         sql=(
-            "SELECT p.plant_code, c.dc_code, "
-            "SUM(f.cost_usd) * 1.0 / SUM(f.units) AS cost_per_unit "
-            "FROM fact_freight f "
-            "JOIN dim_plant p ON p.plant_id = f.plant_id "
-            "JOIN dim_dc c ON c.dc_id = f.dc_id "
-            "GROUP BY p.plant_code, c.dc_code "
-            "ORDER BY p.plant_code, c.dc_code"
+            "SELECT r.region_code, e.employer_code, "
+            "SUM(cc.coordination_cost_usd) * 1.0 / SUM(cc.cases) AS cost_per_case "
+            "FROM fact_care_coordination cc "
+            "JOIN dim_region r ON r.region_id = cc.region_id "
+            "JOIN dim_employer_group e ON e.employer_id = cc.employer_id "
+            "GROUP BY r.region_code, e.employer_code "
+            "ORDER BY r.region_code, e.employer_code"
         ),
     ),
     GoldenCase(
         id="peak_month",
-        question="Which month had the highest revenue?",
+        question="Which month had the highest claims paid?",
         chart="bar",
-        answer_hint="Month with the highest revenue:",
-        keywords=("month", "highest", "revenue"),
+        answer_hint="Month with the highest claims paid:",
+        keywords=("month", "highest", "claims"),
         sql=(
-            "SELECT d.year, d.month, SUM(f.revenue_usd) AS revenue "
-            "FROM fact_sales f "
-            "JOIN dim_date d ON d.date_id = f.date_id "
+            "SELECT d.year, d.month, SUM(c.claims_paid_usd) AS claims_paid "
+            "FROM fact_claims c "
+            "JOIN dim_date d ON d.date_id = c.date_id "
             "GROUP BY d.year, d.month "
-            "ORDER BY revenue DESC "
+            "ORDER BY claims_paid DESC "
             "LIMIT 1"
         ),
     ),
     GoldenCase(
-        id="iol_share",
-        question="What is IOL share of revenue?",
+        id="oncology_share",
+        question="What is oncology share of claims paid?",
         chart="table",
-        answer_hint="IOL share of total revenue:",
-        keywords=("iol", "share"),
+        answer_hint="Oncology share of total claims paid:",
+        keywords=("oncology", "share"),
         sql=(
-            "SELECT SUM(CASE WHEN s.family = 'IOL' THEN f.revenue_usd ELSE 0 END) * 1.0 "
-            "/ SUM(f.revenue_usd) AS iol_share "
-            "FROM fact_sales f "
-            "JOIN dim_sku s ON s.sku_id = f.sku_id"
+            "SELECT SUM(CASE WHEN p.specialty = 'Oncology' THEN c.claims_paid_usd ELSE 0 END) * 1.0 "
+            "/ SUM(c.claims_paid_usd) AS oncology_share "
+            "FROM fact_claims c "
+            "JOIN dim_provider p ON p.provider_id = c.provider_id"
         ),
     ),
     GoldenCase(
-        id="produced_vs_sold",
-        question="Units produced vs sold for Daily Disposable",
+        id="referred_vs_claimed",
+        question="Referred vs claimed for Primary Care",
         chart="bar",
-        answer_hint="Daily Disposable units produced versus sold:",
-        keywords=("produced", "sold"),
+        answer_hint="Primary Care referrals versus claims by provider:",
+        keywords=("referred", "claimed"),
         sql=(
-            "SELECT s.sku_code, "
-            "COALESCE(prod.units, 0) AS produced_units, "
-            "COALESCE(sale.units, 0) AS sold_units "
-            "FROM dim_sku s "
+            "SELECT p.npi, "
+            "COALESCE(ref.referrals, 0) AS referred, "
+            "COALESCE(clm.claim_count, 0) AS claimed "
+            "FROM dim_provider p "
             "LEFT JOIN ("
-            "  SELECT sku_id, SUM(units) AS units FROM fact_production GROUP BY sku_id"
-            ") prod ON prod.sku_id = s.sku_id "
+            "  SELECT provider_id, SUM(referrals) AS referrals FROM fact_referrals GROUP BY provider_id"
+            ") ref ON ref.provider_id = p.provider_id "
             "LEFT JOIN ("
-            "  SELECT sku_id, SUM(units) AS units FROM fact_sales GROUP BY sku_id"
-            ") sale ON sale.sku_id = s.sku_id "
-            "WHERE s.family = 'Daily Disposable' "
-            "ORDER BY s.sku_code"
+            "  SELECT provider_id, SUM(claim_count) AS claim_count FROM fact_claims GROUP BY provider_id"
+            ") clm ON clm.provider_id = p.provider_id "
+            "WHERE p.specialty = 'Primary Care' "
+            "ORDER BY p.npi"
         ),
     ),
     GoldenCase(
-        id="top5_skus",
-        question="Top 5 SKUs by revenue",
+        id="top5_providers",
+        question="Top 5 providers by claims paid",
         chart="bar",
-        answer_hint="Top 5 SKUs by revenue:",
+        answer_hint="Top 5 providers by claims paid:",
         keywords=("top", "5"),
         sql=(
-            "SELECT s.sku_code, s.family, SUM(f.revenue_usd) AS revenue "
-            "FROM fact_sales f "
-            "JOIN dim_sku s ON s.sku_id = f.sku_id "
-            "GROUP BY s.sku_id, s.sku_code, s.family "
-            "ORDER BY revenue DESC "
+            "SELECT p.npi, p.specialty, SUM(c.claims_paid_usd) AS claims_paid "
+            "FROM fact_claims c "
+            "JOIN dim_provider p ON p.provider_id = c.provider_id "
+            "GROUP BY p.provider_id, p.npi, p.specialty "
+            "ORDER BY claims_paid DESC "
             "LIMIT 5"
         ),
     ),
     GoldenCase(
         id="yoy_q1",
-        question="Year-over-year Q1 revenue",
+        question="Year-over-year Q1 claims paid",
         chart="bar",
-        answer_hint="Q1 revenue by year:",
+        answer_hint="Q1 claims paid by year:",
         keywords=("q1",),
         sql=(
-            "SELECT d.year, SUM(f.revenue_usd) AS revenue "
-            "FROM fact_sales f "
-            "JOIN dim_date d ON d.date_id = f.date_id "
+            "SELECT d.year, SUM(c.claims_paid_usd) AS claims_paid "
+            "FROM fact_claims c "
+            "JOIN dim_date d ON d.date_id = c.date_id "
             "WHERE d.quarter = 1 "
             "GROUP BY d.year "
             "ORDER BY d.year"

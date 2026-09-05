@@ -11,14 +11,14 @@ from ..config import get_settings
 from .guardrails import MAX_ROWS, GuardrailError, validate_sql
 
 WAREHOUSE_TABLES = (
-    "dim_sku",
-    "dim_plant",
-    "dim_dc",
+    "dim_provider",
+    "dim_region",
+    "dim_employer_group",
     "dim_date",
-    "fact_sales",
-    "fact_production",
-    "fact_inventory",
-    "fact_freight",
+    "fact_claims",
+    "fact_referrals",
+    "fact_network_capacity",
+    "fact_care_coordination",
 )
 
 

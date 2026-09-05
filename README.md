@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml/badge.svg)](https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml)
 
-Natural-language-to-SQL copilot over a lens-manufacturing star schema. The agent inspects tables, drafts a read-only `SELECT`, runs guardrails, executes the query, and returns an answer plus the SQL.
+Natural-language-to-SQL copilot over a healthcare claims and provider-network star schema. The agent inspects tables, drafts a read-only `SELECT`, runs guardrails, executes the query, and returns an answer plus the SQL.
 
 Scoring is execution accuracy: predicted SQL and gold SQL are both run against the warehouse, and the result sets are compared. A `DROP TABLE` prompt counts as a pass only if the agent refuses.
 
@@ -20,9 +20,9 @@ When `OPENAI_API_KEY` is unset, `StubLLM` compiles SQL from `app/agent/intents.p
 
 ## Warehouse
 
-80 weeks from 2025-01-06, seed `42`. Plants: Fort Worth, Singapore. DCs: Dallas, Rotterdam, Shanghai. Families: Daily Disposable, Monthly, Toric, Multifocal, IOL.
+80 weeks from 2025-01-06, seed `42`. Regions: Northeast, West Coast. Employer groups: Acme Manufacturing, Northwind Retail, Vertex Technologies. Specialties: Primary Care, Cardiology, Orthopedic Surgery, Endocrinology, Oncology.
 
-Planted patterns used by the golden set: Toric has the highest scrap rate; Fort Worth produces more dailies than Singapore; Q4 revenue > Q1.
+Planted patterns used by the golden set: Orthopedic Surgery has the highest declined-referral rate; the Northeast has a denser primary-care network than the West Coast; Q4 claims paid > Q1.
 
 ## Stack
 

@@ -50,38 +50,38 @@ class AskLog(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
 
 
-class DimSku(Base):
-    __tablename__ = "dim_sku"
+class DimProvider(Base):
+    __tablename__ = "dim_provider"
 
-    sku_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    sku_code: Mapped[str] = mapped_column(String(64), unique=True)
-    family: Mapped[str] = mapped_column(String(32))
-    brand: Mapped[str] = mapped_column(String(64))
+    provider_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    npi: Mapped[str] = mapped_column(String(64), unique=True)
+    specialty: Mapped[str] = mapped_column(String(32))
+    group_name: Mapped[str] = mapped_column(String(64))
 
     __table_args__ = (
         CheckConstraint(
-            "family in ('Daily Disposable','Monthly','Toric','Multifocal','IOL')",
-            name="ck_sku_family",
+            "specialty in ('Primary Care','Cardiology','Orthopedic Surgery','Endocrinology','Oncology')",
+            name="ck_provider_specialty",
         ),
     )
 
 
-class DimPlant(Base):
-    __tablename__ = "dim_plant"
+class DimRegion(Base):
+    __tablename__ = "dim_region"
 
-    plant_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    plant_code: Mapped[str] = mapped_column(String(16), unique=True)
+    region_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    region_code: Mapped[str] = mapped_column(String(16), unique=True)
     name: Mapped[str] = mapped_column(String(64))
     country: Mapped[str] = mapped_column(String(32))
 
 
-class DimDc(Base):
-    __tablename__ = "dim_dc"
+class DimEmployerGroup(Base):
+    __tablename__ = "dim_employer_group"
 
-    dc_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    dc_code: Mapped[str] = mapped_column(String(16), unique=True)
+    employer_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    employer_code: Mapped[str] = mapped_column(String(16), unique=True)
     name: Mapped[str] = mapped_column(String(64))
-    region: Mapped[str] = mapped_column(String(32))
+    industry: Mapped[str] = mapped_column(String(32))
 
 
 class DimDate(Base):
@@ -95,54 +95,66 @@ class DimDate(Base):
     week: Mapped[int] = mapped_column(Integer)
 
 
-class FactSales(Base):
-    __tablename__ = "fact_sales"
+class FactClaims(Base):
+    """Claims paid to a provider, attributed to an employer group's member population."""
+
+    __tablename__ = "fact_claims"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     date_id: Mapped[int] = mapped_column(ForeignKey("dim_date.date_id"))
-    sku_id: Mapped[int] = mapped_column(ForeignKey("dim_sku.sku_id"))
-    dc_id: Mapped[int] = mapped_column(ForeignKey("dim_dc.dc_id"))
-    units: Mapped[int] = mapped_column(Integer)
-    revenue_usd: Mapped[float] = mapped_column(Float)
+    provider_id: Mapped[int] = mapped_column(ForeignKey("dim_provider.provider_id"))
+    employer_id: Mapped[int] = mapped_column(ForeignKey("dim_employer_group.employer_id"))
+    claim_count: Mapped[int] = mapped_column(Integer)
+    claims_paid_usd: Mapped[float] = mapped_column(Float)
 
-    __table_args__ = (UniqueConstraint("date_id", "sku_id", "dc_id", name="uq_sales_grain"),)
-
-
-class FactProduction(Base):
-    __tablename__ = "fact_production"
-
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    date_id: Mapped[int] = mapped_column(ForeignKey("dim_date.date_id"))
-    sku_id: Mapped[int] = mapped_column(ForeignKey("dim_sku.sku_id"))
-    plant_id: Mapped[int] = mapped_column(ForeignKey("dim_plant.plant_id"))
-    units: Mapped[int] = mapped_column(Integer)
-    hours: Mapped[float] = mapped_column(Float)
-    scrap_units: Mapped[int] = mapped_column(Integer)
-
-    __table_args__ = (UniqueConstraint("date_id", "sku_id", "plant_id", name="uq_production_grain"),)
+    __table_args__ = (UniqueConstraint("date_id", "provider_id", "employer_id", name="uq_claims_grain"),)
 
 
-class FactInventory(Base):
-    __tablename__ = "fact_inventory"
+class FactReferrals(Base):
+    """Referrals steered to a provider, and how many were declined -- the
+    healthcare-ops analog of a production line's scrap rate: referrals that
+    didn't convert into completed care."""
+
+    __tablename__ = "fact_referrals"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     date_id: Mapped[int] = mapped_column(ForeignKey("dim_date.date_id"))
-    sku_id: Mapped[int] = mapped_column(ForeignKey("dim_sku.sku_id"))
-    dc_id: Mapped[int] = mapped_column(ForeignKey("dim_dc.dc_id"))
-    closing_units: Mapped[int] = mapped_column(Integer)
-    stockout_flag: Mapped[bool] = mapped_column(Boolean)
+    provider_id: Mapped[int] = mapped_column(ForeignKey("dim_provider.provider_id"))
+    region_id: Mapped[int] = mapped_column(ForeignKey("dim_region.region_id"))
+    referrals: Mapped[int] = mapped_column(Integer)
+    avg_wait_days: Mapped[float] = mapped_column(Float)
+    declined_referrals: Mapped[int] = mapped_column(Integer)
 
-    __table_args__ = (UniqueConstraint("date_id", "sku_id", "dc_id", name="uq_inventory_grain"),)
+    __table_args__ = (UniqueConstraint("date_id", "provider_id", "region_id", name="uq_referrals_grain"),)
 
 
-class FactFreight(Base):
-    __tablename__ = "fact_freight"
+class FactNetworkCapacity(Base):
+    """Open panel slots per provider per employer group's member population --
+    a closed panel (no open slots) is this warehouse's stockout equivalent."""
+
+    __tablename__ = "fact_network_capacity"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     date_id: Mapped[int] = mapped_column(ForeignKey("dim_date.date_id"))
-    plant_id: Mapped[int] = mapped_column(ForeignKey("dim_plant.plant_id"))
-    dc_id: Mapped[int] = mapped_column(ForeignKey("dim_dc.dc_id"))
-    units: Mapped[int] = mapped_column(Integer)
-    cost_usd: Mapped[float] = mapped_column(Float)
+    provider_id: Mapped[int] = mapped_column(ForeignKey("dim_provider.provider_id"))
+    employer_id: Mapped[int] = mapped_column(ForeignKey("dim_employer_group.employer_id"))
+    open_panel_slots: Mapped[int] = mapped_column(Integer)
+    panel_closed_flag: Mapped[bool] = mapped_column(Boolean)
 
-    __table_args__ = (UniqueConstraint("date_id", "plant_id", "dc_id", name="uq_freight_grain"),)
+    __table_args__ = (UniqueConstraint("date_id", "provider_id", "employer_id", name="uq_capacity_grain"),)
+
+
+class FactCareCoordination(Base):
+    """Cost of coordinating a member's care across regions -- e.g. a
+    specialist consult routed to a different region's network."""
+
+    __tablename__ = "fact_care_coordination"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    date_id: Mapped[int] = mapped_column(ForeignKey("dim_date.date_id"))
+    region_id: Mapped[int] = mapped_column(ForeignKey("dim_region.region_id"))
+    employer_id: Mapped[int] = mapped_column(ForeignKey("dim_employer_group.employer_id"))
+    cases: Mapped[int] = mapped_column(Integer)
+    coordination_cost_usd: Mapped[float] = mapped_column(Float)
+
+    __table_args__ = (UniqueConstraint("date_id", "region_id", "employer_id", name="uq_coordination_grain"),)

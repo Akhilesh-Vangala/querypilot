@@ -3,12 +3,12 @@ import { api, AskResponse } from "../api";
 import BarChart from "../components/BarChart";
 
 const EXAMPLES = [
-  "What is total revenue last 12 months?",
-  "Revenue by family",
-  "Which plant produced the most units?",
-  "Scrap rate by family",
-  "Which DCs had any stockout weeks?",
-  "Average freight cost per unit by lane",
+  "What is total claims paid last 12 months?",
+  "Claims paid by specialty",
+  "Which region had the most referrals?",
+  "Declined referral rate by specialty",
+  "Which employer groups had any closed panel weeks?",
+  "Average care coordination cost per case by region and employer",
 ];
 
 function formatCell(value: unknown): string {
@@ -18,7 +18,7 @@ function formatCell(value: unknown): string {
 }
 
 export default function Ask() {
-  const [question, setQuestion] = useState("Revenue by family");
+  const [question, setQuestion] = useState("Claims paid by specialty");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<AskResponse | null>(null);
@@ -45,7 +45,7 @@ export default function Ask() {
       <div className="card">
         <h2>Ask the warehouse</h2>
         <p className="muted" style={{ marginTop: 0 }}>
-          Questions are planned as read-only SQL against the seeded lens star schema. Destructive
+          Questions are planned as read-only SQL against the seeded claims star schema. Destructive
           statements are refused before they reach the database.
         </p>
         <div className="chips">

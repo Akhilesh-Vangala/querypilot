@@ -30,7 +30,7 @@ app = FastAPI(
     title="QueryPilot",
     version="1.0.0",
     description=(
-        "Agentic natural-language-to-SQL analytics copilot over a lens-manufacturing "
+        "Agentic natural-language-to-SQL analytics copilot over a healthcare claims "
         "star schema. Drafts read-only SQL, enforces statement guardrails, and scores "
         "answers with execution accuracy against a golden set."
     ),

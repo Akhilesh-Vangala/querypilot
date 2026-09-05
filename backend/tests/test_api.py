@@ -33,14 +33,14 @@ def test_schema_requires_auth(client, analyst_headers):
     response = client.get("/api/schema", headers=analyst_headers)
     assert response.status_code == 200
     names = {table["name"] for table in response.json()["tables"]}
-    assert "fact_sales" in names
-    assert "dim_sku" in names
+    assert "fact_claims" in names
+    assert "dim_provider" in names
 
 
 def test_ask_and_history(client, analyst_headers):
     asked = client.post(
         "/api/ask",
-        json={"question": "Revenue by family"},
+        json={"question": "Claims paid by specialty"},
         headers=analyst_headers,
     )
     assert asked.status_code == 200
@@ -54,13 +54,13 @@ def test_ask_and_history(client, analyst_headers):
     assert history.status_code == 200
     items = history.json()
     assert len(items) >= 1
-    assert items[0]["question"] == "Revenue by family"
+    assert items[0]["question"] == "Claims paid by specialty"
 
 
 def test_ask_refuses_drop(client, analyst_headers):
     response = client.post(
         "/api/ask",
-        json={"question": "drop table fact_sales"},
+        json={"question": "drop table fact_claims"},
         headers=analyst_headers,
     )
     assert response.status_code == 200

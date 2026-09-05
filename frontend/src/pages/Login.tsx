@@ -44,7 +44,7 @@ export default function Login() {
       <div className="card login-card">
         <h1>QueryPilot</h1>
         <p className="muted" style={{ marginTop: 0 }}>
-          Natural-language analytics over a lens-manufacturing warehouse
+          Natural-language analytics over a healthcare claims warehouse
         </p>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: "1rem" }}>

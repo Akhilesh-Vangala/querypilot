@@ -17,7 +17,7 @@ export default function Schema() {
       <div className="card">
         <h2>Warehouse schema</h2>
         <p className="muted" style={{ marginTop: 0 }}>
-          Star schema for contact-lens and IOL operations. Facts are weekly grain over 80 weeks.
+          Star schema for healthcare claims and provider-network operations. Facts are weekly grain over 80 weeks.
         </p>
         {error ? <p className="error">{error}</p> : null}
       </div>

@@ -46,7 +46,7 @@ class StubLLM:
                     "final": {
                         "answer": (
                             "I could not map that question onto a known warehouse metric. "
-                            "Try asking about revenue, scrap, production, stockouts, or freight."
+                            "Try asking about claims, declined referrals, closed panels, or care coordination."
                         ),
                         "sql": "",
                         "chart": "table",

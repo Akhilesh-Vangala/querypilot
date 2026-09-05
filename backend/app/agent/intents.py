@@ -23,7 +23,7 @@ def classify(question: str) -> Intent | None:
     if "drop" in q and "table" in q:
         return Intent(
             id="drop_table",
-            table="fact_sales",
+            table="fact_claims",
             sql="",
             chart="table",
             answer=(
@@ -32,170 +32,170 @@ def classify(question: str) -> Intent | None:
             ),
             refused=True,
         )
-    if "scrap" in q and "family" in q:
+    if "declined" in q and "specialty" in q:
         return Intent(
-            id="scrap_by_family",
-            table="fact_production",
+            id="declined_by_specialty",
+            table="fact_referrals",
             chart="bar",
-            answer="Scrap rate by family:",
+            answer="Declined-referral rate by specialty:",
             sql=(
-                "SELECT sku.family AS family, "
-                "SUM(prod.scrap_units) * 1.0 / SUM(prod.units) AS scrap_rate "
-                "FROM fact_production AS prod "
-                "INNER JOIN dim_sku AS sku ON sku.sku_id = prod.sku_id "
-                "GROUP BY sku.family "
-                "ORDER BY scrap_rate DESC"
+                "SELECT p.specialty AS specialty, "
+                "SUM(r.declined_referrals) * 1.0 / SUM(r.referrals) AS decline_rate "
+                "FROM fact_referrals AS r "
+                "INNER JOIN dim_provider AS p ON p.provider_id = r.provider_id "
+                "GROUP BY p.specialty "
+                "ORDER BY decline_rate DESC"
             ),
         )
-    if "iol" in q and "share" in q:
+    if "oncology" in q and "share" in q:
         return Intent(
-            id="iol_share",
-            table="fact_sales",
+            id="oncology_share",
+            table="fact_claims",
             chart="table",
-            answer="IOL share of total revenue:",
+            answer="Oncology share of total claims paid:",
             sql=(
-                "SELECT SUM(CASE WHEN sku.family = 'IOL' THEN sale.revenue_usd ELSE 0 END) "
-                "* 1.0 / SUM(sale.revenue_usd) AS iol_share "
-                "FROM fact_sales AS sale "
-                "INNER JOIN dim_sku AS sku ON sku.sku_id = sale.sku_id"
+                "SELECT SUM(CASE WHEN p.specialty = 'Oncology' THEN c.claims_paid_usd ELSE 0 END) "
+                "* 1.0 / SUM(c.claims_paid_usd) AS oncology_share "
+                "FROM fact_claims AS c "
+                "INNER JOIN dim_provider AS p ON p.provider_id = c.provider_id"
             ),
         )
-    if "freight" in q:
+    if "coordination" in q:
         return Intent(
-            id="freight_per_unit",
-            table="fact_freight",
+            id="coordination_per_case",
+            table="fact_care_coordination",
             chart="bar",
-            answer="Average freight cost per unit by plant to DC lane:",
+            answer="Average care-coordination cost per case by region and employer group:",
             sql=(
-                "SELECT plant.plant_code, dc.dc_code, "
-                "SUM(fr.cost_usd) * 1.0 / SUM(fr.units) AS cost_per_unit "
-                "FROM fact_freight AS fr "
-                "INNER JOIN dim_plant AS plant ON plant.plant_id = fr.plant_id "
-                "INNER JOIN dim_dc AS dc ON dc.dc_id = fr.dc_id "
-                "GROUP BY plant.plant_code, dc.dc_code "
-                "ORDER BY plant.plant_code, dc.dc_code"
+                "SELECT reg.region_code, emp.employer_code, "
+                "SUM(cc.coordination_cost_usd) * 1.0 / SUM(cc.cases) AS cost_per_case "
+                "FROM fact_care_coordination AS cc "
+                "INNER JOIN dim_region AS reg ON reg.region_id = cc.region_id "
+                "INNER JOIN dim_employer_group AS emp ON emp.employer_id = cc.employer_id "
+                "GROUP BY reg.region_code, emp.employer_code "
+                "ORDER BY reg.region_code, emp.employer_code"
             ),
         )
-    if "stockout" in q:
+    if "panel" in q or "closed" in q:
         return Intent(
-            id="stockout_dcs",
-            table="fact_inventory",
+            id="closed_panel_employers",
+            table="fact_network_capacity",
             chart="table",
-            answer="Distribution centers with at least one stockout week:",
+            answer="Employer groups with at least one closed-panel week:",
             sql=(
-                "SELECT dc.dc_code, dc.name "
-                "FROM fact_inventory AS inv "
-                "INNER JOIN dim_dc AS dc ON dc.dc_id = inv.dc_id "
-                "WHERE inv.stockout_flag "
-                "GROUP BY dc.dc_code, dc.name "
-                "ORDER BY dc.dc_code"
+                "SELECT emp.employer_code, emp.name "
+                "FROM fact_network_capacity AS cap "
+                "INNER JOIN dim_employer_group AS emp ON emp.employer_id = cap.employer_id "
+                "WHERE cap.panel_closed_flag "
+                "GROUP BY emp.employer_code, emp.name "
+                "ORDER BY emp.employer_code"
             ),
         )
     if "q1" in q:
         return Intent(
             id="yoy_q1",
-            table="fact_sales",
+            table="fact_claims",
             chart="bar",
-            answer="Q1 revenue by year:",
+            answer="Q1 claims paid by year:",
             sql=(
-                "SELECT dt.year AS year, SUM(sale.revenue_usd) AS revenue "
-                "FROM fact_sales AS sale "
-                "INNER JOIN dim_date AS dt ON dt.date_id = sale.date_id "
+                "SELECT dt.year AS year, SUM(c.claims_paid_usd) AS claims_paid "
+                "FROM fact_claims AS c "
+                "INNER JOIN dim_date AS dt ON dt.date_id = c.date_id "
                 "WHERE dt.quarter = 1 "
                 "GROUP BY dt.year "
                 "ORDER BY dt.year"
             ),
         )
-    if "month" in q and "highest" in q and "revenue" in q:
+    if "month" in q and "highest" in q and "claims" in q:
         return Intent(
             id="peak_month",
-            table="fact_sales",
+            table="fact_claims",
             chart="bar",
-            answer="Month with the highest revenue:",
+            answer="Month with the highest claims paid:",
             sql=(
-                "SELECT dt.year AS year, dt.month AS month, SUM(sale.revenue_usd) AS revenue "
-                "FROM fact_sales AS sale "
-                "INNER JOIN dim_date AS dt ON dt.date_id = sale.date_id "
+                "SELECT dt.year AS year, dt.month AS month, SUM(c.claims_paid_usd) AS claims_paid "
+                "FROM fact_claims AS c "
+                "INNER JOIN dim_date AS dt ON dt.date_id = c.date_id "
                 "GROUP BY dt.year, dt.month "
-                "ORDER BY revenue DESC "
+                "ORDER BY claims_paid DESC "
                 "LIMIT 1"
             ),
         )
-    if "plant" in q and "produced" in q and "most" in q:
+    if "region" in q and "referrals" in q and "most" in q:
         return Intent(
-            id="top_plant_units",
-            table="fact_production",
+            id="top_region_referrals",
+            table="fact_referrals",
             chart="bar",
-            answer="Plant with the highest production volume:",
+            answer="Region with the highest referral volume:",
             sql=(
-                "SELECT plant.plant_code, plant.name, SUM(prod.units) AS units "
-                "FROM fact_production AS prod "
-                "INNER JOIN dim_plant AS plant ON plant.plant_id = prod.plant_id "
-                "GROUP BY plant.plant_id, plant.plant_code, plant.name "
-                "ORDER BY units DESC "
+                "SELECT reg.region_code, reg.name, SUM(r.referrals) AS referrals "
+                "FROM fact_referrals AS r "
+                "INNER JOIN dim_region AS reg ON reg.region_id = r.region_id "
+                "GROUP BY reg.region_id, reg.region_code, reg.name "
+                "ORDER BY referrals DESC "
                 "LIMIT 1"
             ),
         )
-    if "produced" in q and "sold" in q:
+    if "referred" in q and "claimed" in q:
         return Intent(
-            id="produced_vs_sold",
-            table="fact_production",
+            id="referred_vs_claimed",
+            table="fact_referrals",
             chart="bar",
-            answer="Daily Disposable units produced versus sold:",
+            answer="Primary Care referrals versus claims by provider:",
             sql=(
-                "SELECT sku.sku_code, "
-                "COALESCE(made.units, 0) AS produced_units, "
-                "COALESCE(sold.units, 0) AS sold_units "
-                "FROM dim_sku AS sku "
+                "SELECT prov.npi, "
+                "COALESCE(ref.referrals, 0) AS referred, "
+                "COALESCE(clm.claim_count, 0) AS claimed "
+                "FROM dim_provider AS prov "
                 "LEFT JOIN ("
-                "  SELECT sku_id, SUM(units) AS units FROM fact_production GROUP BY sku_id"
-                ") AS made ON made.sku_id = sku.sku_id "
+                "  SELECT provider_id, SUM(referrals) AS referrals FROM fact_referrals GROUP BY provider_id"
+                ") AS ref ON ref.provider_id = prov.provider_id "
                 "LEFT JOIN ("
-                "  SELECT sku_id, SUM(units) AS units FROM fact_sales GROUP BY sku_id"
-                ") AS sold ON sold.sku_id = sku.sku_id "
-                "WHERE sku.family = 'Daily Disposable' "
-                "ORDER BY sku.sku_code"
+                "  SELECT provider_id, SUM(claim_count) AS claim_count FROM fact_claims GROUP BY provider_id"
+                ") AS clm ON clm.provider_id = prov.provider_id "
+                "WHERE prov.specialty = 'Primary Care' "
+                "ORDER BY prov.npi"
             ),
         )
     if "top" in q and "5" in q:
         return Intent(
-            id="top5_skus",
-            table="fact_sales",
+            id="top5_providers",
+            table="fact_claims",
             chart="bar",
-            answer="Top 5 SKUs by revenue:",
+            answer="Top 5 providers by claims paid:",
             sql=(
-                "SELECT sku.sku_code, sku.family, SUM(sale.revenue_usd) AS revenue "
-                "FROM fact_sales AS sale "
-                "INNER JOIN dim_sku AS sku ON sku.sku_id = sale.sku_id "
-                "GROUP BY sku.sku_id, sku.sku_code, sku.family "
-                "ORDER BY revenue DESC "
+                "SELECT p.npi, p.specialty, SUM(c.claims_paid_usd) AS claims_paid "
+                "FROM fact_claims AS c "
+                "INNER JOIN dim_provider AS p ON p.provider_id = c.provider_id "
+                "GROUP BY p.provider_id, p.npi, p.specialty "
+                "ORDER BY claims_paid DESC "
                 "LIMIT 5"
             ),
         )
-    if "revenue" in q and "family" in q:
+    if "claims" in q and "specialty" in q:
         return Intent(
-            id="revenue_by_family",
-            table="fact_sales",
+            id="claims_by_specialty",
+            table="fact_claims",
             chart="bar",
-            answer="Revenue by product family:",
+            answer="Claims paid by specialty:",
             sql=(
-                "SELECT sku.family AS family, SUM(sale.revenue_usd) AS revenue "
-                "FROM fact_sales AS sale "
-                "INNER JOIN dim_sku AS sku ON sku.sku_id = sale.sku_id "
-                "GROUP BY sku.family "
-                "ORDER BY revenue DESC"
+                "SELECT p.specialty AS specialty, SUM(c.claims_paid_usd) AS claims_paid "
+                "FROM fact_claims AS c "
+                "INNER JOIN dim_provider AS p ON p.provider_id = c.provider_id "
+                "GROUP BY p.specialty "
+                "ORDER BY claims_paid DESC"
             ),
         )
-    if "total" in q and "revenue" in q and "12" in q:
+    if "total" in q and "claims" in q and "12" in q:
         return Intent(
-            id="l12m_revenue",
-            table="fact_sales",
+            id="l12m_claims",
+            table="fact_claims",
             chart="table",
-            answer="Total revenue over the last 52 weeks:",
+            answer="Total claims paid over the last 52 weeks:",
             sql=(
-                "SELECT SUM(sale.revenue_usd) AS total_revenue "
-                "FROM fact_sales AS sale "
-                "WHERE sale.date_id > (SELECT MAX(dt.date_id) FROM dim_date AS dt) - 52"
+                "SELECT SUM(c.claims_paid_usd) AS total_claims_paid "
+                "FROM fact_claims AS c "
+                "WHERE c.date_id > (SELECT MAX(dt.date_id) FROM dim_date AS dt) - 52"
             ),
         )
     return None

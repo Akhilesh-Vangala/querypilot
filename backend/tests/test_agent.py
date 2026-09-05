@@ -30,19 +30,19 @@ def test_compiler_sql_is_not_a_copy_of_the_gold_string():
 
 
 def test_stub_walks_the_tool_loop(db_session):
-    result = Planner(db_session, llm=StubLLM()).run("Revenue by family")
+    result = Planner(db_session, llm=StubLLM()).run("Claims paid by specialty")
     assert not result.refused
     assert result.attempts >= 1
 
 
 def test_drop_question_is_refused(db_session):
-    result = Planner(db_session, llm=StubLLM()).run("drop table fact_sales")
+    result = Planner(db_session, llm=StubLLM()).run("drop table fact_claims")
     assert result.refused
     assert result.rows == []
 
 
-def test_stub_answers_revenue_by_family(db_session):
-    result = Planner(db_session, llm=StubLLM()).run("Revenue by family")
+def test_stub_answers_claims_by_specialty(db_session):
+    result = Planner(db_session, llm=StubLLM()).run("Claims paid by specialty")
     assert not result.refused
     assert result.sql
     assert len(result.rows) >= 1

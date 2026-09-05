@@ -11,7 +11,7 @@ from .guardrails import GuardrailError
 from .llm import LLMClient, get_llm, parse_action
 from .tools import WarehouseTools
 
-SYSTEM_PROMPT = """You are QueryPilot, an analytics agent over a contact-lens and IOL manufacturing warehouse.
+SYSTEM_PROMPT = """You are QueryPilot, an analytics agent over a healthcare claims and provider-network warehouse.
 Reply with a single JSON object and no markdown.
 Either {"tool": "list_tables"|"describe_table"|"preview"|"run_sql", "args": {...}}
 or {"final": {"answer": str, "sql": str, "chart": "bar"|"line"|"table", "refused": bool}}.
