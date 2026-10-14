@@ -456,26 +456,21 @@ def test_filter_injection_is_only_a_literal_and_cannot_expand_scope(variant_fact
 
 def test_offline_report_recomputes_and_detects_altered_summary(db_session):
     import copy
-    import importlib.util
-    from pathlib import Path
+    from app.agent.evidence import verify_artifact
 
-    path = Path(__file__).resolve().parents[2] / "scripts" / "verify_report.py"
-    spec = importlib.util.spec_from_file_location("report_verifier", path)
-    verifier = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(verifier)
     result = AnalyticsWorkflow(db_session, StubLLM()).run(
         "What explains the change in claims paid between Q1 and Q2 2026?"
     )
     payload = {"format": "querypilot-report-v1", "run": {"result": result}}
-    assert verifier.verify_artifact(payload)["comparison_verified"]
+    assert verify_artifact(payload)["comparison_verified"]
     altered = copy.deepcopy(payload)
     altered["run"]["result"]["comparison"]["summary"]["change"] += 100
     with pytest.raises(ValueError, match="recomputed"):
-        verifier.verify_artifact(altered)
+        verify_artifact(altered)
     altered = copy.deepcopy(payload)
     altered["run"]["result"]["evidence"]["rows"][0][3] += 100
     with pytest.raises(ValueError, match="fingerprint"):
-        verifier.verify_artifact(altered)
+        verify_artifact(altered)
 
 
 def test_live_style_typed_action_uses_compiler_and_plan_metric_binding(db_session):
