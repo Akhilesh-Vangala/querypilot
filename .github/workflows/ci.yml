@@ -64,6 +64,7 @@ jobs:
         run: |
           docker compose stop worker
           python scripts/postgres_rehearsal.py
+          python scripts/comparison_benchmark.py
           docker compose start worker
       - run: python scripts/browser_smoke.py
       - name: API restart and persisted run smoke

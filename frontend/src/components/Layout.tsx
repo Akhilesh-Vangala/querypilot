@@ -19,6 +19,7 @@ export default function Layout() {
   const links = [
     ["/", "Overview"],
     ["/new", "New investigation"],
+    ["/compare", "Compare periods"],
     ["/history", "Investigations"],
     ["/metrics", "Metric catalog"],
     ["/schema", "Warehouse"],

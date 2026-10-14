@@ -2,6 +2,8 @@
 
 import argparse
 import json
+import subprocess
+import sys
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 
@@ -43,9 +45,40 @@ with sync_playwright() as p:
     page.get_by_role("button", name="Inspect record").wait_for()
     page.reload()
     page.get_by_role("button", name="Inspect record").wait_for()
+    page.get_by_role("link", name="Compare periods", exact=True).click()
+    page.get_by_role("heading", name="Understand what changed.").wait_for()
+    page.get_by_role("button", name="Investigate change").click()
+    page.get_by_role("heading", name="Contributions by specialty").wait_for(
+        timeout=60000
+    )
+    expect(page.locator(".contribution-row")).to_have_count(5)
+    expect(page.locator(".factor-grid > div")).to_have_count(3)
+    page.screenshot(path=str(output / "comparison.png"), full_page=True)
+    page.get_by_role("button", name="Verification", exact=True).click()
+    expect(page.locator(".check-row")).to_have_count(15)
+    assert "REVIEW" not in page.locator(".check-list").inner_text()
+    with page.expect_download() as download_info:
+        page.get_by_role("button", name="Export evidence JSON").click()
+    download_path = output / "comparison-export.json"
+    download_info.value.save_as(str(download_path))
+    exported = json.loads(download_path.read_text())
+    assert exported["format"] == "querypilot-report-v1"
+    assert exported["run"]["result"]["comparison"]["verified"]
+    assert exported["run"]["result"]["evidence"]["result_sha256"]
+    subprocess.run(
+        [sys.executable, "scripts/verify_report.py", str(download_path)], check=True
+    )
+    page.get_by_role("button", name="Result", exact=True).click()
     page.set_viewport_size({"width": 390, "height": 844})
     assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
     page.screenshot(path=str(output / "mobile.png"), full_page=True)
+    page.get_by_role("link", name="Compare periods", exact=True).click()
+    page.get_by_label("Comparison start", exact=True).fill("2027-04-01")
+    page.get_by_label("Comparison end · exclusive", exact=True).fill("2027-07-01")
+    page.get_by_role("button", name="Investigate change").click()
+    page.get_by_role("heading", name="Comparison withheld:").wait_for(timeout=60000)
+    assert page.locator(".comparison-totals").count() == 0
+    assert page.locator(".factor-grid").count() == 0
     page.get_by_role("link", name="Metric catalog").click()
     page.get_by_role("heading", name="Start with a definition.").wait_for()
     expect(page.locator(".metric-grid article")).to_have_count(5, timeout=15000)
@@ -62,6 +95,13 @@ report = json.dumps(
         "reload_history": True,
         "mobile_overflow": False,
         "metric_contracts": 5,
+        "compiled_comparison": True,
+        "contribution_segments": 5,
+        "shapley_factors": 3,
+        "deterministic_comparison_checks": 15,
+        "evidence_export": True,
+        "offline_report_recheck": True,
+        "future_period_withheld": True,
         "page_errors": errors,
         "paid_model_calls": 0,
     }

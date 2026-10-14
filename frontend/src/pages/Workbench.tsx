@@ -2,6 +2,11 @@ import { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api, Run, Metric, RuntimeConfig } from "../api";
 import BarChart from "../components/BarChart";
+import {
+  ComparisonSummary,
+  ComparisonChecks,
+  exportReport,
+} from "../components/ComparisonReport";
 export function Home() {
   const [runs, setRuns] = useState<Run[]>([]);
   const [config, setConfig] = useState<RuntimeConfig | null>(null);
@@ -80,6 +85,15 @@ export function Home() {
           )}
         </section>
         <section>
+          <Link className="card comparison-entry" to="/compare">
+            <div className="eyebrow">NEW / COMPARATIVE INVESTIGATIONS</div>
+            <h2>What explains the change?</h2>
+            <p>
+              Compare periods with executable metrics, reconciled contributions
+              and claims volume/mix/unit-cost accounting.
+            </p>
+            <strong>Investigate a change →</strong>
+          </Link>
           <div className="card feature-card">
             <div className="eyebrow">A TRACEABLE ANALYTICAL WORKFLOW</div>
             <h2>From intent to a checked result.</h2>
@@ -166,6 +180,14 @@ export function RunDetail() {
     );
   if (!run) return <div className="loading-page">Loading investigation…</div>;
   const result = run.result;
+  const comparison = result?.comparison;
+  const title = comparison
+    ? comparison.request.metric_id
+        .replaceAll("_", " ")
+        .replace(/^./, (c) => c.toUpperCase()) +
+      " change by " +
+      comparison.request.dimension
+    : run.question;
   const events = result?.events || run.events || [];
   return (
     <>
@@ -176,7 +198,7 @@ export function RunDetail() {
         <div className="section-heading">
           <div>
             <div className="eyebrow">INVESTIGATION / {run.id.slice(0, 8)}</div>
-            <h1>{run.question}</h1>
+            <h1>{title}</h1>
           </div>
           <span className="pill">{run.status.replaceAll("_", " ")}</span>
         </div>
@@ -184,6 +206,12 @@ export function RunDetail() {
           {result?.model_mode || run.mode} · Synthetic claims warehouse ·{" "}
           {new Date(run.created_at).toLocaleString()}
         </p>
+        {comparison && (
+          <details>
+            <summary>View original question</summary>
+            <p>{run.question}</p>
+          </details>
+        )}
       </div>
       <div className="run-layout">
         <section>
@@ -204,7 +232,7 @@ export function RunDetail() {
             <>
               <div className="stats compact">
                 <div>
-                  <span>Model rounds</span>
+                  <span>Agent rounds</span>
                   <strong>{result.rounds}</strong>
                 </div>
                 <div>
@@ -221,17 +249,24 @@ export function RunDetail() {
                 </div>
               </div>
               <div className="tabs">
-                {["result", "query", "plan"].map((t) => (
+                {[
+                  "result",
+                  "query",
+                  "plan",
+                  ...(result.comparison ? ["checks"] : []),
+                ].map((t) => (
                   <button
                     key={t}
                     className={tab === t ? "active" : ""}
                     onClick={() => setTab(t)}
                   >
-                    {t === "query"
-                      ? "Executed SQL"
-                      : t === "plan"
-                        ? "Plan + assumptions"
-                        : "Result"}
+                    {t === "checks"
+                      ? "Verification"
+                      : t === "query"
+                        ? "Executed SQL"
+                        : t === "plan"
+                          ? "Plan + assumptions"
+                          : "Result"}
                   </button>
                 ))}
               </div>
@@ -246,6 +281,9 @@ export function RunDetail() {
                           : "EXECUTED RESULT"}
                     </div>
                     <h2>{result.answer}</h2>
+                    {result.comparison && (
+                      <ComparisonSummary report={result.comparison} />
+                    )}
                     {result.validation?.possibly_truncated && (
                       <div className="callout">
                         The result reached the row limit. Treat this view as
@@ -286,6 +324,8 @@ export function RunDetail() {
                       </div>
                     )}
                   </>
+                ) : tab === "checks" && result.comparison ? (
+                  <ComparisonChecks report={result.comparison} />
                 ) : tab === "query" ? (
                   <>
                     <div className="section-heading">
@@ -348,6 +388,12 @@ export function RunDetail() {
                   <p className="muted">
                     {result.validation.semantic_guarantee}
                   </p>
+                  <button
+                    className="secondary"
+                    onClick={() => exportReport(run)}
+                  >
+                    Export evidence JSON ↓
+                  </button>
                 </div>
               )}
             </>
@@ -405,6 +451,10 @@ export function Metrics() {
               <strong>{m.table}</strong>
             </div>
             <pre>{m.expression}</pre>
+            <p className="muted">
+              Executable comparisons by {m.comparison_dimensions?.join(", ")} ·{" "}
+              {m.executable_version}
+            </p>
           </article>
         ))}
       </div>

@@ -1,5 +1,8 @@
 # QueryPilot handoff
 
+Active increment on `feat/semantic-investigations`: [executable comparison design](docs/SEMANTIC-INVESTIGATIONS.md). Five metric contracts now compile supported metric/dimension/filter/period scope into one read-only total/breakdown statement; explicit LangGraph compile/execute/verify/report nodes, weighted contributions and three-factor claims Shapley accounting with no causal claim. Local backend/data-variant and browser/Postgres checks pass; exact-head remote CI, protected merge and updated Vercel verification are pending. New comparison UI/export and `scripts/verify_report.py` retain/recompute evidence offline. Existing exploratory SQL keeps its narrower safety/execution guarantee. Do not interpret the historical delivery below as verification of this new increment.
+
+
 QueryPilot is published at [GitHub](https://github.com/Akhilesh-Vangala/querypilot) with the [interactive Vercel demo](https://querypilot-five.vercel.app). The user explicitly authorized improving this existing repository; the earlier no-existing-repository restriction remains for other repositories. Canonical local path: projects/applied-ai/querypilot. Original449398c history preserved.
 
 Implementation [PR1](https://github.com/Akhilesh-Vangala/querypilot/pull/1) merged after exact-head required checks and no administrator bypass. Verified implementation main45826c7fd53c13f016d7ac0fcf9b472f6cb66af1; [actual main CI38524748660](https://github.com/Akhilesh-Vangala/querypilot/actions/runs/38524748660) passes every required native/frontend/container job. A documentation-only delivery follow-up records this evidence; use git/GitHub for the latest documentation main. Read README, BRANCHING, PLAN and docs before further work.

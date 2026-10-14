@@ -36,6 +36,13 @@ def tool_definitions():
         }
 
     return [
+        {
+            "type": "function",
+            "name": "compare_metric",
+            "description": "Compare a reviewed metric across two explicit nonoverlapping half-open YYYY-MM-DD periods, by specialty, employer (name) or region (code) where supported. Application compiles SQL and verifies totals, weighted denominators, coverage and descriptive contributions; publishes report directly. Prefer this over run_sql for period comparisons. Unknown periods require clarification.",
+            "strict": True,
+            "parameters": comparison_schema(),
+        },
         definition(
             "list_tables", "List authorized relations and bounded metadata", {}, []
         ),
@@ -80,3 +87,9 @@ def tool_definitions():
             ["answer", "sql", "chart", "refused"],
         ),
     ]
+
+
+def comparison_schema():
+    from .semantic import ComparisonRequest
+
+    return ComparisonRequest.model_json_schema()

@@ -29,6 +29,10 @@ FORBIDDEN = (
     "INTO",
 )
 FUNCTIONS = {
+    # SQLGlot represents these ordinary boolean operators as Func nodes too.
+    "AND",
+    "OR",
+    "NOT",
     "SUM",
     "AVG",
     "COUNT",
