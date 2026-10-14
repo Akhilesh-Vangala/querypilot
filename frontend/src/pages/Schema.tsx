@@ -9,15 +9,19 @@ export default function Schema() {
     api
       .schema()
       .then((data) => setTables(data.tables))
-      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load schema"));
+      .catch((err) =>
+        setError(err instanceof Error ? err.message : "Failed to load schema"),
+      );
   }, []);
 
   return (
     <>
       <div className="card">
-        <h2>Warehouse schema</h2>
+        <div className="eyebrow">AUTHORIZED RELATIONS</div>
+        <h1>Explore the warehouse.</h1>
         <p className="muted" style={{ marginTop: 0 }}>
-          Star schema for healthcare claims and provider-network operations. Facts are weekly grain over 80 weeks.
+          Star schema for healthcare claims and provider-network operations.
+          Facts are weekly grain over 80 weeks.
         </p>
         {error ? <p className="error">{error}</p> : null}
       </div>
@@ -26,6 +30,7 @@ export default function Schema() {
           <h2>
             {table.name}{" "}
             <span className="muted" style={{ fontWeight: 400 }}>
+              {table.row_count_kind === "estimate" ? "≈ " : ""}
               {table.row_count.toLocaleString()} rows
             </span>
           </h2>

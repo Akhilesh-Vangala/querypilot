@@ -10,8 +10,12 @@ function isNumeric(value: unknown): value is number {
 export default function BarChart({ columns, rows }: Props) {
   if (rows.length === 0 || columns.length < 2) return null;
 
-  const labelIndex = columns.findIndex((_, i) => rows.some((row) => typeof row[i] === "string"));
-  const valueIndex = columns.findIndex((_, i) => rows.some((row) => isNumeric(row[i])));
+  const labelIndex = columns.findIndex((_, i) =>
+    rows.some((row) => typeof row[i] === "string"),
+  );
+  const valueIndex = columns.findIndex((_, i) =>
+    rows.some((row) => isNumeric(row[i])),
+  );
   if (labelIndex < 0 || valueIndex < 0) return null;
 
   const values = rows.map((row) => Math.abs(Number(row[valueIndex]) || 0));
@@ -29,7 +33,9 @@ export default function BarChart({ columns, rows }: Props) {
             <div className="bar-track">
               <div className="bar-fill" style={{ width: `${width}%` }} />
             </div>
-            <span className="mono">{Number.isInteger(value) ? value : value.toFixed(2)}</span>
+            <span className="mono">
+              {Number.isInteger(value) ? value : value.toFixed(2)}
+            </span>
           </div>
         );
       })}

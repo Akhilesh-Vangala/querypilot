@@ -1,129 +1,123 @@
-import { FormEvent, useState } from "react";
-import { api, AskResponse } from "../api";
-import BarChart from "../components/BarChart";
-
+import { FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { api, RuntimeConfig } from "../api";
 const EXAMPLES = [
-  "What is total claims paid last 12 months?",
   "Claims paid by specialty",
-  "Which region had the most referrals?",
   "Declined referral rate by specialty",
+  "Which region had the most referrals?",
+  "What is total claims paid last 12 months?",
   "Which employer groups had any closed panel weeks?",
   "Average care coordination cost per case by region and employer",
 ];
-
-function formatCell(value: unknown): string {
-  if (value === null || value === undefined) return "";
-  if (typeof value === "number") return Number.isInteger(value) ? String(value) : value.toFixed(4);
-  return String(value);
-}
-
 export default function Ask() {
-  const [question, setQuestion] = useState("Claims paid by specialty");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
-  const [result, setResult] = useState<AskResponse | null>(null);
-
-  async function submit(q: string) {
+  const navigate = useNavigate();
+  const [question, setQuestion] = useState("Claims paid by specialty"),
+    [mode, setMode] = useState("baseline"),
+    [busy, setBusy] = useState(false),
+    [error, setError] = useState(""),
+    [config, setConfig] = useState<RuntimeConfig | null>(null);
+  useEffect(() => {
+    api.config().then(setConfig);
+  }, []);
+  async function submit(event: FormEvent) {
+    event.preventDefault();
     setBusy(true);
     setError("");
     try {
-      setResult(await api.ask(q));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Ask failed");
-    } finally {
+      const run = await api.createAnalysis(question, mode);
+      navigate("/runs/" + run.id);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Investigation failed");
       setBusy(false);
     }
   }
-
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    void submit(question);
-  }
-
   return (
     <>
-      <div className="card">
-        <h2>Ask the warehouse</h2>
-        <p className="muted" style={{ marginTop: 0 }}>
-          Questions are planned as read-only SQL against the seeded claims star schema. Destructive
-          statements are refused before they reach the database.
+      <div className="page-heading">
+        <Link className="back-link" to="/">
+          ← Overview
+        </Link>
+        <div className="eyebrow">QUESTION TO EVIDENCE</div>
+        <h1>Start an investigation.</h1>
+        <p>
+          Define the metric and scope. Inspect the query and its evidence before
+          using the answer.
         </p>
-        <div className="chips">
-          {EXAMPLES.map((example) => (
-            <button
-              key={example}
-              type="button"
-              className="chip"
-              onClick={() => {
-                setQuestion(example);
-                void submit(example);
-              }}
-            >
-              {example}
-            </button>
-          ))}
-        </div>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="question">Question</label>
-          <textarea
-            id="question"
-            rows={3}
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            required
-          />
-          <div className="form-actions">
-            <button type="submit" disabled={busy}>
-              {busy ? "Running…" : "Run"}
-            </button>
-          </div>
-        </form>
-        {error ? <p className="error">{error}</p> : null}
       </div>
-
-      {result ? (
-        <div className="card">
-          {result.refused ? <div className="refused">{result.answer}</div> : <p className="answer">{result.answer}</p>}
-          {result.sql ? (
-            <>
-              <h2>SQL</h2>
-              <code className="sql-block">{result.sql}</code>
-              <p className="muted">Attempts: {result.attempts}</p>
-            </>
-          ) : null}
-          {result.chart === "bar" && result.rows.length > 0 ? (
-            <>
-              <h2>Chart</h2>
-              <BarChart columns={result.columns} rows={result.rows} />
-            </>
-          ) : null}
-          {result.columns.length > 0 ? (
-            <>
-              <h2>Result</h2>
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      {result.columns.map((col) => (
-                        <th key={col}>{col}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {result.rows.map((row, i) => (
-                      <tr key={i}>
-                        {row.map((cell, j) => (
-                          <td key={j}>{formatCell(cell)}</td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+      <div className="two-columns">
+        <section className="card">
+          <h2>Your analytical question</h2>
+          <form onSubmit={submit}>
+            <label htmlFor="question">Question</label>
+            <textarea
+              id="question"
+              rows={6}
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              required
+              maxLength={4000}
+            />
+            <div className="form-grid">
+              <div>
+                <label htmlFor="mode">Investigator</label>
+                <select
+                  id="mode"
+                  value={mode}
+                  onChange={(e) => setMode(e.target.value)}
+                >
+                  <option value="baseline">Guided development baseline</option>
+                  <option value="live" disabled={!config?.live_available}>
+                    Live model investigator
+                    {!config?.live_available ? " · not configured" : ""}
+                  </option>
+                </select>
               </div>
-            </>
-          ) : null}
-        </div>
-      ) : null}
+              <div className="small-note">
+                Read-only queries
+                <br />
+                Up to {config?.max_rows || 500} returned rows
+              </div>
+            </div>
+            {error && (
+              <p role="alert" className="error">
+                {error}
+              </p>
+            )}
+            <div className="form-actions">
+              <button disabled={busy}>
+                {busy ? "Creating investigation…" : "Investigate question ↗"}
+              </button>
+            </div>
+          </form>
+        </section>
+        <aside>
+          <div className="card">
+            <div className="eyebrow">START WITH A KNOWN METRIC</div>
+            <h2>Questions to explore</h2>
+            <div className="example-list">
+              {EXAMPLES.map((q) => (
+                <button
+                  className="example"
+                  key={q}
+                  onClick={() => setQuestion(q)}
+                >
+                  {q}
+                  <span>↗</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="card muted">
+            <h3>Useful scope</h3>
+            <p>
+              Include the time window, grouping and denominator. Separate
+              metrics have different grains; combining them requires a
+              deliberate join.
+            </p>
+            <Link to="/metrics">Review metric definitions →</Link>
+          </div>
+        </aside>
+      </div>
     </>
   );
 }
