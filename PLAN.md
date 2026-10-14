@@ -9,7 +9,8 @@
 - [x] Prepare hashed dependencies, non-root Docker/Compose, benchmark CLI and OTLP integration.
 - [x] Pass actual remote CI/container/restart checks on implementation head.
 - [ ] Merge the final protected PR and verify current-main CI.
-- [x] Verify the public Vercel browser journey, guarded SQL and browser-only history.
+- [x] Publish the public synthetic demo and verify guarded SQL/API privacy/live gate.
+- [ ] Verify the corrected published public browser journey including keyboard focus restoration.
 - [ ] Verify final current-main deployment after protected merge.
 - [ ] Configure a persistent cloud provider and monitored private staging.
 - [ ] Run live model regression/held-out quality and cost comparisons.

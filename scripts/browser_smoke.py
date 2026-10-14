@@ -37,9 +37,7 @@ with sync_playwright() as p:
     assert "result_sha256" in page.get_by_role("dialog").inner_text()
     page.keyboard.press("Escape")
     assert page.get_by_role("dialog").count() == 0
-    assert page.get_by_role("button", name="Inspect record").evaluate(
-        "el => document.activeElement === el"
-    )
+    expect(page.get_by_role("button", name="Inspect record")).to_be_focused()
     page.get_by_role("link", name="Investigations", exact=True).first.click()
     page.get_by_role("link", name="Claims paid by specialty").first.click()
     page.get_by_role("button", name="Inspect record").wait_for()

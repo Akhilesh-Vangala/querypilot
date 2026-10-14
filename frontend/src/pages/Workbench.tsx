@@ -133,6 +133,7 @@ export function RunDetail() {
     [error, setError] = useState("");
   const [tab, setTab] = useState("result");
   const [drawer, setDrawer] = useState(false);
+  const drawerLauncher = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     let active = true;
     let timer: number | undefined;
@@ -338,6 +339,7 @@ export function RunDetail() {
                     </div>
                     <button
                       className="secondary"
+                      ref={drawerLauncher}
                       onClick={() => setDrawer(true)}
                     >
                       Inspect record
@@ -367,7 +369,11 @@ export function RunDetail() {
         </aside>
       </div>
       {drawer && (
-        <ProvenanceDrawer result={result} close={() => setDrawer(false)} />
+        <ProvenanceDrawer
+          result={result}
+          returnFocus={drawerLauncher.current}
+          close={() => setDrawer(false)}
+        />
       )}
     </>
   );
@@ -451,15 +457,20 @@ export function SettingsPage() {
 function ProvenanceDrawer({
   result,
   close,
+  returnFocus,
 }: {
   result: Run["result"];
   close: () => void;
+  returnFocus: HTMLButtonElement | null;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const dialog = ref.current;
     dialog?.showModal();
-    return () => dialog?.close();
+    return () => {
+      dialog?.close();
+      returnFocus?.focus();
+    };
   }, []);
   return (
     <dialog
