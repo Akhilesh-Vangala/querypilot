@@ -1,5 +1,23 @@
 # Verified delivery evidence
 
+## Executable comparison increment — October 14, 2026
+
+[PR14](https://github.com/Akhilesh-Vangala/querypilot/pull/14) merged after exact-head [CI38655793257](https://github.com/Akhilesh-Vangala/querypilot/actions/runs/38655793257) passed all three required jobs. Tested headb034df3 and implementation main d68e7e4 have identical trees. Original449398c ancestry is preserved. Implementation-main [CI38656156145](https://github.com/Akhilesh-Vangala/querypilot/actions/runs/38656156145) passes all three required jobs and provides the separate main-branch record. Actual public deploymentdpl_3mNtjeuAS3pG5fpgPBvKSuufD4kJ matches its successful Vercel commit status; public Chromium and offline recalculation pass.
+
+| Check | Actual scoped evidence |
+| --- | --- |
+| Native and actual container suites |137distinct tests in each environment; do not sum into274unique tests |
+| Independent data variants | All5metric families ×2supported dimensions ×3uneven distributions, plus filter/coverage/zero/invalid/Simpson/Shapley/tampering checks |
+| Real PostgreSQL queue |4claimants complete12legacy +10compiled comparison cases in two batches, preserving16active admission cap |
+| Independent comparison SQL |10/10reviewed comparison regressions pass across5metric families |
+| Database authority/recovery |3role denials,executable custom-function startup denial,owner isolation,idempotency,lease fencing andAPIrestart/history pass |
+| Actual Chromium |5segments,3claims factors,15deterministic checks,export/offline recomputation,future-period withholding,reload/keyboard/mobile,noJSerrors |
+| Public Vercel |Actual comparison browser journey and downloaded report offline recheck pass; forced synthetic guided mode |
+
+Downloaded actual `backend-evidence` and `container-evidence` artifacts contain JUnit, Postgres/comparison benchmark/browser/restart JSON, a real exported synthetic report and screenshots. The README comparison capture is actual public Vercel execution. The benchmark is reviewed known-case regression, not held-out live-model understanding. No provider requests were made. The offline fingerprint covers typed request/raw aggregate evidence and recomputes the comparison object; it does not authenticate source or certify natural-language intent, display text or unrelated export metadata.
+
+## Prior analytics workbench delivery
+
 Date: October 14, 2026. Scoped release: an interactive synthetic demo and verified persistent runtime foundations. Customer production/live quality gates remain open.
 
 | Evidence | Actual source |
