@@ -12,7 +12,11 @@ export default function EvalPage() {
     try {
       setReport(await api.evalRun());
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Eval failed (admin role required)");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Eval failed (admin role required)",
+      );
     } finally {
       setBusy(false);
     }
@@ -20,11 +24,15 @@ export default function EvalPage() {
 
   return (
     <div className="card">
-      <h2>Golden eval</h2>
+      <div className="eyebrow">DETERMINISTIC DEVELOPMENT COMPARATOR</div>
+      <h1>Known-case regression.</h1>
       <p className="muted">
-        Runs the 12-question harness and scores <em>execution accuracy</em>: predicted SQL and gold SQL
-        must return the same result set, not the same tokens. With no API key the predicted SQL comes
-        from the intent compiler, which is written separately from the gold file.
+        Runs the 12-question harness and scores <em>execution accuracy</em>:
+        predicted SQL and gold SQL must return the same result set, not the same
+        tokens. This page always uses the guided baseline; no model calls are
+        made. Predicted SQL comes from the intent compiler, which is written
+        separately from the gold file. This score is not live-model or held-out
+        accuracy.
       </p>
       <div className="form-actions">
         <button type="button" onClick={() => void run()} disabled={busy}>

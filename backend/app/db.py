@@ -32,6 +32,11 @@ def _make_engine(url: str) -> Engine:
 
 _settings = get_settings()
 engine = _make_engine(_settings.database_url)
+warehouse_engine = (
+    _make_engine(_settings.warehouse_database_url)
+    if _settings.warehouse_database_url
+    else None
+)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 
 

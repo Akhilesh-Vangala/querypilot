@@ -1,44 +1,67 @@
 import { useEffect, useState } from "react";
-import { api, HistoryItem } from "../api";
-
+import { Link } from "react-router-dom";
+import { api, Run } from "../api";
 export default function History() {
-  const [items, setItems] = useState<HistoryItem[]>([]);
-  const [error, setError] = useState("");
-
+  const [items, setItems] = useState<Run[]>([]),
+    [error, setError] = useState(""),
+    [filter, setFilter] = useState("");
   useEffect(() => {
     api
-      .history()
+      .analyses()
       .then(setItems)
-      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load history"));
+      .catch((e) => setError(e.message));
   }, []);
-
+  const rows = items.filter((r) =>
+    r.question.toLowerCase().includes(filter.toLowerCase()),
+  );
   return (
-    <div className="card">
-      <h2>Recent questions</h2>
-      {error ? <p className="error">{error}</p> : null}
-      {items.length === 0 && !error ? <p className="muted">No questions yet.</p> : null}
-      <div className="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>When</th>
-              <th>Question</th>
-              <th>Refused</th>
-              <th>Answer</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => (
-              <tr key={item.id}>
-                <td className="muted">{new Date(item.created_at).toLocaleString()}</td>
-                <td>{item.question}</td>
-                <td>{item.refused ? "yes" : "no"}</td>
-                <td>{item.answer}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+    <>
+      <div className="page-heading">
+        <div className="eyebrow">YOUR ANALYTICAL RECORDS</div>
+        <div className="section-heading">
+          <div>
+            <h1>Investigations.</h1>
+            <p>
+              Open an executed query, its plan, and the evidence behind the
+              answer.
+            </p>
+          </div>
+          <Link className="button" to="/new">
+            New investigation ↗
+          </Link>
+        </div>
       </div>
-    </div>
+      <div className="card">
+        <label htmlFor="search">Find a question</label>
+        <input
+          id="search"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          placeholder="Search investigations…"
+        />
+        {error && (
+          <p role="alert" className="error">
+            {error}
+          </p>
+        )}
+        {rows.map((r) => (
+          <Link className="run-row" to={"/runs/" + r.id} key={r.id}>
+            <div>
+              <strong>{r.question}</strong>
+              <small>
+                {r.mode} · {new Date(r.created_at).toLocaleString()}
+              </small>
+            </div>
+            <span className="pill">{r.status.replaceAll("_", " ")}</span>
+          </Link>
+        ))}
+        {rows.length === 0 && !error && (
+          <div className="empty-state">
+            <h3>No matching investigations.</h3>
+            <Link to="/new">Ask your next question →</Link>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

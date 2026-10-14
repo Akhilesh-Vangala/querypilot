@@ -24,7 +24,13 @@ N_WEEKS = 80
 WEEK_START = date(2025, 1, 6)
 RNG_SEED = 42
 
-SPECIALTIES = ("Primary Care", "Cardiology", "Orthopedic Surgery", "Endocrinology", "Oncology")
+SPECIALTIES = (
+    "Primary Care",
+    "Cardiology",
+    "Orthopedic Surgery",
+    "Endocrinology",
+    "Oncology",
+)
 
 # Specialty-level decline rate is fixed so Orthopedic Surgery remains the
 # worst even after per-row noise -- referrals to ortho surgeons are
@@ -153,11 +159,22 @@ def seed_warehouse(session: Session) -> None:
         )
     session.add_all(dates)
     session.add_all(
-        [DimProvider(provider_id=i, npi=n, specialty=s, group_name=g) for i, n, s, g in PROVIDERS]
+        [
+            DimProvider(provider_id=i, npi=n, specialty=s, group_name=g)
+            for i, n, s, g in PROVIDERS
+        ]
     )
-    session.add_all([DimRegion(region_id=i, region_code=c, name=n, country=co) for i, c, n, co in REGIONS])
     session.add_all(
-        [DimEmployerGroup(employer_id=i, employer_code=c, name=n, industry=ind) for i, c, n, ind in EMPLOYER_GROUPS]
+        [
+            DimRegion(region_id=i, region_code=c, name=n, country=co)
+            for i, c, n, co in REGIONS
+        ]
+    )
+    session.add_all(
+        [
+            DimEmployerGroup(employer_id=i, employer_code=c, name=n, industry=ind)
+            for i, c, n, ind in EMPLOYER_GROUPS
+        ]
     )
     session.flush()
 
@@ -166,7 +183,9 @@ def seed_warehouse(session: Session) -> None:
     capacity: list[FactNetworkCapacity] = []
     coordination: list[FactCareCoordination] = []
 
-    closed_panel_by_employer: dict[int, int] = {employer_id: 0 for employer_id, *_ in EMPLOYER_GROUPS}
+    closed_panel_by_employer: dict[int, int] = {
+        employer_id: 0 for employer_id, *_ in EMPLOYER_GROUPS
+    }
 
     for date_id in range(1, N_WEEKS + 1):
         d = WEEK_START + timedelta(weeks=date_id - 1)
@@ -210,7 +229,9 @@ def seed_warehouse(session: Session) -> None:
 
             for employer_id, *_ in EMPLOYER_GROUPS:
                 employer_share = {1: 0.48, 2: 0.32, 3: 0.20}[employer_id]
-                claim_count = int(base * 0.92 * season * employer_share * rng.uniform(0.9, 1.1))
+                claim_count = int(
+                    base * 0.92 * season * employer_share * rng.uniform(0.9, 1.1)
+                )
                 avg_cost = AVG_CLAIM_USD[specialty] * rng.uniform(0.97, 1.03)
                 claims.append(
                     FactClaims(
@@ -242,8 +263,15 @@ def seed_warehouse(session: Session) -> None:
 
         for region_id, *_ in REGIONS:
             for employer_id, *_ in EMPLOYER_GROUPS:
-                case_volume = int(18000 * rng.uniform(0.7, 1.3) * season * (1.2 if region_id == 1 else 0.9))
-                rate = COORDINATION_COST_PER_CASE[(region_id, employer_id)] * rng.uniform(0.95, 1.05)
+                case_volume = int(
+                    18000
+                    * rng.uniform(0.7, 1.3)
+                    * season
+                    * (1.2 if region_id == 1 else 0.9)
+                )
+                rate = COORDINATION_COST_PER_CASE[
+                    (region_id, employer_id)
+                ] * rng.uniform(0.95, 1.05)
                 coordination.append(
                     FactCareCoordination(
                         date_id=date_id,

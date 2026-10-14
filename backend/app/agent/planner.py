@@ -53,7 +53,9 @@ class Planner:
         if name == "describe_table":
             return self.tools.describe_table(str(args.get("name", "")))
         if name == "preview":
-            return self.tools.preview(str(args.get("name", "")), int(args.get("limit", 5)))
+            return self.tools.preview(
+                str(args.get("name", "")), int(args.get("limit", 5))
+            )
         if name == "run_sql":
             raise GuardrailError("run_sql must go through the guarded execute path")
         raise GuardrailError(f"unknown tool '{name}'")
@@ -126,7 +128,12 @@ class Planner:
                                 refused=False,
                             )
                         messages.append({"role": "assistant", "content": raw})
-                        messages.append({"role": "user", "content": f"SQL error: {exc}. Retry with corrected SQL."})
+                        messages.append(
+                            {
+                                "role": "user",
+                                "content": f"SQL error: {exc}. Retry with corrected SQL.",
+                            }
+                        )
                         continue
                     messages.append({"role": "assistant", "content": raw})
                     messages.append(
@@ -137,7 +144,9 @@ class Planner:
                     )
                     continue
                 try:
-                    result = self._dispatch(name, args if isinstance(args, dict) else {})
+                    result = self._dispatch(
+                        name, args if isinstance(args, dict) else {}
+                    )
                 except GuardrailError as exc:
                     messages.append({"role": "assistant", "content": raw})
                     messages.append({"role": "user", "content": f"SQL error: {exc}"})
@@ -182,7 +191,12 @@ class Planner:
                         refused=False,
                     )
                 messages.append({"role": "assistant", "content": raw})
-                messages.append({"role": "user", "content": f"SQL error: {exc}. Retry with corrected SQL."})
+                messages.append(
+                    {
+                        "role": "user",
+                        "content": f"SQL error: {exc}. Retry with corrected SQL.",
+                    }
+                )
                 continue
             return AgentResult(
                 answer=self._summarize(columns, rows, str(final.get("answer") or "")),

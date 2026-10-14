@@ -1,0 +1,11 @@
+.tools
+.env
+.env.*
+!.env.example
+!.env.production.example
+artifacts
+backend/tests
+backend/.pytest_cache
+**/__pycache__
+frontend/node_modules
+.git

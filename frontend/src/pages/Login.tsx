@@ -1,82 +1,120 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api, login } from "../api";
-
-const DEMO_ACCOUNTS = [
-  { label: "Analyst demo", email: "analyst@querypilot.example.com", password: "analyst-password" },
-  { label: "Admin demo", email: "admin@querypilot.example.com", password: "admin-password" },
-];
-
+import { api, login, RuntimeConfig } from "../api";
 export default function Login() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
-  async function finish(token: string) {
-    localStorage.setItem("token", token);
-    const me = await api.me();
-    localStorage.setItem("role", me.role);
-    navigate("/");
-  }
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  const [email, setEmail] = useState(""),
+    [password, setPassword] = useState(""),
+    [error, setError] = useState(""),
+    [busy, setBusy] = useState(false),
+    [config, setConfig] = useState<RuntimeConfig | null>(null);
+  useEffect(() => {
+    api.config().then(setConfig);
+  }, []);
+  async function signIn(e: string, p: string) {
+    setBusy(true);
     setError("");
     try {
-      await finish(await login(email, password));
-    } catch {
-      setError("Invalid email or password.");
+      await login(e, p);
+      await api.me();
+      navigate("/");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign-in failed");
+      setBusy(false);
     }
   }
-
-  async function demoLogin(demoEmail: string, demoPassword: string) {
-    setError("");
-    try {
-      await finish(await login(demoEmail, demoPassword));
-    } catch {
-      setError("Demo login failed. Is the API running?");
-    }
+  function submit(event: FormEvent) {
+    event.preventDefault();
+    void signIn(email, password);
   }
-
   return (
     <div className="login-page">
-      <div className="card login-card">
-        <h1>QueryPilot</h1>
-        <p className="muted" style={{ marginTop: 0 }}>
-          Natural-language analytics over a healthcare claims warehouse
+      <section className="login-story">
+        <div className="brand">
+          <span className="brand-mark">Q</span>QueryPilot
+        </div>
+        <div className="eyebrow">ANALYTICAL QUESTIONS. EXECUTED EVIDENCE.</div>
+        <h1>
+          Clarity starts
+          <br />
+          with the right
+          <br />
+          question.
+        </h1>
+        <p>
+          Explore claims and provider-network operations through a traceable
+          analytical workflow.
         </p>
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: "1rem" }}>
-            <label htmlFor="email">Email</label>
-            <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          </div>
-          <div style={{ marginBottom: "1rem" }}>
+        <div className="login-footer">
+          Read-only analysis · Reviewed metric definitions · Query provenance
+        </div>
+      </section>
+      <section className="login-panel">
+        <div className="login-card">
+          <div className="eyebrow">YOUR ANALYTICS WORKSPACE</div>
+          <h2>Welcome to QueryPilot.</h2>
+          <p className="muted">
+            Sign in to inspect your data and investigations.
+          </p>
+          <form onSubmit={submit}>
+            <label htmlFor="email">Email address</label>
+            <input
+              id="email"
+              type="email"
+              autoComplete="username"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
             <label htmlFor="password">Password</label>
             <input
               id="password"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-          </div>
-          {error ? <p className="error">{error}</p> : null}
-          <button type="submit" style={{ width: "100%" }}>
-            Sign in
-          </button>
-        </form>
-        <div className="demo-buttons">
-          <span className="muted" style={{ fontSize: "0.85rem" }}>
-            Demo accounts
-          </span>
-          {DEMO_ACCOUNTS.map((acct) => (
-            <button key={acct.email} type="button" className="secondary" onClick={() => demoLogin(acct.email, acct.password)}>
-              {acct.label}
+            {error && (
+              <p role="alert" className="error">
+                {error}
+              </p>
+            )}
+            <button disabled={busy}>
+              {busy ? "Opening workspace…" : "Sign in ↗"}
             </button>
-          ))}
+          </form>
+          {config?.demo_accounts && (
+            <div className="demo-buttons">
+              <span className="eyebrow">EXPLORE SYNTHETIC DATA</span>
+              <button
+                className="secondary"
+                disabled={busy}
+                onClick={() =>
+                  void signIn(
+                    "analyst@querypilot.example.com",
+                    "analyst-password",
+                  )
+                }
+              >
+                Open analyst demo →
+              </button>
+              <button
+                className="secondary"
+                disabled={busy}
+                onClick={() =>
+                  void signIn("admin@querypilot.example.com", "admin-password")
+                }
+              >
+                Open evaluation demo →
+              </button>
+              <p className="small-note">
+                Guided baseline. No live model request or customer data.
+              </p>
+            </div>
+          )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

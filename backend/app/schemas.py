@@ -1,6 +1,7 @@
 from datetime import datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Literal
 
 
 class TokenOut(BaseModel):
@@ -15,6 +16,7 @@ class UserOut(BaseModel):
 
 
 class AskRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     question: str = Field(min_length=1, max_length=4000)
 
 
@@ -45,6 +47,7 @@ class ColumnInfo(BaseModel):
 class TableInfo(BaseModel):
     name: str
     row_count: int
+    row_count_kind: str = "exact"
     columns: list[ColumnInfo]
 
 
@@ -66,3 +69,7 @@ class EvalReportOut(BaseModel):
     n: int
     passed: int
     results: list[EvalCaseResult]
+
+
+class AnalysisRequest(AskRequest):
+    mode: Literal["baseline", "live"] = "baseline"

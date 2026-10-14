@@ -30,7 +30,9 @@ class GoldenCase:
             return "drop" in normalized and "table" in normalized
         if normalized == normalize_question(self.question):
             return True
-        return bool(self.keywords) and all(token in normalized for token in self.keywords)
+        return bool(self.keywords) and all(
+            token in normalized for token in self.keywords
+        )
 
 
 GOLDEN: tuple[GoldenCase, ...] = (
@@ -224,7 +226,9 @@ def coerce_cell(value: Any) -> Any:
         return str(value)
 
 
-def results_match(left: list[list[Any]], right: list[list[Any]], tol: float = 1e-4) -> bool:
+def results_match(
+    left: list[list[Any]], right: list[list[Any]], tol: float = 1e-4
+) -> bool:
     if len(left) != len(right):
         return False
 
