@@ -25,6 +25,50 @@ export interface Metric {
   grain: string;
   expression: string;
   definition: string;
+  comparison_dimensions: string[];
+  executable_version: string;
+}
+export interface ComparisonReport {
+  version: string;
+  verified: boolean;
+  request: {
+    metric_id: string;
+    dimension: string;
+    baseline: { start: string; end: string };
+    comparison: { start: string; end: string };
+    filters: { dimension: string; value: string }[];
+  };
+  checks: { name: string; passed: boolean; detail: string }[];
+  summary: {
+    baseline: number;
+    comparison: number;
+    change: number;
+    relative_change: number | null;
+    residual: number;
+    unit: string;
+  } | null;
+  segments: {
+    segment: string;
+    baseline: number | null;
+    comparison: number | null;
+    contribution: number;
+    share_of_change: number | null;
+  }[];
+  attribution: {
+    available: boolean;
+    reason?: string;
+    method?: string;
+    volume?: number;
+    mix?: number;
+    unit_cost?: number;
+    residual?: number;
+  } | null;
+  source: {
+    transaction: string;
+    resolution: string;
+    warehouse_latest: string | null;
+  };
+  limitations: string[];
 }
 export interface Event {
   sequence: number;
@@ -35,6 +79,14 @@ export interface Event {
   [key: string]: unknown;
 }
 export interface AnalysisResult {
+  comparison?: ComparisonReport;
+  evidence?: {
+    version: string;
+    request: ComparisonReport["request"];
+    columns: string[];
+    rows: unknown[][];
+    result_sha256: string;
+  };
   answer: string;
   sql: string;
   chart: string;
@@ -162,7 +214,11 @@ export const api = {
     return value;
   },
   me: () => request<UserMe>("/api/auth/me"),
-  logout: async () => { const result = await request("/api/auth/logout", { method: "POST" }); sessionStorage.removeItem("querypilot-demo-runs"); return result; },
+  logout: async () => {
+    const result = await request("/api/auth/logout", { method: "POST" });
+    sessionStorage.removeItem("querypilot-demo-runs");
+    return result;
+  },
   metrics: () =>
     request<{ metrics: Metric[]; contract: Record<string, string> }>(
       "/api/metrics",

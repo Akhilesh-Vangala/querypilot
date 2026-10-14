@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { api, RuntimeConfig } from "../api";
 const EXAMPLES = [
+  "What explains the change in claims paid between Q1 and Q2 2026?",
   "Claims paid by specialty",
   "Declined referral rate by specialty",
   "Which region had the most referrals?",
@@ -91,6 +92,14 @@ export default function Ask() {
           </form>
         </section>
         <aside>
+          <Link className="card comparison-entry" to="/compare">
+            <div className="eyebrow">EXECUTABLE COMPARISONS</div>
+            <h3>Investigate what changed →</h3>
+            <p>
+              Choose dates and a reviewed metric. Inspect reconciled
+              contributions and verification checks.
+            </p>
+          </Link>
           <div className="card">
             <div className="eyebrow">START WITH A KNOWN METRIC</div>
             <h2>Questions to explore</h2>

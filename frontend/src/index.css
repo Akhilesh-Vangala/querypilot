@@ -859,3 +859,113 @@ dialog.drawer {
 dialog.drawer::backdrop {
   background: rgba(0, 0, 0, 0.48);
 }
+
+.comparison-entry {
+  display: block;
+  border-color: #555;
+}
+.comparison-entry:hover {
+  background: #181818;
+}
+fieldset {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin: 22px 0;
+  padding: 16px;
+  min-width: 0;
+}
+legend {
+  padding: 0 8px;
+  color: #bbb;
+  font-size: 13px;
+}
+.comparison-report {
+  border-block: 1px solid var(--border);
+  padding-block: 22px;
+  margin-block: 24px;
+}
+.comparison-totals strong {
+  font-size: clamp(15px, 1.5vw, 23px);
+  overflow-wrap: anywhere;
+}
+.contribution-row {
+  padding-block: 12px;
+}
+.contribution-track {
+  height: 6px;
+  background: #252525;
+  margin-top: 10px;
+}
+.contribution-track > div {
+  height: 100%;
+  min-width: 1px;
+}
+.contribution-track .positive {
+  background: #e8e8e8;
+}
+.contribution-track .negative {
+  background: repeating-linear-gradient(
+    135deg,
+    #999,
+    #999 3px,
+    #333 3px,
+    #333 6px
+  );
+}
+.contribution-row .section-heading {
+  margin: 0;
+  gap: 12px;
+  font-size: 13px;
+}
+.factor-section {
+  margin-top: 30px;
+}
+.factor-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.factor-grid > div {
+  border: 1px solid var(--border);
+  padding: 16px;
+  min-width: 0;
+}
+.factor-grid span {
+  display: block;
+  text-transform: capitalize;
+  color: var(--muted);
+  font-size: 12px;
+}
+.factor-grid strong {
+  display: block;
+  font-size: 15px;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+.check-row {
+  display: flex;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.check-row strong {
+  font-size: 13px;
+  text-transform: capitalize;
+}
+.check-row p {
+  margin-bottom: 0;
+  font-size: 12px;
+}
+@media (max-width: 700px) {
+  .factor-grid {
+    grid-template-columns: 1fr;
+  }
+  .comparison-totals strong {
+    font-size: 17px;
+  }
+  .contribution-row .section-heading {
+    flex-wrap: wrap;
+  }
+}

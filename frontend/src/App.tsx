@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Layout from "./components/Layout";
 import Ask from "./pages/Ask";
+import Compare from "./pages/Compare";
 import EvalPage from "./pages/EvalPage";
 import History from "./pages/History";
 import Login from "./pages/Login";
@@ -51,6 +52,7 @@ export default function App() {
         >
           <Route index element={<Home />} />
           <Route path="new" element={<Ask />} />
+          <Route path="compare" element={<Compare />} />
           <Route path="runs/:id" element={<RunDetail />} />
           <Route path="history" element={<History />} />
           <Route path="schema" element={<Schema />} />
