@@ -15,3 +15,17 @@
 - [ ] Configure a persistent cloud provider and monitored private staging.
 - [ ] Run live model regression/held-out quality and cost comparisons.
 - [ ] Complete customer-release gates in docs/DEPLOYMENT.md.
+
+## Executable metric comparison increment — October 14
+
+- [x] Strict five-metric contracts with compatible dimensions, exact filters and explicit half-open periods.
+- [x] Compile/execute/reconcile/report LangGraph subworkflow and native provider call-ID results.
+- [x] One-statement total/breakdown evidence, weighted contribution accounting and three-factor claims Shapley accounting.
+- [x] Independent unequal-data oracles and coverage/denominator/tampering/Simpson failure cases.
+- [x] Monochrome comparison page, verification tab and export with offline recheck.
+- [x] Native PostgreSQL four-claimant rehearsal: 12 legacy + 10 comparison cases in bounded batches.
+- [x] Local Chromium comparison/export/withholding journey and frontend build/audit.
+- [ ] Pass exact-head required remote native/frontend/container CI and protected merge.
+- [ ] Verify new current-main CI, public Vercel comparison/export and main-bound deployment.
+
+This increment does not complete live-model quality, monitored persistent cloud staging or actual-user pilot gates.

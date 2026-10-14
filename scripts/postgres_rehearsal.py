@@ -17,6 +17,7 @@ from app.worker import process_one
 from app.production_checks import verify_warehouse_role
 from app.agent.tools import WarehouseTools
 from app.eval.golden import GOLDEN, results_match
+from app.eval.comparisons import comparison_cases, evaluate_comparison
 
 verify_warehouse_role(db.warehouse_engine)
 assert db.engine.dialect.name == "postgresql"
@@ -59,16 +60,29 @@ assert (
     repo.admit(analyst, GOLDEN[0].question, namespace + "-" + GOLDEN[0].id)["id"]
     == runs[0]["id"]
 )
+
+
+def work(_):
+    count = 0
+    while process_one(RunRepository(db.engine)):
+        count += 1
+    return count
+
+
+# Preserve admission's 16-active-run cap: two bounded batches, four claimants.
 with ThreadPoolExecutor(max_workers=4) as pool:
-
-    def work(_):
-        count = 0
-        while process_one(RunRepository(db.engine)):
-            count += 1
-        return count
-
-    workers = list(pool.map(work, range(4)))
-assert sum(workers) == len(runs)
+    first_batch = list(pool.map(work, range(4)))
+assert sum(first_batch) == len(runs)
+comparisons = comparison_cases()
+comparison_runs = [
+    repo.admit(analyst, case.question, namespace + "-" + case.id)
+    for case in comparisons
+]
+with ThreadPoolExecutor(max_workers=4) as pool:
+    second_batch = list(pool.map(work, range(4)))
+assert sum(second_batch) == len(comparison_runs)
+workers = [a + b for a, b in zip(first_batch, second_batch)]
+assert sum(workers) == len(runs) + len(comparison_runs)
 passed = 0
 with Session(db.engine) as session:
     tools = WarehouseTools(session)
@@ -82,6 +96,9 @@ with Session(db.engine) as session:
             assert results_match(expected, result["rows"]), case.id
         assert result["framework"] == "LangGraph"
         passed += 1
+    for run, case in zip(comparison_runs, comparisons):
+        result = repo.get(run["id"], analyst)["result"]
+        assert result is not None and evaluate_comparison(result, case, tools), case.id
     try:
         tools.run_sql("SELECT missing_column FROM fact_claims")
     except Exception:
@@ -124,6 +141,7 @@ assert repo.get(run["id"], analyst)["status"] == "interrupted"
 report = {
     "database": "PostgreSQL",
     "baseline_cases": passed,
+    "compiled_comparison_cases": len(comparison_runs),
     "workers": 4,
     "worker_claims": workers,
     "database_role_denials": 3,

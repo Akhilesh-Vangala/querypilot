@@ -1,5 +1,7 @@
 # Evidence-backed analytical investigations
 
+New executable metric comparisons: [full design](SEMANTIC-INVESTIGATIONS.md). The `compare_metric` action routes into an owned compile/execute/reconcile/report subgraph; exploratory SQL retains the narrower execution-only guarantee. Both guided and live investigator selection use this same application-owned authority.
+
 QueryPilot helps a claims/network operations analyst answer questions that span a warehouse: which specialties dominate spend, where referrals decline, whether provider panels are closed, and how coordination cost varies. The difficult part is preserving metric meaning while allowing flexible questions. Units, grain, denominators, time anchors and completeness must remain inspectable.
 
 The new workbench owns the policy and execution loop. LangGraph orchestrates model actions; an application-owned executor validates each action and controls database access. The model can propose analytical SQL, inspect approved schemas/previews, declare a public plan and request a result. It cannot add tools, change the warehouse scope, read application identities, remove bounds or write data. Answer numbers come from executed rows rather than unverified model prose.
