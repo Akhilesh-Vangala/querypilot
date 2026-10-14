@@ -67,7 +67,7 @@ services:
       context: ./backend
       target: test
     environment:
-      DATABASE_URL: sqlite:///:memory:
+      DATABASE_URL: "sqlite:///:memory:"
       JWT_SECRET: isolated-container-test-secret-000000000000000000000000000
 volumes:
   pgdata:
