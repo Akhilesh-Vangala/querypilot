@@ -16,9 +16,14 @@
 
 Claims spend, declined referrals, provider capacity and coordination costs have different grains and denominators. A plausible query can double-count spend or average the wrong rate. Analysts need a faster route to an answer with inspectable metric assumptions, SQL, completeness and evidence. QueryPilot supplies that workflow over an explicitly synthetic healthcare operations warehouse.
 
+<details>
+<summary>Explore the original analytical investigation</summary>
+
 <img src="docs/assets/investigation.png" alt="Actual QueryPilot investigation showing specialty results, SQL and plan tabs, public workflow events and execution provenance. Synthetic data, deterministic investigator." width="100%" />
 
 *Actual application capture. Guided deterministic investigator; no live model request or customer data.*
+
+</details>
 
 ## Investigate what changed
 

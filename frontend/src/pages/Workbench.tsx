@@ -180,6 +180,14 @@ export function RunDetail() {
     );
   if (!run) return <div className="loading-page">Loading investigation…</div>;
   const result = run.result;
+  const comparison = result?.comparison;
+  const title = comparison
+    ? comparison.request.metric_id
+        .replaceAll("_", " ")
+        .replace(/^./, (c) => c.toUpperCase()) +
+      " change by " +
+      comparison.request.dimension
+    : run.question;
   const events = result?.events || run.events || [];
   return (
     <>
@@ -190,7 +198,7 @@ export function RunDetail() {
         <div className="section-heading">
           <div>
             <div className="eyebrow">INVESTIGATION / {run.id.slice(0, 8)}</div>
-            <h1>{run.question}</h1>
+            <h1>{title}</h1>
           </div>
           <span className="pill">{run.status.replaceAll("_", " ")}</span>
         </div>
@@ -198,6 +206,12 @@ export function RunDetail() {
           {result?.model_mode || run.mode} · Synthetic claims warehouse ·{" "}
           {new Date(run.created_at).toLocaleString()}
         </p>
+        {comparison && (
+          <details>
+            <summary>View original question</summary>
+            <p>{run.question}</p>
+          </details>
+        )}
       </div>
       <div className="run-layout">
         <section>

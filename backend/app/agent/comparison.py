@@ -3,7 +3,7 @@
 from typing import TypedDict
 from langgraph.graph import StateGraph, START, END
 
-from .catalog import CONTRACT
+from .catalog import CONTRACT, METRICS
 from .semantic import (
     ComparisonRequest,
     compile_comparison,
@@ -78,7 +78,8 @@ class ComparisonWorkflow:
             report = state["report"]
             summary = report["summary"]
             if report["verified"]:
-                answer = f"{request.metric_id}: {summary['baseline']:,.4f} → {summary['comparison']:,.4f} {summary['unit']}; change {summary['change']:+,.4f}. Descriptive contributions reconcile; this does not establish causality."
+                name = next(m["name"] for m in METRICS if m["id"] == request.metric_id)
+                answer = f"{name} changed by {summary['change']:+,.4f} {summary['unit']}. Inspect the reconciled contributions below."
                 columns = [request.dimension, "baseline", "comparison", "contribution"]
                 rows = [
                     [r["segment"], r["baseline"], r["comparison"], r["contribution"]]
