@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 
 os.environ["DATABASE_URL"] = "sqlite:///:memory:"
-os.environ["JWT_SECRET"] = "test-secret-querypilot"
+os.environ["JWT_SECRET"] = "querypilot-test-secret-0000000000000000000000000000000000000"
 os.environ.pop("OPENAI_API_KEY", None)
 
 import pytest

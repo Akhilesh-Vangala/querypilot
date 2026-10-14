@@ -2,8 +2,6 @@ from __future__ import annotations
 
 import json
 import re
-import urllib.error
-import urllib.request
 from typing import Any, Protocol
 
 from .intents import classify
@@ -30,12 +28,13 @@ def _tool_result_count(messages: list[dict[str, str]]) -> int:
     return sum(
         1
         for message in messages
-        if message.get("role") == "user" and str(message.get("content", "")).startswith("Tool result:")
+        if message.get("role") == "user"
+        and str(message.get("content", "")).startswith("Tool result:")
     )
 
 
 class StubLLM:
-    """Used when OPENAI_API_KEY is unset. Compiles SQL via intents.py."""
+    """Explicit deterministic development baseline. Compiles SQL via intents.py."""
 
     def complete(self, messages: list[dict[str, str]]) -> str:
         question = _extract_question(messages)
@@ -70,7 +69,9 @@ class StubLLM:
         if seen == 0:
             return json.dumps({"tool": "list_tables", "args": {}})
         if seen == 1:
-            return json.dumps({"tool": "describe_table", "args": {"name": intent.table}})
+            return json.dumps(
+                {"tool": "describe_table", "args": {"name": intent.table}}
+            )
         return json.dumps(
             {
                 "final": {
@@ -84,34 +85,62 @@ class StubLLM:
 
 
 class OpenAILLM:
-    def __init__(self, api_key: str, model: str) -> None:
-        self.api_key = api_key
+    """Official SDK function calls; no generation retry or prompt persistence."""
+
+    mode = "live"
+
+    def __init__(self, api_key: str, model: str, client=None) -> None:
+        from openai import OpenAI
+
         self.model = model
+        self.client = client or OpenAI(api_key=api_key, timeout=30, max_retries=0)
+        self.usage = {"input_tokens": 0, "output_tokens": 0}
+        self.requests = 0
 
     def complete(self, messages: list[dict[str, str]]) -> str:
-        payload = json.dumps(
-            {
-                "model": self.model,
-                "temperature": 0,
-                "messages": messages,
-            }
-        ).encode("utf-8")
-        request = urllib.request.Request(
-            "https://api.openai.com/v1/chat/completions",
-            data=payload,
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-            },
-            method="POST",
+        from ..config import get_settings
+        from .protocol import tool_definitions
+
+        settings = get_settings()
+        if len(json.dumps(messages)) > settings.max_prompt_chars:
+            raise RuntimeError("Model context budget exceeded")
+        if (
+            self.requests >= settings.max_model_rounds
+            or sum(self.usage.values()) >= settings.max_run_tokens
+        ):
+            raise RuntimeError("Model run budget exceeded")
+        self.requests += 1
+        response = self.client.responses.create(
+            model=self.model,
+            input=messages,
+            tools=tool_definitions(),
+            tool_choice="required",
+            parallel_tool_calls=False,
+            max_output_tokens=settings.max_output_tokens,
+            store=False,
         )
-        try:
-            with urllib.request.urlopen(request, timeout=30) as response:
-                body = json.loads(response.read().decode("utf-8"))
-        except urllib.error.URLError as exc:
-            raise RuntimeError(f"openai request failed: {exc}") from exc
-        text = body["choices"][0]["message"]["content"]
-        return text.strip()
+        usage = response.usage
+        if usage:
+            self.usage["input_tokens"] += usage.input_tokens
+            self.usage["output_tokens"] += usage.output_tokens
+        if (
+            response.status != "completed"
+            or sum(self.usage.values()) > settings.max_run_tokens
+        ):
+            raise RuntimeError(
+                "Incomplete or over-budget model response; no automatic replay"
+            )
+        calls = [item for item in response.output if item.type == "function_call"]
+        if len(calls) != 1:
+            raise RuntimeError("Exactly one typed model action is required")
+        call = calls[0]
+        arguments = json.loads(call.arguments)
+        if call.name == "finish":
+            return json.dumps({"final": arguments})
+        return json.dumps({"tool": call.name, "args": arguments})
+
+    def close(self):
+        self.client.close()
 
 
 def get_llm() -> LLMClient:
@@ -119,7 +148,7 @@ def get_llm() -> LLMClient:
 
     settings = get_settings()
     key = (settings.openai_api_key or "").strip()
-    if key:
+    if key and settings.allow_live_ai:
         return OpenAILLM(key, settings.openai_model)
     return StubLLM()
 

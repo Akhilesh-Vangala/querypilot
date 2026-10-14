@@ -29,6 +29,7 @@ def test_bad_password(client):
 
 
 def test_schema_requires_auth(client, analyst_headers):
+    client.cookies.clear()
     assert client.get("/api/schema").status_code == 401
     response = client.get("/api/schema", headers=analyst_headers)
     assert response.status_code == 200

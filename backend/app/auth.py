@@ -6,9 +6,10 @@ from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
 import bcrypt
-from fastapi import Depends, HTTPException, status
+from fastapi import Cookie, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jose import JWTError, jwt
+import jwt
+from jwt import PyJWTError as JWTError
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -19,7 +20,7 @@ from .models import User
 # bcrypt truncates past 72 bytes.
 BCRYPT_MAX_BYTES = 72
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token", auto_error=False)
 
 
 def _encode(password: str) -> bytes:
@@ -42,14 +43,17 @@ def verify_password(plain: str, hashed: str) -> bool:
 
 def create_access_token(subject: str, role: str) -> str:
     settings = get_settings()
-    expires = datetime.now(timezone.utc) + timedelta(minutes=settings.access_token_minutes)
+    expires = datetime.now(timezone.utc) + timedelta(
+        minutes=settings.access_token_minutes
+    )
     payload = {"sub": subject, "role": role, "exp": expires}
     return jwt.encode(payload, settings.jwt_secret, algorithm=settings.jwt_algorithm)
 
 
 def get_current_user(
-    token: Annotated[str, Depends(oauth2_scheme)],
+    token: Annotated[str | None, Depends(oauth2_scheme)],
     db: Annotated[Session, Depends(get_db)],
+    querypilot_session: Annotated[str | None, Cookie()] = None,
 ) -> User:
     settings = get_settings()
     credentials_error = HTTPException(
@@ -58,7 +62,12 @@ def get_current_user(
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        payload = jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
+        token = token or querypilot_session
+        if not token:
+            raise credentials_error
+        payload = jwt.decode(
+            token, settings.jwt_secret, algorithms=[settings.jwt_algorithm]
+        )
         email = payload.get("sub")
         if not email:
             raise credentials_error

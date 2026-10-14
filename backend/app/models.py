@@ -10,6 +10,7 @@ from sqlalchemy import (
     Float,
     ForeignKey,
     Integer,
+    JSON,
     String,
     Text,
     UniqueConstraint,
@@ -33,9 +34,13 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String(255))
     full_name: Mapped[str] = mapped_column(String(255))
     role: Mapped[str] = mapped_column(String(32), default="analyst")
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow
+    )
 
-    __table_args__ = (CheckConstraint("role in ('analyst','admin')", name="ck_user_role"),)
+    __table_args__ = (
+        CheckConstraint("role in ('analyst','admin')", name="ck_user_role"),
+    )
 
 
 class AskLog(Base):
@@ -47,7 +52,9 @@ class AskLog(Base):
     sql: Mapped[str] = mapped_column(Text, default="")
     answer: Mapped[str] = mapped_column(Text, default="")
     refused: Mapped[bool] = mapped_column(Boolean, default=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, index=True
+    )
 
 
 class DimProvider(Base):
@@ -103,11 +110,17 @@ class FactClaims(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     date_id: Mapped[int] = mapped_column(ForeignKey("dim_date.date_id"))
     provider_id: Mapped[int] = mapped_column(ForeignKey("dim_provider.provider_id"))
-    employer_id: Mapped[int] = mapped_column(ForeignKey("dim_employer_group.employer_id"))
+    employer_id: Mapped[int] = mapped_column(
+        ForeignKey("dim_employer_group.employer_id")
+    )
     claim_count: Mapped[int] = mapped_column(Integer)
     claims_paid_usd: Mapped[float] = mapped_column(Float)
 
-    __table_args__ = (UniqueConstraint("date_id", "provider_id", "employer_id", name="uq_claims_grain"),)
+    __table_args__ = (
+        UniqueConstraint(
+            "date_id", "provider_id", "employer_id", name="uq_claims_grain"
+        ),
+    )
 
 
 class FactReferrals(Base):
@@ -125,7 +138,11 @@ class FactReferrals(Base):
     avg_wait_days: Mapped[float] = mapped_column(Float)
     declined_referrals: Mapped[int] = mapped_column(Integer)
 
-    __table_args__ = (UniqueConstraint("date_id", "provider_id", "region_id", name="uq_referrals_grain"),)
+    __table_args__ = (
+        UniqueConstraint(
+            "date_id", "provider_id", "region_id", name="uq_referrals_grain"
+        ),
+    )
 
 
 class FactNetworkCapacity(Base):
@@ -137,11 +154,17 @@ class FactNetworkCapacity(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     date_id: Mapped[int] = mapped_column(ForeignKey("dim_date.date_id"))
     provider_id: Mapped[int] = mapped_column(ForeignKey("dim_provider.provider_id"))
-    employer_id: Mapped[int] = mapped_column(ForeignKey("dim_employer_group.employer_id"))
+    employer_id: Mapped[int] = mapped_column(
+        ForeignKey("dim_employer_group.employer_id")
+    )
     open_panel_slots: Mapped[int] = mapped_column(Integer)
     panel_closed_flag: Mapped[bool] = mapped_column(Boolean)
 
-    __table_args__ = (UniqueConstraint("date_id", "provider_id", "employer_id", name="uq_capacity_grain"),)
+    __table_args__ = (
+        UniqueConstraint(
+            "date_id", "provider_id", "employer_id", name="uq_capacity_grain"
+        ),
+    )
 
 
 class FactCareCoordination(Base):
@@ -153,8 +176,46 @@ class FactCareCoordination(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     date_id: Mapped[int] = mapped_column(ForeignKey("dim_date.date_id"))
     region_id: Mapped[int] = mapped_column(ForeignKey("dim_region.region_id"))
-    employer_id: Mapped[int] = mapped_column(ForeignKey("dim_employer_group.employer_id"))
+    employer_id: Mapped[int] = mapped_column(
+        ForeignKey("dim_employer_group.employer_id")
+    )
     cases: Mapped[int] = mapped_column(Integer)
     coordination_cost_usd: Mapped[float] = mapped_column(Float)
 
-    __table_args__ = (UniqueConstraint("date_id", "region_id", "employer_id", name="uq_coordination_grain"),)
+    __table_args__ = (
+        UniqueConstraint(
+            "date_id", "region_id", "employer_id", name="uq_coordination_grain"
+        ),
+    )
+
+
+class AnalysisRun(Base):
+    __tablename__ = "analysis_runs"
+    id: Mapped[str] = mapped_column(String(32), primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
+    request_key: Mapped[str] = mapped_column(String(128))
+    request_hash: Mapped[str] = mapped_column(String(64))
+    question: Mapped[str] = mapped_column(Text)
+    mode: Mapped[str] = mapped_column(String(16), default="baseline")
+    status: Mapped[str] = mapped_column(String(32), default="queued", index=True)
+    result: Mapped[dict | None] = mapped_column(JSON, nullable=True)
+    events: Mapped[list] = mapped_column(JSON, default=list)
+    owner: Mapped[str | None] = mapped_column(String(32), nullable=True)
+    lease_until: Mapped[float | None] = mapped_column(Float, nullable=True)
+    error_kind: Mapped[str | None] = mapped_column(String(80), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, index=True
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow
+    )
+    __table_args__ = (
+        UniqueConstraint("user_id", "request_key", name="uq_analysis_admission"),
+    )
+
+
+class RateWindow(Base):
+    __tablename__ = "rate_windows"
+    id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    hits: Mapped[int] = mapped_column(Integer, default=0)
+    expires_at: Mapped[float] = mapped_column(Float, index=True)
