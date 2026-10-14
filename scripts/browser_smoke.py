@@ -3,7 +3,7 @@
 import argparse
 import json
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--url", default="http://127.0.0.1:3007")
@@ -37,6 +37,9 @@ with sync_playwright() as p:
     assert "result_sha256" in page.get_by_role("dialog").inner_text()
     page.keyboard.press("Escape")
     assert page.get_by_role("dialog").count() == 0
+    assert page.get_by_role("button", name="Inspect record").evaluate(
+        "el => document.activeElement === el"
+    )
     page.get_by_role("link", name="Investigations", exact=True).first.click()
     page.get_by_role("link", name="Claims paid by specialty").first.click()
     page.get_by_role("button", name="Inspect record").wait_for()
@@ -47,23 +50,24 @@ with sync_playwright() as p:
     page.screenshot(path=str(output / "mobile.png"), full_page=True)
     page.get_by_role("link", name="Metric catalog").click()
     page.get_by_role("heading", name="Start with a definition.").wait_for()
-    assert page.locator(".metric-grid article").count() == 5
+    expect(page.locator(".metric-grid article")).to_have_count(5, timeout=15000)
     assert not errors, errors
     browser.close()
-print(
-    json.dumps(
-        {
-            "browser": "Chromium",
-            "analyst_journey": True,
-            "rows": 5,
-            "sql": True,
-            "plan": True,
-            "dialog_escape": True,
-            "reload_history": True,
-            "mobile_overflow": False,
-            "metric_contracts": 5,
-            "page_errors": errors,
-            "paid_model_calls": 0,
-        }
-    )
+report = json.dumps(
+    {
+        "browser": "Chromium",
+        "analyst_journey": True,
+        "rows": 5,
+        "sql": True,
+        "plan": True,
+        "dialog_escape": True,
+        "reload_history": True,
+        "mobile_overflow": False,
+        "metric_contracts": 5,
+        "page_errors": errors,
+        "paid_model_calls": 0,
+    }
 )
+
+Path("artifacts/generated/browser-report.json").write_text(report + "\n")
+print(report)

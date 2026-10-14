@@ -58,6 +58,7 @@ jobs:
       - run: docker compose --profile test run --build --rm tests
       - name: Database-enforced authority and four-worker queue
         env:
+          MIGRATION_DATABASE_URL: postgresql+psycopg://migration_owner:local-owner-password-only@127.0.0.1:5437/querypilot
           DATABASE_URL: postgresql+psycopg://querypilot_app:local-app-password-only@127.0.0.1:5437/querypilot
           WAREHOUSE_DATABASE_URL: postgresql+psycopg://querypilot_reader:local-reader-password-only@127.0.0.1:5437/querypilot
         run: |

@@ -24,6 +24,8 @@ from app.worker import process_one
 @pytest.mark.parametrize(
     "sql",
     [
+        "SELECT evil.sum(claims_paid_usd) FROM fact_claims",
+        "SELECT CAST(claims_paid_usd AS eviltype) FROM fact_claims",
         'SELECT * FROM "users"',
         "SELECT * FROM analysis_runs",
         "SELECT * FROM rate_windows",

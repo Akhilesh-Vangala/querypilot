@@ -91,7 +91,12 @@ def validate_sql(
     for with_node in tree.find_all(exp.With):
         if with_node.args.get("recursive"):
             raise GuardrailError("Recursive queries are outside the analytical budget")
+    for datatype in tree.find_all(exp.DataType):
+        if datatype.this == exp.DataType.Type.USERDEFINED:
+            raise GuardrailError("Custom types are outside the analytical allowlist")
     for function in tree.find_all(exp.Func):
+        if isinstance(function.parent, exp.Dot):
+            raise GuardrailError("Schema-qualified functions are not authorized")
         name = (
             function.name.upper()
             if isinstance(function, exp.Anonymous)

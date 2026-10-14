@@ -6,6 +6,19 @@ from .agent.catalog import WAREHOUSE_TABLES
 
 def verify_warehouse_role(engine):
     with engine.connect() as connection:
+        if connection.execute(
+            text("SELECT has_schema_privilege(current_user,'public','CREATE')")
+        ).scalar_one():
+            raise RuntimeError("Warehouse role must not create warehouse objects")
+        custom = connection.execute(
+            text(
+                "SELECT EXISTS (SELECT 1 FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='public' AND has_function_privilege(current_user,p.oid,'EXECUTE'))"
+            )
+        ).scalar_one()
+        if custom:
+            raise RuntimeError(
+                "Custom executable warehouse functions require separate review and are not enabled"
+            )
         superuser, bypass = connection.execute(
             text(
                 "SELECT rolsuper,rolbypassrls FROM pg_roles WHERE rolname=current_user"

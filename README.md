@@ -10,7 +10,7 @@
 
 **An agentic analytics workbench for claims and provider-network operations.** Ask a business question, inspect its public metric plan, execute a bounded read-only query, and retain the evidence behind the result.
 
-**[Architecture](docs/ARCHITECTURE.md) · [Evaluation](docs/EVALUATION.md) · [Deployment](docs/DEPLOYMENT.md) · [Tradeoffs](docs/DECISIONS.md) · [Progress](PROGRESS.md)**
+**[Open the live synthetic demo](https://querypilot-five.vercel.app) · [Architecture](docs/ARCHITECTURE.md) · [Evaluation](docs/EVALUATION.md) · [Deployment](docs/DEPLOYMENT.md) · [Tradeoffs](docs/DECISIONS.md) · [Progress](PROGRESS.md)**
 
 ## The business problem
 
@@ -69,7 +69,7 @@ For native Python 3.13 development, install hashed dependencies from `backend/re
 | Check | Recorded local result |
 | --- | --- |
 | Original baseline | 30 backend tests passed before changes |
-| Expanded policy/workflow/SDK/API suite | 72 tests passed; mocked transport, no paid calls |
+| Expanded policy/workflow/SDK/API suite | 74 tests passed; mocked transport, no paid calls |
 | New graph on real PostgreSQL | 12/12 known development cases match independent gold results |
 | Concurrent workers | Four claimants complete 12 queued cases; idempotency and stale-owner fencing pass |
 | Independent database authority | Reader cannot read app identities or write warehouse; app role cannot read facts |

@@ -24,6 +24,32 @@ with Session(db.engine) as session:
     analyst = session.scalar(select(User).where(User.role == "analyst")).id
     admin = session.scalar(select(User).where(User.role == "admin")).id
 # Rehearsal uses a new namespace, without deleting existing warehouse or user records.
+custom_function_denial = False
+if os.getenv("MIGRATION_DATABASE_URL"):
+    from sqlalchemy import create_engine
+
+    owner_engine = create_engine(os.environ["MIGRATION_DATABASE_URL"])
+    try:
+        with owner_engine.begin() as conn:
+            conn.execute(
+                text(
+                    "CREATE FUNCTION public.querypilot_rehearsal_probe() RETURNS text LANGUAGE SQL SECURITY DEFINER SET search_path=pg_catalog,public AS 'SELECT email FROM public.users ORDER BY id LIMIT 1'"
+                )
+            )
+        try:
+            verify_warehouse_role(db.warehouse_engine)
+        except RuntimeError:
+            custom_function_denial = True
+        else:
+            raise AssertionError("Executable custom definer function was not rejected")
+    finally:
+        with owner_engine.begin() as conn:
+            conn.execute(
+                text("DROP FUNCTION IF EXISTS public.querypilot_rehearsal_probe()")
+            )
+        owner_engine.dispose()
+    verify_warehouse_role(db.warehouse_engine)
+
 namespace = "rehearsal-" + str(time.time_ns())
 repo = RunRepository(db.engine)
 runs = [
@@ -101,6 +127,7 @@ report = {
     "workers": 4,
     "worker_claims": workers,
     "database_role_denials": 3,
+    "custom_function_denial": custom_function_denial,
     "cross_user_denial": True,
     "idempotency": True,
     "lease_fencing": True,

@@ -47,6 +47,7 @@ services:
   worker:
     build: ./backend
     environment: *runtime
+    stop_grace_period: 35s
     command: ["python", "-m", "app.worker"]
     healthcheck:
       test: ["CMD", "python", "-m", "app.worker", "--health"]

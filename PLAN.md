@@ -7,8 +7,10 @@
 - [x] Rebuild the monochrome product interface with overview, investigations, detail tabs, catalog, warehouse and workspace pages.
 - [x] Verify actual PostgreSQL four-worker execution, database role denial and browser journey locally.
 - [x] Prepare hashed dependencies, non-root Docker/Compose, benchmark CLI and OTLP integration.
-- [ ] Pass actual remote CI/container/restart checks and merge protected PR.
-- [ ] Verify and publish the interactive Vercel synthetic demo.
+- [x] Pass actual remote CI/container/restart checks on implementation head.
+- [ ] Merge the final protected PR and verify current-main CI.
+- [x] Verify the public Vercel browser journey, guarded SQL and browser-only history.
+- [ ] Verify final current-main deployment after protected merge.
 - [ ] Configure a persistent cloud provider and monitored private staging.
 - [ ] Run live model regression/held-out quality and cost comparisons.
 - [ ] Complete customer-release gates in docs/DEPLOYMENT.md.
