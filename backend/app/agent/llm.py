@@ -38,6 +38,41 @@ class StubLLM:
 
     def complete(self, messages: list[dict[str, str]]) -> str:
         question = _extract_question(messages)
+        from .semantic import guided_comparison
+        from pydantic import ValidationError
+
+        try:
+            comparison = guided_comparison(question)
+        except (ValidationError, ValueError):
+            return json.dumps(
+                {
+                    "final": {
+                        "answer": "Specify a supported metric/dimension and valid nonoverlapping calendar windows, baseline first.",
+                        "sql": "",
+                        "chart": "table",
+                        "refused": False,
+                    }
+                }
+            )
+        if comparison:
+            return json.dumps(
+                {"tool": "compare_metric", "args": comparison.model_dump()}
+            )
+        # Do not let the legacy Q1/claims classifier silently drop comparison scope.
+        if any(
+            word in question.lower()
+            for word in ("compare", "versus", "between q", "explains the change")
+        ):
+            return json.dumps(
+                {
+                    "final": {
+                        "answer": "Use the Compare periods page to choose a reviewed metric, dimension and explicit dates. Guided mode only accepts its exact comparison templates; flexible questions require a configured live investigator.",
+                        "sql": "",
+                        "chart": "table",
+                        "refused": False,
+                    }
+                }
+            )
         intent = classify(question)
         if intent is None:
             return json.dumps(
@@ -96,13 +131,38 @@ class OpenAILLM:
         self.client = client or OpenAI(api_key=api_key, timeout=30, max_retries=0)
         self.usage = {"input_tokens": 0, "output_tokens": 0}
         self.requests = 0
+        self.history = []
+        self.seen_messages = 0
+        self.pending_call_id = None
+        self.last_action = None
 
     def complete(self, messages: list[dict[str, str]]) -> str:
         from ..config import get_settings
         from .protocol import tool_definitions
 
         settings = get_settings()
-        if len(json.dumps(messages)) > settings.max_prompt_chars:
+        if self.pending_call_id is None:
+            native_input = list(messages)
+        else:
+            # Correlate actual provider calls/results by call_id. Never replay a
+            # tool result as a new user instruction or drop reasoning items.
+            if (
+                len(messages) != self.seen_messages + 2
+                or messages[-2] != {"role": "assistant", "content": self.last_action}
+                or messages[-1].get("role") != "user"
+                or not messages[-1].get("content", "").startswith("Tool result: ")
+            ):
+                raise RuntimeError(
+                    "Model/tool transcript does not match the pending call"
+                )
+            native_input = self.history + [
+                {
+                    "type": "function_call_output",
+                    "call_id": self.pending_call_id,
+                    "output": messages[-1]["content"][len("Tool result: ") :],
+                }
+            ]
+        if len(json.dumps(native_input)) > settings.max_prompt_chars:
             raise RuntimeError("Model context budget exceeded")
         if (
             self.requests >= settings.max_model_rounds
@@ -112,7 +172,7 @@ class OpenAILLM:
         self.requests += 1
         response = self.client.responses.create(
             model=self.model,
-            input=messages,
+            input=native_input,
             tools=tool_definitions(),
             tool_choice="required",
             parallel_tool_calls=False,
@@ -135,9 +195,16 @@ class OpenAILLM:
             raise RuntimeError("Exactly one typed model action is required")
         call = calls[0]
         arguments = json.loads(call.arguments)
+        self.history = native_input + [
+            item.model_dump(exclude_none=True) for item in response.output
+        ]
+        self.pending_call_id = call.call_id
+        self.seen_messages = len(messages)
         if call.name == "finish":
-            return json.dumps({"final": arguments})
-        return json.dumps({"tool": call.name, "args": arguments})
+            self.last_action = json.dumps({"final": arguments})
+        else:
+            self.last_action = json.dumps({"tool": call.name, "args": arguments})
+        return self.last_action
 
     def close(self):
         self.client.close()

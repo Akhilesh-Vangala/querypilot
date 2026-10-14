@@ -160,7 +160,8 @@ def configuration():
         if settings.allow_live_ai and settings.openai_api_key
         else "deterministic baseline",
         "framework": "LangGraph",
-        "contract_version": "claims-network-v2",
+        "contract_version": "claims-network-v2 + metric-comparison-v1",
+        "capabilities": ["exploratory_sql", "compiled_metric_comparisons", "descriptive_shapley_attribution", "evidence_export"],
         "public_demo": settings.public_demo,
         "production_runtime": settings.app_environment == "production",
         "max_rows": settings.max_result_rows,
@@ -180,9 +181,10 @@ def configuration():
 
 @router.get("/api/metrics", tags=["warehouse"])
 def metrics(_user: UserDep):
-    from .agent.catalog import METRICS, CONTRACT
+    from .agent.catalog import CONTRACT
+    from .agent.semantic import metric_catalog
 
-    return {"metrics": METRICS, "contract": CONTRACT}
+    return {"metrics": metric_catalog(), "contract": CONTRACT}
 
 
 @router.post("/api/analyses", tags=["agent"])

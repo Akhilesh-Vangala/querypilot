@@ -214,6 +214,64 @@ def test_sdk_rate_limit_is_not_automatically_replayed():
     adapter.close()
 
 
+def test_sdk_replays_native_call_ids_and_reasoning_items_not_user_tool_text():
+    requests = []
+
+    def transport(req):
+        body = json.loads(req.content)
+        requests.append(body)
+        return httpx.Response(
+            200,
+            json={
+                "id": "resp_native",
+                "object": "response",
+                "created_at": 1,
+                "status": "completed",
+                "model": "gpt-4o-mini",
+                "output": [
+                    {"type": "reasoning", "id": "rs_test", "summary": []},
+                    {
+                        "type": "function_call",
+                        "id": "fc_test",
+                        "call_id": "call_native_" + str(len(requests)),
+                        "name": "record_plan",
+                        "arguments": json.dumps(plan()["args"]),
+                        "status": "completed",
+                    },
+                ],
+                "usage": None,
+            },
+        )
+
+    client = OpenAI(
+        api_key="transport-test-only",
+        max_retries=0,
+        http_client=httpx.Client(transport=httpx.MockTransport(transport)),
+    )
+    adapter = OpenAILLM("transport-test-only", "gpt-4o-mini", client)
+    messages = [{"role": "user", "content": "claims"}]
+    action = adapter.complete(messages)
+    messages += [
+        {"role": "assistant", "content": action},
+        {"role": "user", "content": 'Tool result: {"accepted":true}'},
+    ]
+    adapter.complete(messages)
+    assert requests[1]["input"][-1] == {
+        "type": "function_call_output",
+        "call_id": "call_native_1",
+        "output": '{"accepted":true}',
+    }
+    assert any(item.get("type") == "reasoning" for item in requests[1]["input"])
+    assert not any(
+        item.get("content", "").startswith("Tool result:")
+        for item in requests[1]["input"]
+    )
+    with pytest.raises(RuntimeError, match="transcript"):
+        adapter.complete(messages)
+    assert len(requests) == 2
+    adapter.close()
+
+
 def test_persistent_queue_idempotency_ownership_and_expiry(tmp_path):
     engine = create_engine(
         "sqlite:///" + str(tmp_path / "state.db"),
