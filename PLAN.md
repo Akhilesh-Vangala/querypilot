@@ -25,7 +25,7 @@
 - [x] Monochrome comparison page, verification tab and export with offline recheck.
 - [x] Native PostgreSQL four-claimant rehearsal: 12 legacy + 10 comparison cases in bounded batches.
 - [x] Local Chromium comparison/export/withholding journey and frontend build/audit.
-- [ ] Pass exact-head required remote native/frontend/container CI and protected merge.
-- [ ] Verify new current-main CI, public Vercel comparison/export and main-bound deployment.
+- [x] Pass exact-head required remote native/frontend/container CI and protected merge (PR14 / CI38655793257).
+- [x] Verify implementation-main CI38656156145 and actual public Vercel comparison/export/withholding journey; deploymentdpl_3mNtjeuAS3pG5fpgPBvKSuufD4kJ matches main status.
 
 This increment does not complete live-model quality, monitored persistent cloud staging or actual-user pilot gates.

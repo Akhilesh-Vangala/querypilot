@@ -57,7 +57,7 @@ The report retains the typed request, contract version, executed SQL, raw aggreg
 python scripts/verify_report.py path/to/querypilot-run.json
 ```
 
-The verifier needs neither a model key nor a database. It checks the fingerprint and recomputes the report from retained aggregates. This detects accidental changes/inconsistent summaries; an unsigned hash does not authenticate origin, stop a party from replacing both rows and hash, prove natural-language intent, or certify the source data. Model prompts/hidden reasoning are not included in operational trace attributes.
+The verifier needs neither a model key nor a database. It checks the typed-request/raw-aggregate fingerprint and recomputes the comparison object from retained aggregates. Display prose and unrelated export metadata are outside that fingerprint. This detects accidental changes/inconsistent summaries; an unsigned hash does not authenticate origin, stop a party from replacing both rows and hash, prove natural-language intent, or certify the source data. Model prompts/hidden reasoning are not included in operational trace attributes.
 
 ## Evaluation and limits
 
@@ -71,6 +71,7 @@ Customer pilot gaps remain: live quality/cost comparisons, managed migrations, O
 
 - `backend/app/agent/semantic.py`: strict contracts, compiler, metric checks and Shapley accounting.
 - `backend/app/agent/comparison.py`: owned LangGraph subworkflow.
+- `backend/app/agent/evidence.py`: reusable offline verification packaged with the backend; CLI and tests import this module without depending on repository layout.
 - `backend/app/agent/llm.py`: native Responses call IDs, typed function outputs and replayed response items; generation retries remain disabled.
 - `frontend/src/pages/Compare.tsx`, `frontend/src/components/ComparisonReport.tsx`: scope form, report, contribution display and export.
 - `backend/app/eval/comparisons.py`: independent known-case SQL oracles, never imported into model context.

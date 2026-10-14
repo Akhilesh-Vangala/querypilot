@@ -93,10 +93,10 @@ For native Python 3.13 development, install hashed dependencies from `backend/re
 
 ## Evidence, honestly scoped
 
-| Check | Recorded local result |
+| Check | Verified result |
 | --- | --- |
 | Original baseline | 30 backend tests passed before changes |
-| Expanded policy/workflow/SDK/API suite | 137 tests passed locally; mocked transport, no paid calls |
+| Expanded policy/workflow/SDK/API suite | 137distinct tests pass natively and inside actual containers; mocked provider transport, no paid calls |
 | New graph on real PostgreSQL | 12/12 known development cases match independent gold results |
 | Compiled comparisons on PostgreSQL | 10/10 reviewed cases across five metric families match independent quarterly SQL |
 | Concurrent workers | Four claimants complete two admission-bounded batches: 12 legacy + 10 compiled comparisons; idempotency and stale-owner fencing pass |
