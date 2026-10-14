@@ -11,3 +11,12 @@ __pycache__/
 .coverage
 htmlcov/
 *.log
+
+.tools/
+artifacts/generated/
+.env.*
+!.env.example
+.vercel/
+.vercel
+
+!.env.production.example
