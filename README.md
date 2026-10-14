@@ -10,7 +10,7 @@
 
 **An agentic analytics workbench for claims and provider-network operations.** Ask a business question, inspect its public metric plan, execute a bounded read-only query, and retain the evidence behind the result.
 
-**[Open the live synthetic demo](https://querypilot-five.vercel.app) · [Architecture](docs/ARCHITECTURE.md) · [Evaluation](docs/EVALUATION.md) · [Deployment](docs/DEPLOYMENT.md) · [Tradeoffs](docs/DECISIONS.md) · [Progress](PROGRESS.md)**
+**[Open the live synthetic demo](https://querypilot-five.vercel.app) · [Verified delivery](docs/EVIDENCE.md) · [Architecture](docs/ARCHITECTURE.md) · [Evaluation](docs/EVALUATION.md) · [Deployment](docs/DEPLOYMENT.md) · [Tradeoffs](docs/DECISIONS.md) · [Progress](PROGRESS.md)**
 
 ## The business problem
 
