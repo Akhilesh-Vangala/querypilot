@@ -1,3 +1,5 @@
+> Historical record. [Current project overview](../../../README.md) and [current handoff](../HANDOFF.md) take precedence.
+
 # Verified progress
 
 ## October 14, 2026 — Analytics workbench upgrade
@@ -24,7 +26,7 @@ Corrected public [Vercel demo](https://querypilot-five.vercel.app) passes actual
 
 ## Executable comparison increment — local verification
 
-Added strict executable metric comparisons, a compile/execute/reconcile/report LangGraph subworkflow, native provider call-ID tool feedback, weighted contribution accounting, descriptive three-factor claims Shapley, a dedicated comparison page, verification tab and downloadable/offline-recomputed evidence. Local suites verify independent unequal-data metric oracles and failure/coverage/denominator/tampering cases; actual PostgreSQL completes12original +10comparison cases through4claimants in two admission-bounded batches. All10comparison cases match independent quarterly SQL. Actual Chromium verifies15claims checks,5segments,3factors,export/offline recheck,future-period withholding and mobile/no-JS-error behavior. Native totals/current-head CI links follow after observation. No live requests or persistent monitored cloud backend. See [technical scope](docs/SEMANTIC-INVESTIGATIONS.md).
+Added strict executable metric comparisons, a compile/execute/reconcile/report LangGraph subworkflow, native provider call-ID tool feedback, weighted contribution accounting, descriptive three-factor claims Shapley, a dedicated comparison page, verification tab and downloadable/offline-recomputed evidence. Local suites verify independent unequal-data metric oracles and failure/coverage/denominator/tampering cases; actual PostgreSQL completes12original +10comparison cases through4claimants in two admission-bounded batches. All10comparison cases match independent quarterly SQL. Actual Chromium verifies15claims checks,5segments,3factors,export/offline recheck,future-period withholding and mobile/no-JS-error behavior. Native totals/current-head CI links follow after observation. No live requests or persistent monitored cloud backend. See [technical scope](../../architecture/SEMANTIC-INVESTIGATIONS.md).
 
 ## Verified executable comparison delivery
 

@@ -1,0 +1,78 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1180"
+  height="490"
+  viewBox="0 0 1180 490"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">QueryPilot · scope to executed evidence</title>
+  <desc id="desc">
+    React interface, FastAPI authority boundary, bounded LangGraph analytics,
+    read-only SQL execution and independently reconciled reports. Private
+    PostgreSQL workers are separate from the public request-bounded guided demo.
+  </desc>
+  <defs>
+    <marker
+      id="arrow"
+      viewBox="0 0 10 10"
+      refX="9"
+      refY="5"
+      markerWidth="7"
+      markerHeight="7"
+      orient="auto-start-reverse"
+    >
+      <path d="M0 0L10 5L0 10" fill="none" stroke="#888" stroke-width="1.5" />
+    </marker>
+  </defs>
+  <rect width="1180" height="490" rx="12" fill="#101010" />
+  <g font-family="Arial,sans-serif">
+    <text x="36" y="43" fill="#aaa" font-size="12" letter-spacing="2">
+      QUERY PILOT / IMPLEMENTED AUTHORITY BOUNDARIES
+    </text>
+    <text x="36" y="87" fill="#f4f4f4" font-size="30" font-weight="700">
+      A model proposes. Application code owns the boundary.
+    </text>
+    <g fill="#181818" stroke="#444">
+      <rect x="36" y="126" width="330" height="122" rx="8" />
+      <rect x="424" y="126" width="330" height="122" rx="8" />
+      <rect x="812" y="126" width="330" height="122" rx="8" />
+      <rect x="36" y="290" width="330" height="122" rx="8" />
+      <rect x="424" y="290" width="330" height="122" rx="8" />
+      <rect x="812" y="290" width="330" height="122" rx="8" />
+    </g>
+    <g fill="#eee" font-size="19" font-weight="700">
+      <text x="58" y="164">React workbench</text>
+      <text x="446" y="164">FastAPI + typed scope</text>
+      <text x="834" y="164">Bounded LangGraph</text>
+      <text x="58" y="328">Read-only execution</text>
+      <text x="446" y="328">Independent reconciliation</text>
+      <text x="834" y="328">Evidence-backed report</text>
+    </g>
+    <g fill="#aaa" font-size="14">
+      <text x="58" y="194">Question · comparison · SQL · verification</text>
+      <text x="58" y="220">frontend/src/</text>
+      <text x="446" y="194">Identity · admission · allowed actions</text>
+      <text x="446" y="220">Private queue or public bounded request</text>
+      <text x="834" y="194">Native SDK actions · correction budgets</text>
+      <text x="834" y="220">Compile → execute → reconcile → report</text>
+      <text x="58" y="358">SQL AST + warehouse role + budgets</text>
+      <text x="58" y="384">Reviewed metrics and exact query receipt</text>
+      <text x="446" y="358">Totals · weighted contributions · factors</text>
+      <text x="446" y="384">Withhold unsupported conclusions</text>
+      <text x="834" y="358">Rows · provenance · export · offline recheck</text>
+      <text x="834" y="384">Descriptive accounting, not causality</text>
+    </g>
+    <g fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)">
+      <path d="M366 187H414" />
+      <path d="M754 187H802" />
+      <path d="M977 248V266H201V280" />
+      <path d="M366 351H414" />
+      <path d="M754 351H802" />
+    </g>
+    <text x="36" y="456" fill="#aaa" font-size="13">
+      Public: original synthetic data, guided execution, no live inference.
+      Private: separate PostgreSQL workers and explicit model opt-in.
+    </text>
+  </g>
+</svg>
