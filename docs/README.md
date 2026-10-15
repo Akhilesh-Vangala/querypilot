@@ -13,3 +13,7 @@
 | What is current versus historical? | [Handoff](project/HANDOFF.md), [plan](project/PLAN.md), [dated history](project/history/PRE-ORGANIZATION-README.md) |
 
 Detailed implementation: [metric comparison subgraph](architecture/SEMANTIC-INVESTIGATIONS.md), [source-linked delivery evidence](evaluation/EVIDENCE.md).
+
+## Visitor-owned data
+
+[CSV workspace contracts, limits and verification](product/USER-DATA.md).

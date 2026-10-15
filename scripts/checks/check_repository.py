@@ -80,6 +80,12 @@ def main():
     assert hashlib.sha256(video.read_bytes()).hexdigest() == manifest["video_sha256"]
     for name, digest in manifest["source_sha256"].items():
         assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, "Capture source changed: " + name
+    upload_capture = json.loads((ROOT / "docs/demos/uploads-recording.json").read_text())
+    assert upload_capture["passed"] and upload_capture["paid_model_calls"] == 0
+    for name, digest in upload_capture["source_sha256"].items():
+        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, "Upload capture source changed: " + name
+    for name, digest in upload_capture["media_sha256"].items():
+        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest, "Upload recording changed: " + name
     errors, count = [], 0
     for path in files:
         body = path.read_text()

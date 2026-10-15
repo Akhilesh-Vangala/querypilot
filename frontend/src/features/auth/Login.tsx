@@ -54,8 +54,9 @@ export default function Login() {
           <div className="eyebrow">YOUR ANALYTICS WORKSPACE</div>
           <h2>Welcome to QueryPilot.</h2>
           <p className="muted">
-            Sign in to inspect your data and investigations.
+            Sign in to inspect the sample investigations.
           </p>
+          <p><a href="/uploads">Use your own CSV — no account required ↗</a></p>
           <form onSubmit={submit}>
             <label htmlFor="email">Email address</label>
             <input

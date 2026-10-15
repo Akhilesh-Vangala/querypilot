@@ -37,10 +37,15 @@ function PrivateRoute({ children }: { children: JSX.Element }) {
     return <div className="loading-page">Opening your workspace…</div>;
   return state === "ready" ? children : <Navigate to="/login" replace />;
 }
+function UploadWorkspace() {
+  useEffect(() => { window.location.replace("/uploads/index.html"); }, []);
+  return <div className="loading-page">Opening your data workspace…</div>;
+}
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/uploads" element={<UploadWorkspace />} />
         <Route path="/login" element={<Login />} />
         <Route
           path="/"
