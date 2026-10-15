@@ -41,6 +41,7 @@ export default function Layout() {
           {user?.role === "admin" && (
             <NavLink to="/eval">Evaluation lab</NavLink>
           )}
+          <a href="/uploads">Use your own data ↗</a>
         </nav>
         <div className="sidebar-bottom">
           <span className="status-dot" />

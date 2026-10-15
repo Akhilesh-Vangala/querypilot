@@ -1,11 +1,11 @@
-"""Vercel interactive synthetic demo. Private PostgreSQL runtime uses app.main."""
+"""Vercel sample analytics and visitor-owned CSVs. Private PostgreSQL uses app.main."""
 import os
 import sys
 import secrets
 from pathlib import Path
 root=Path(__file__).resolve().parent
 sys.path.insert(0,str(root/'backend'))
-# This entrypoint is intentionally a no-model, request-bounded, synthetic demonstration.
+# This entrypoint offers request-bounded, no-model sample and visitor-data workflows.
 os.environ.update(APP_ENVIRONMENT='development',DATABASE_URL='sqlite:////tmp/querypilot-demo-v2.db',
                   WAREHOUSE_DATABASE_URL='',PUBLIC_DEMO='true',SEED_DEMO='true',DEMO_ACCOUNTS='true',
                   EMBEDDED_WORKER='false',AUTO_CREATE_SCHEMA='true',ALLOW_LIVE_AI='false',OPENAI_API_KEY='')

@@ -98,7 +98,7 @@ async def access_log(request: Request, call_next):
             )
         if (
             request.headers.get("content-length", "").isdigit()
-            and int(request.headers["content-length"]) > 20000
+            and int(request.headers["content-length"]) > (1000000 if request.url.path.startswith("/api/uploads/") else 20000)
         ):
             return JSONResponse(
                 status_code=413, content={"detail": "Request exceeds the body limit"}
@@ -153,3 +153,8 @@ def ready() -> dict:
 
 
 app.include_router(router)
+
+
+from pathlib import Path
+from .uploads.api import attach as attach_uploads
+attach_uploads(app, "QueryPilot", Path(__file__).resolve().parents[2])

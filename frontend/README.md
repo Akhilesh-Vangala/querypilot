@@ -8,3 +8,5 @@
 - [Configuration](config/): Nginx routing.
 
 Run `npm ci` and `npm run build` from this directory. [Full layout](../docs/development/LAYOUT.md).
+
+- [Own-data workspace](public/uploads/): file selection, explicit contracts, checked results, approval and downloads.

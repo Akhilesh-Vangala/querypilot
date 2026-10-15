@@ -18,45 +18,45 @@
   "page_errors": [],
   "paid_model_calls": 0,
   "recording_player": true,
-  "url": "http://127.0.0.1:18007",
+  "url": "http://127.0.0.1:18018",
   "frames": [
     {
       "stage": "overview",
       "path": "00-overview.png",
-      "sha256": "28ee9b80ac4b6d8e5b6c0c766ceaee62d01f6ddb8400bb9f9b74ecf05438565f"
+      "sha256": "dc53ce6a0e7615a4f7546513fcd1078c08dc3acae37bc6dec1b0d6159c2bcd6c"
     },
     {
       "stage": "executed-investigation",
       "path": "01-executed-investigation.png",
-      "sha256": "e03334bee1ab0a3aec8dd6e65dd72b6a28197853e8b5097f92e69afa2a1bf6b3"
+      "sha256": "9cc2ba7c0857a64c2123d77d8ef4b5fd67fd1cf8cf4bff7ef67ef609ca8e3c39"
     },
     {
       "stage": "guarded-sql",
       "path": "02-guarded-sql.png",
-      "sha256": "69bd7a59bcfe3a691f46dab59d6c8b1774c8e4ee9130d686202d70a83f45584d"
+      "sha256": "d2d57e46969f0541f01099e80fb24e115b001dfbceddb1023789c3e89c192189"
     },
     {
       "stage": "reconciled-periods",
       "path": "03-reconciled-periods.png",
-      "sha256": "8553699bf845fa08b136488b13a83549c380d85e572962f1abb98d7be362d96f"
+      "sha256": "72d70fa7ab7664dd15e3b03b327e56abd30564d50f162780a13d63564a0a5701"
     },
     {
       "stage": "independent-checks",
       "path": "04-independent-checks.png",
-      "sha256": "02c8803255ac8807e07b6208050465ad871d0248b317e90520d1e3ae67f56660"
+      "sha256": "d520b4eefe79401f0c6f66bc55d06816592471c1cbd4f1b40c1e5192367c81b1"
     },
     {
       "stage": "exported-evidence",
       "path": "05-exported-evidence.png",
-      "sha256": "33c9277be8316765ed741739bb4b70711c748c5c3c02084acf4bbfbb376e2de3"
+      "sha256": "0cbc582cd0d4188cc5b02a5c56b086c6045a3a9dcf821473a8aa0f9a7d930992"
     }
   ],
-  "video_sha256": "8a0bb720a8efa40cf1b73a768ac80aca258451aeafbedca89085e9aded6fb3c0",
+  "video_sha256": "8cb9960ba3630e538a95d22c21e3b5f039d18930f9432e9ba0faeb1bade1557f",
   "recording": "Continuous actual Chromium capture; guided synthetic data, automated interactions, no live model inference",
   "captured_deployment_source": null,
   "source_sha256": {
-    "frontend/src/app/App.tsx": "c2660d8164122d39e80fb2c1e59c83e66a75621c39815063820245d5e98d3e01",
-    "frontend/src/features/auth/Login.tsx": "75957baaca988bce0f6ec541596b2165a013732007a0eca17d2f2aa88ab10d24",
+    "frontend/src/app/App.tsx": "de2047250a9fd576185775830a33332732289e40790b7ced29942c2a17a983de",
+    "frontend/src/features/auth/Login.tsx": "167e5e7861d6b61b457d20480307813ba4294c7fdbe208275db33ad88d74e1c3",
     "frontend/src/features/catalog/Schema.tsx": "8bb710ed8843c87d4fcc450cd0bf8f6fde4a7dcb2e0d78235d2040b139e55774",
     "frontend/src/features/comparisons/Compare.tsx": "c379dcd97b76e5e33f956b533c3d4100fd061504e1239b47148fca1d7031d26b",
     "frontend/src/features/evaluation/EvalPage.tsx": "63035b5290199f188a1cf39faba482516831eae1b75ce2976fbab3784d006059",
@@ -88,7 +88,7 @@
     "backend/app/evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "backend/app/evaluation/comparisons.py": "84dec093710ce91d0eeb63e769134e3b14a4d7b66a726d7f7eec15c51e48f2e8",
     "backend/app/evaluation/golden.py": "447edd0c126a03a402935b61f4b09f7c5fca7d54f311dd664c2e6254fcba767a",
-    "backend/app/main.py": "a1c9840f16035472fe167694d59fc7b9e066cdd8384f3c3de1683f34d98e9612",
+    "backend/app/main.py": "25159397fd01f785f1919c9e0d3e100d43ac1904180fd323a0335240d4b552f1",
     "backend/app/persistence/__init__.py": "3ca206777c38f388d48cec021a2b4eeb2f3797fec72adecf62eecc12c52e3c82",
     "backend/app/persistence/db.py": "6dbe5647332fc54a6dc8c718c062a58d5f19001ce9567e1aee5d6ee0aba17344",
     "backend/app/persistence/migrations.py": "659520b170d75e67976264f8d49927ec9d5fb7cb102e0897beefdd2349692843",
@@ -97,6 +97,10 @@
     "backend/app/security/__init__.py": "40b3a82b44424af44f56b0bde3265cbc18140b986da49ec3d0ce7bbff590584d",
     "backend/app/security/auth.py": "bdc337ab4e40a66bc577b83622bc20181b958bb0079312cd3281dd7ce454a4db",
     "backend/app/security/provision_user.py": "d91a257a0f88360a8ac707ac9e02dddca51b4057cff30c33ec9bcbe2d98a7f4c",
+    "backend/app/uploads/__init__.py": "6cf9cc3f23b8eb7fecf7b1f708e9627b7d6c5aacbe313fc0034cc082b4496ee4",
+    "backend/app/uploads/api.py": "d4a4b58f7911ccb84983b48c21779954dbef567b82c2adb7c86d66024bc3d3e9",
+    "backend/app/uploads/ingestion.py": "0f376ef3fd01d75e98b5db06522d6ebfda660fcdf53e1c533471cbe823c00e63",
+    "backend/app/uploads/service.py": "4ca0e314e6c6fd2e25a3fd6e665926c2c5e1f9296e7adefb656b46fead39ae99",
     "backend/app/warehouse/__init__.py": "5bb23bdc221cf95aa275ebc90cf39d7276087ae5019f99186bffd5d4071c0948",
     "backend/app/warehouse/bootstrap.py": "371c3213b73db8b70ec8f73c445da437c281421e3b8a0afd5fae50951a83d103",
     "backend/app/warehouse/service.py": "f1da56e8eccf9be25db00dfd597934d9422f870fe9c610f7da2b4ba0be0ce1ee",
@@ -104,6 +108,6 @@
     "backend/app/workers/worker.py": "159edafe6b67bc93a7321f8a7fd3ba975bae90230be776388208c3557b315a21"
   },
   "video_path": "frontend/public/recordings/querypilot.webm",
-  "preview_path": "docs/assets/demos/querypilot-demo.gif",
-  "capture_environment": "Actual isolated local built frontend cohosted with the reorganized FastAPI application; original synthetic fixtures; no live inference"
+  "preview_path": "docs/assets/demos/querypilot-interactive-demo.gif",
+  "capture_environment": "Actual isolated local application with current source hashes; original synthetic sample workflow; zero paid inference"
 }
