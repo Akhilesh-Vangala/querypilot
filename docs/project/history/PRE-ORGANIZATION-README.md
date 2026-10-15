@@ -1,6 +1,6 @@
 > Historical record. [Current project overview](../../../README.md) and [current handoff](../HANDOFF.md) take precedence.
 
-<p align="center"><img src="../../assets/hero.svg" alt="QueryPilot — analytical questions, executed evidence" width="100%" /></p>
+<p align="center"><img src="../../assets/branding/hero.svg" alt="QueryPilot — analytical questions, executed evidence" width="100%" /></p>
 
 <p align="center">
 <a href="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml/badge.svg" /></a>
@@ -21,7 +21,7 @@ Claims spend, declined referrals, provider capacity and coordination costs have 
 <details>
 <summary>Explore the original analytical investigation</summary>
 
-<img src="../../assets/investigation.png" alt="Actual QueryPilot investigation showing specialty results, SQL and plan tabs, public workflow events and execution provenance. Synthetic data, deterministic investigator." width="100%" />
+<img src="../../assets/screenshots/investigation.png" alt="Actual QueryPilot investigation showing specialty results, SQL and plan tabs, public workflow events and execution provenance. Synthetic data, deterministic investigator." width="100%" />
 
 *Actual application capture. Guided deterministic investigator; no live model request or customer data.*
 
@@ -33,7 +33,7 @@ Claims spend, declined referrals, provider capacity and coordination costs have 
 
 The new **Compare periods** workspace compiles reviewed metric semantics into SQL, executes both periods in one snapshot, reconciles separate totals and segment aggregates, and produces descriptive volume/mix/unit-cost accounting for claims spend. Weighted-rate contributions use the correct overall denominator. Missing coverage, invalid data or undefined denominators withhold the conclusion.
 
-<img src="../../assets/comparison.png" alt="Actual synthetic QueryPilot period comparison with reconciled specialty contributions and three-factor claims change accounting. Guided compiler, no live model calls." width="100%" />
+<img src="../../assets/screenshots/comparison.png" alt="Actual synthetic QueryPilot period comparison with reconciled specialty contributions and three-factor claims change accounting. Guided compiler, no live model calls." width="100%" />
 
 Five metric families · ten supported metric/dimension combinations · explicit calendar windows · deterministic verification · downloadable evidence with offline recheck. [Technical design and limits](../../architecture/SEMANTIC-INVESTIGATIONS.md).
 
@@ -137,4 +137,4 @@ docs/               architecture · tradeoffs · evaluation · deployment · act
 .github/            reproducible CI · dependency updates · review workflow
 ```
 
-[Branch policy](../../../BRANCHING.md): short-lived work branches → required backend/frontend/container checks → protected squash merge to main. Preserve original history. MIT; see [LICENSE](../../../LICENSE).
+[Branch policy](../../development/BRANCHING.md): short-lived work branches → required backend/frontend/container checks → protected squash merge to main. Preserve original history. MIT; see [LICENSE](../../../LICENSE).

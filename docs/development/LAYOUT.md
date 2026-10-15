@@ -1,27 +1,115 @@
-# QueryPilot repository layout
+# QueryPilot component layout
 
-The checkout separates browser code, backend authority, reproducible tooling and documentation. Run commands from the repository root unless a command states otherwise.
+Run commands from the repository root unless a command states otherwise. The file tree is organized by ownership at the root and responsibility inside each component.
 
-| Directory/file | Responsibility |
-| --- | --- |
-| `backend/app/` | API, agent workflow, typed contracts, verification and persistent-runtime services. |
-| `backend/tests/` | Unit, protocol, authority and recovery tests. |
-| `backend/tests/` | Backend regression and integration cases. |
-| `frontend/src/` | React product components, pages and styling. |
-| `frontend/public/recordings/` | Native recording player, static poster and actual continuous WebM. |
-| `scripts/browser_smoke.py` | Browser journeys across both sides of the application. |
-| `scripts/` | Structural checks, benchmarks, deployment smoke and reproducible capture. |
-| `docs/architecture/` | Current system/agent flow and authority boundaries. |
-| `docs/operations/` | Development, deployment and public/private operating boundaries. |
-| `docs/evaluation/` | Evaluation design, limits and linked engineering evidence. |
-| `docs/project/` | Current handoff, release gates and progress; dated predecessors live under `history/`. |
-| `docs/assets/`, `docs/demos/` | Documentation figures, actual capture previews and provenance manifests. |
-| `docker-compose.yml`, `vercel.json` | Root deployment wiring; the Vercel launcher remains at the root for framework discovery. |
+```text
+querypilot/
+├── backend/
+│   ├── app/
+│   ├── tests/
+│   ├── requirements/
+│   └── docker/
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   ├── features/
+│   │   ├── components/
+│   │   ├── lib/
+│   │   └── styles/
+│   ├── public/recordings/
+│   └── config/
+├── infrastructure/
+│   └── containers/
+├── scripts/
+│   ├── checks/
+│   ├── demos/
+│   ├── deployment/
+│   └── evaluation/
+├── docs/
+│   ├── architecture/
+│   ├── operations/
+│   ├── evaluation/
+│   ├── project/history/
+│   └── assets/
+│       ├── branding/
+│       ├── diagrams/
+│       ├── screenshots/
+│       └── demos/
+└── .github/
+```
 
-The React/Vite frontend has its own dependency lock and image. The Python backend has hashed runtime/development locks and its own image. Root Python metadata and the thin index.py entrypoint support the cohosted Vercel demonstration.
+## Ownership and runtime boundaries
 
-## Reorganization compatibility
+Backend APIs own request validation, identity and action authority. Agents propose bounded decisions; verification and execution code own whether a proposal passes and which effects may occur. Persistence and workers own recovery and claims. Frontend code owns presentation and browser interactions. Tests are grouped by capability, with shared fixtures and cross-component browser journeys identified separately.
 
-Source moves update ASGI imports, asset resolution, dependency locks, test discovery, Docker context/copies, CI, source exports and Vercel includes. Existing HTTP routes, data directories and ignored runtime histories remain in place. Agent, SQL policy and warehouse semantics are unchanged by this layout increment.
+Only GitHub/Python/Vercel discovery files, private-configuration examples and the primary README remain at the root. Compose is under infrastructure/containers; `scripts/deployment/compose.sh` supplies the repository project directory so build contexts, private root .env and existing volume naming retain their intended meaning. No live-model call or cloud apply is part of this reorganization.
 
-The current paths supersede the dated commands in historical records. [Current quick start](../../README.md#run-locally) · [Branch workflow](../../BRANCHING.md).
+Source-path changes intentionally change runtime and review fingerprints. Preserve old results; start a fresh investigation when stale checkpoints or checked proposals are rejected. The exportable VerifyOps investigator deliberately keeps a small flat runtime when copied into an isolated workspace; evaluator references remain outside that runtime.
+
+[Branch policy](BRANCHING.md) · [Backend](../../backend/README.md) · [Frontend](../../frontend/README.md) · [Infrastructure](../../infrastructure/README.md) · [Scripts](../../scripts/README.md)
+
+## Full directory navigation
+
+```text
+querypilot/
+├── .github/
+│   └── workflows/
+├── backend/
+│   ├── app/
+│   │   ├── agents/
+│   │   │   └── analytics/
+│   │   ├── analytics/
+│   │   ├── api/
+│   │   ├── core/
+│   │   ├── evaluation/
+│   │   ├── persistence/
+│   │   ├── security/
+│   │   ├── warehouse/
+│   │   └── workers/
+│   ├── docker/
+│   ├── requirements/
+│   └── tests/
+│       ├── agents/
+│       ├── analytics/
+│       └── api/
+├── docs/
+│   ├── architecture/
+│   ├── assets/
+│   │   ├── branding/
+│   │   ├── demos/
+│   │   ├── diagrams/
+│   │   └── screenshots/
+│   ├── demos/
+│   ├── development/
+│   ├── evaluation/
+│   ├── operations/
+│   └── project/
+│       └── history/
+├── frontend/
+│   ├── config/
+│   ├── public/
+│   │   └── recordings/
+│   └── src/
+│       ├── app/
+│       ├── components/
+│       │   ├── charts/
+│       │   ├── layout/
+│       │   └── reports/
+│       ├── features/
+│       │   ├── auth/
+│       │   ├── catalog/
+│       │   ├── comparisons/
+│       │   ├── evaluation/
+│       │   ├── history/
+│       │   ├── investigations/
+│       │   └── workbench/
+│       ├── lib/
+│       └── styles/
+├── infrastructure/
+│   └── containers/
+└── scripts/
+    ├── checks/
+    ├── demos/
+    ├── deployment/
+    └── evaluation/
+```

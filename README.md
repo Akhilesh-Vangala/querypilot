@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/assets/hero.svg" alt="QueryPilot — Agentic analytics" width="100%"></p>
+<p align="center"><img src="docs/assets/branding/hero.svg" alt="QueryPilot — Agentic analytics" width="100%"></p>
 
 <p align="center"><a href="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml"><img src="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml/badge.svg" alt="Required engineering checks"></a> &nbsp; Python · LangGraph · FastAPI · PostgreSQL</p>
 
@@ -18,8 +18,8 @@ Answer claims and provider-network questions with executed SQL, reviewed metric 
 ## Run the workflow
 
 <picture>
-  <source media="(prefers-reduced-motion: reduce)" srcset="docs/assets/querypilot-demo-poster.png">
-  <img src="docs/assets/querypilot-demo.gif" alt="Actual guided querypilot browser journey on original synthetic data" width="100%">
+  <source media="(prefers-reduced-motion: reduce)" srcset="docs/assets/demos/querypilot-demo-poster.png">
+  <img src="docs/assets/demos/querypilot-demo.gif" alt="Actual guided querypilot browser journey on original synthetic data" width="100%">
 </picture>
 
 **Actual execution, guided synthetic data.** The continuous recording shows real browser interactions and server results. No live model call, customer data or user-validation claim. [Recording provenance and reproducible capture](docs/DEMO.md).
@@ -33,7 +33,7 @@ Synthetic claims/network data and a guided investigator execute guarded SQL with
 
 ## Architecture and authority
 
-![QueryPilot architecture and verification boundaries](docs/assets/system-map.svg)
+![QueryPilot architecture and verification boundaries](docs/assets/diagrams/system-map.svg)
 
 React and FastAPI connect authenticated admission to separate PostgreSQL workers. A bounded LangGraph controller uses typed native SDK actions and an independent read-only warehouse connection. The comparison subgraph compiles reviewed semantics, executes one statement, reconciles weighted contributions and produces inspectable evidence.
 
@@ -60,12 +60,38 @@ flowchart LR
 
 ```text
 querypilot/
-├── backend/          Python application, agent/runtime, unit tests and image build
-├── frontend/         React/TypeScript source, dependencies and public recordings
-├── scripts/          Reproducible checks, benchmarks and demo capture
-├── docs/             Architecture, operations, evaluation, demos and project history
-├── .github/          Required CI and review workflow
-└── index.py          Thin Vercel entrypoint; deployment wiring stays at the root
+├── backend/
+│   ├── app/
+│   ├── tests/
+│   ├── requirements/
+│   └── docker/
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   ├── features/
+│   │   ├── components/
+│   │   ├── lib/
+│   │   └── styles/
+│   ├── public/recordings/
+│   └── config/
+├── infrastructure/
+│   └── containers/
+├── scripts/
+│   ├── checks/
+│   ├── demos/
+│   ├── deployment/
+│   └── evaluation/
+├── docs/
+│   ├── architecture/
+│   ├── operations/
+│   ├── evaluation/
+│   ├── project/history/
+│   └── assets/
+│       ├── branding/
+│       ├── diagrams/
+│       ├── screenshots/
+│       └── demos/
+└── .github/
 ```
 
 [Component ownership and commands](docs/development/LAYOUT.md) · [Current handoff](docs/project/HANDOFF.md) · [Release plan](docs/project/PLAN.md)
@@ -77,12 +103,12 @@ querypilot/
 ```sh
 git clone https://github.com/Akhilesh-Vangala/querypilot.git
 cd querypilot
-docker compose up --build -d --wait db api worker frontend
+scripts/deployment/compose.sh up --build -d --wait db api worker frontend
 ```
 
 Open **http://127.0.0.1:3007**. The Compose accounts/passwords are isolated development fixtures. The API, worker, frontend and warehouse are separate services.
 
-Native development uses Python 3.13 and Node 24; install hashed dependencies from backend/requirements-dev.txt and run npm ci in frontend/. Keep private configuration in ignored `.env`; never overwrite an existing private configuration. [Full development and deployment guide](docs/operations/DEPLOYMENT.md).
+Native development uses Python 3.13 and Node 24; install hashed dependencies from backend/requirements/development.txt and run npm ci in frontend/. Keep private configuration in ignored `.env`; never overwrite an existing private configuration. [Full development and deployment guide](docs/operations/DEPLOYMENT.md).
 
 <a id="verified-evidence"></a>
 <a id="evidence-honestly-scoped"></a>
@@ -101,8 +127,8 @@ Native development uses Python 3.13 and Node 24; install hashed dependencies fro
 python -m pytest -q backend/tests
 npm ci --prefix frontend
 npm run build --prefix frontend
-python scripts/check_repository.py
-python scripts/browser_smoke.py --url http://127.0.0.1:3007
+python scripts/checks/check_repository.py
+python scripts/demos/browser_smoke.py --url http://127.0.0.1:3007
 ```
 
 Native commands run inside the project's installed environment. Required CI repeats the relevant checks on Linux. Test counts describe distinct cases; rerunning them in a container does not double the number of tests. [Evaluation and limits](docs/evaluation/README.md) · [Progress and source-linked evidence](docs/project/PROGRESS.md).
@@ -113,4 +139,4 @@ Native commands run inside the project's installed environment. Required CI repe
 - **Private agent/runtime:** official OpenAI SDK, typed tools and bounded agent loops. A private provider key and explicit live selection are required; live quality and cost comparisons remain unmeasured.
 - **Production boundary:** compiled comparisons are descriptive accounting, not causal inference or proof of model-selected intent. OIDC/tenant warehouse access, global cost controls, managed migrations, restore/load evidence and monitored cloud operation are open.
 
-[Design decisions](docs/DECISIONS.md) · [Recorded demo](docs/DEMO.md) · [Branch policy](BRANCHING.md) · [Contributing](CONTRIBUTING.md) · [Dated history](docs/project/history/PRE-ORGANIZATION-README.md)
+[Design decisions](docs/DECISIONS.md) · [Recorded demo](docs/DEMO.md) · [Branch policy](docs/development/BRANCHING.md) · [Contributing](.github/CONTRIBUTING.md) · [Dated history](docs/project/history/PRE-ORGANIZATION-README.md)

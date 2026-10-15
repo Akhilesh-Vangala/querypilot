@@ -2,7 +2,7 @@
 
 [Open the working app](https://querypilot-five.vercel.app) · [Watch the continuous recording](https://querypilot-five.vercel.app/recordings/) · [Download the WebM](../frontend/public/recordings/querypilot.webm) · [Capture/source manifest](demos/interactive-recording.json)
 
-![Actual guided browser journey](assets/querypilot-demo.gif)
+![Actual guided browser journey](assets/demos/querypilot-demo.gif)
 
 The GIF is a six-frame preview. The WebM is a continuous Playwright screen recording of real browser interactions and server results; no generated UI, invented scores, model reasoning transcript or customer feedback is inserted. All data is original synthetic development data and no live model inference occurs.
 
@@ -17,12 +17,12 @@ The GIF is a six-frame preview. The WebM is a continuous Playwright screen recor
 
 ## Scope and provenance
 
-Video SHA256: `adeea0ce07c98ab5038be7d577c1d2c7f46a958f584bf284c552984de755d85f`. The [manifest](demos/interactive-recording.json) contains frame hashes, source hashes, browser checks and capture scope. The capture comes from the public guided deployment at source80ddc5966a207a721ee426226d49ece70d1f5aa5; the React and analytical backend source in this increment is unchanged. The recording player is added as a static frontend asset.
+Video SHA256: `8a0bb720a8efa40cf1b73a768ac80aca258451aeafbedca89085e9aded6fb3c0`. The [manifest](demos/interactive-recording.json) contains frame hashes, source hashes, browser checks and capture scope. This capture runs the actual built React frontend and reorganized FastAPI backend in an isolated local guided rehearsal. The same native recording-player/static routing is exercised. Source hashes identify the captured working tree; no deployed-commit attribution is claimed for this local capture. The earlier public capture remains in the dated manifest history.
 
 ## Reproduce
 
 ```sh
-python scripts/browser_smoke.py --url https://querypilot-five.vercel.app --record --publish-assets --source-commit <verified-deployment-sha> --screenshots artifacts/generated/demo-capture
+python scripts/demos/browser_smoke.py --url https://querypilot-five.vercel.app --record --publish-assets --source-commit <verified-deployment-sha> --screenshots artifacts/generated/demo-capture
 ```
 
 Check the source commit of the URL before attributing a remote capture. The optional source-commit value is provenance supplied by the operator, not independently authenticated by the recording script. Raw captures and downloaded reports stay ignored.

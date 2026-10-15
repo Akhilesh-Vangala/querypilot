@@ -6,9 +6,10 @@ from pathlib import Path
 # Allow `python seed.py` from backend/ without installing the package.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from app.db import SessionLocal, engine  # noqa: E402
-from app.models import Base  # noqa: E402
-from app.warehouse import seed_all  # noqa: E402
+from app.persistence.db import SessionLocal
+from app.persistence.db import engine  # noqa: E402
+from app.persistence.models import Base  # noqa: E402
+from app.warehouse.service import seed_all  # noqa: E402
 
 
 def main() -> None:

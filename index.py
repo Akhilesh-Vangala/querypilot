@@ -13,9 +13,9 @@ os.environ.setdefault('JWT_SECRET',secrets.token_urlsafe(64))
 from app.main import app
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from app.models import Base
-from app import db
-from app.warehouse import seed_all
+from app.persistence.models import Base
+from app.persistence import db
+from app.warehouse.service import seed_all
 from sqlalchemy.orm import Session
 # Some serverless adapters omit ASGI lifespan; initialize this isolated demo explicitly.
 Base.metadata.create_all(db.engine)

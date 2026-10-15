@@ -69,12 +69,12 @@ Public events expose stages and operational outcomes. Optional OTLP HTTP tracing
 
 | Responsibility | Source |
 | --- | --- |
-| Graph / action policy | [workflow.py](../../backend/app/agent/workflow.py), [protocol.py](../../backend/app/agent/protocol.py) |
-| Native model transport | [llm.py](../../backend/app/agent/llm.py) |
-| Semantic contracts | [catalog.py](../../backend/app/agent/catalog.py) |
-| SQL / warehouse authority | [guardrails.py](../../backend/app/agent/guardrails.py), [tools.py](../../backend/app/agent/tools.py), [production_checks.py](../../backend/app/production_checks.py) |
-| Persistence / workers | [runs.py](../../backend/app/runs.py), [worker.py](../../backend/app/worker.py) |
-| Identity / rate limits | [auth.py](../../backend/app/auth.py), [rate_limits.py](../../backend/app/rate_limits.py), [api.py](../../backend/app/api.py) |
-| Reproducible evidence | [workbench tests](../../backend/tests/test_workbench.py), [Postgres rehearsal](../../scripts/postgres_rehearsal.py), [browser journey](../../scripts/browser_smoke.py) |
+| Graph / action policy | [workflow.py](../../backend/app/agents/analytics/workflow.py), [protocol.py](../../backend/app/agents/analytics/protocol.py) |
+| Native model transport | [llm.py](../../backend/app/agents/analytics/llm.py) |
+| Semantic contracts | [catalog.py](../../backend/app/analytics/catalog.py) |
+| SQL / warehouse authority | [guardrails.py](../../backend/app/analytics/guardrails.py), [tools.py](../../backend/app/agents/analytics/tools.py), [production_checks.py](../../backend/app/core/production_checks.py) |
+| Persistence / workers | [runs.py](../../backend/app/persistence/runs.py), [worker.py](../../backend/app/workers/worker.py) |
+| Identity / rate limits | [auth.py](../../backend/app/security/auth.py), [rate_limits.py](../../backend/app/core/rate_limits.py), [api.py](../../backend/app/api/routes.py) |
+| Reproducible evidence | [workbench tests](../../backend/tests/api/test_workbench.py), [Postgres rehearsal](../../scripts/deployment/postgres_rehearsal.py), [browser journey](../../scripts/demos/browser_smoke.py) |
 
 Official design references: [OpenAI native function calling](https://developers.openai.com/api/docs/guides/function-calling), [strict structured outputs](https://developers.openai.com/api/docs/guides/structured-outputs), [PostgreSQL transaction controls](https://www.postgresql.org/docs/current/sql-set-transaction.html), [SQLGlot](https://github.com/tobymao/sqlglot), [LangGraph](https://docs.langchain.com/oss/python/langgraph/overview).

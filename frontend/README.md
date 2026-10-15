@@ -1,5 +1,10 @@
 # QueryPilot frontend
 
-[src](src/) contains React/TypeScript product pages and components. [public/recordings](public/recordings/) contains the native demo player and continuous capture. npm ci and npm run build use the checked-in package lock; Vite copies the static assets into dist.
+- [Application](src/app/): route composition.
+- [Features](src/features/): auth, investigations, comparisons, catalog, evaluation, history and workbench screens.
+- [Components](src/components/): shared charts, reports and layout.
+- [Client](src/lib/): typed API calls; [styles](src/styles/) own shared presentation.
+- [Recordings](public/recordings/): native video player and actual continuous capture.
+- [Configuration](config/): Nginx routing.
 
-[Repository ownership](../docs/development/LAYOUT.md) · [Actual demo](../docs/DEMO.md) · [Working app](https://querypilot-five.vercel.app).
+Run `npm ci` and `npm run build` from this directory. [Full layout](../docs/development/LAYOUT.md).
