@@ -1,0 +1,81 @@
+{
+  "browser": "Chromium",
+  "analyst_journey": true,
+  "rows": 5,
+  "sql": true,
+  "plan": true,
+  "dialog_escape": true,
+  "reload_history": true,
+  "mobile_overflow": false,
+  "metric_contracts": 5,
+  "compiled_comparison": true,
+  "contribution_segments": 5,
+  "shapley_factors": 3,
+  "deterministic_comparison_checks": 15,
+  "evidence_export": true,
+  "offline_report_recheck": true,
+  "future_period_withheld": true,
+  "page_errors": [],
+  "paid_model_calls": 0,
+  "url": "https://querypilot-five.vercel.app",
+  "frames": [
+    {
+      "stage": "overview",
+      "path": "00-overview.png",
+      "sha256": "28ee9b80ac4b6d8e5b6c0c766ceaee62d01f6ddb8400bb9f9b74ecf05438565f"
+    },
+    {
+      "stage": "executed-investigation",
+      "path": "01-executed-investigation.png",
+      "sha256": "dad7092d741c8fcba77ac230745034c38da9545735af828613a8c055363e14f4"
+    },
+    {
+      "stage": "guarded-sql",
+      "path": "02-guarded-sql.png",
+      "sha256": "2b50ee9bd47a13996a8b739baf0823976f8f60d961a6715a59a511b19a91605f"
+    },
+    {
+      "stage": "reconciled-periods",
+      "path": "03-reconciled-periods.png",
+      "sha256": "b6f1453d21d3013733bb6d28e75afdf4029324f56370643095037017faae7c3f"
+    },
+    {
+      "stage": "independent-checks",
+      "path": "04-independent-checks.png",
+      "sha256": "96e89a6eabb192c5a6a30fcaac25d399866bb5001ed020354773ba7b960e2020"
+    },
+    {
+      "stage": "exported-evidence",
+      "path": "05-exported-evidence.png",
+      "sha256": "7fc4751c31e579a8bc98db82bb2ef06291a9a0c79c8a24e7b3f21a5d89490918"
+    }
+  ],
+  "video_sha256": "adeea0ce07c98ab5038be7d577c1d2c7f46a958f584bf284c552984de755d85f",
+  "recording": "Continuous actual Chromium capture; guided synthetic data, automated interactions, no live model inference",
+  "captured_deployment_source": "80ddc5966a207a721ee426226d49ece70d1f5aa5",
+  "source_sha256": {
+    "frontend/src/App.tsx": "1991b0751070d229455e4a9f028c1456b19be70a32756e89d99b09bb25ed1f79",
+    "frontend/src/pages/Ask.tsx": "dd9c6d42f4d051fc4a61ddff59c13b2749e8e36fc992badd677fe438f0f89e68",
+    "frontend/src/pages/Compare.tsx": "a85b2d50b6cf4e73feaf56ed2217aa1a535fd190bdf9a2ac5d04a8cd37de4e94",
+    "frontend/src/pages/EvalPage.tsx": "057327a97adbb593223dc6e5bc3a5dbcf4975ffbbc7f2478a4e06a77d06f1d55",
+    "frontend/src/pages/History.tsx": "300b0062ece2c301a01d03dbb76e2636ab8c920ba0291e01851768cd79376f94",
+    "frontend/src/pages/Login.tsx": "b9d182af77e1abcefc528a07827debf4a9e3f023283e14defa9454bbce1b6888",
+    "frontend/src/pages/Schema.tsx": "302cac1bb4239d3032a1a72940bdda584737b021fb7a1a33244a95b0d588c122",
+    "frontend/src/pages/Workbench.tsx": "25f9d61dac592d8cfd068efe0bea5eb4508041dabf36a4cd129536e095e82148",
+    "backend/app/agent/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/app/agent/catalog.py": "66c377322a6ac614f230586063d215d1a6b5e030c2ea2a0df8d876f24b598825",
+    "backend/app/agent/comparison.py": "b9e3c436b4d312120f80d90f46a75dc556f4468b9198d0724992c0b043abb248",
+    "backend/app/agent/evidence.py": "3b3f9574e55cc083c61d6761adc4de164c6253e2c0d40282006b42398d6169b4",
+    "backend/app/agent/guardrails.py": "4b03be4e7d4d0c1f424a16397d14e659fafabc4624232407d4b342bde438e9ab",
+    "backend/app/agent/intents.py": "09bc14473f5111b53c6245b40a4d17733dee89656df3f261551dda9b48c0e6b6",
+    "backend/app/agent/llm.py": "60068d732a73121dbfce92714f684ded36c386b40653f6f1b54bf12aacede6b5",
+    "backend/app/agent/planner.py": "e0473b0fc86d38c5c8abcb6af5cd0c04d9763360efdd88822c5106db88b902dc",
+    "backend/app/agent/protocol.py": "3d4d01ec80d42604bd2a375fbfb4291ba8230423029c8dde81d5f50493637767",
+    "backend/app/agent/semantic.py": "4e4423374d85481c06edc1a8704b62a3c7ece197a5718ede7d98bdd304ad175f",
+    "backend/app/agent/tools.py": "7b47de0705f743973b21aa3bd0bf4feb1a45f99090bcc591e7c7137546aec201",
+    "backend/app/agent/workflow.py": "f954d02cb285bc27654e101775025fca017d2699923cb8910742587bc27009e0"
+  },
+  "video_path": "frontend/public/recordings/querypilot.webm",
+  "preview_path": "docs/assets/querypilot-demo.gif",
+  "capture_environment": "Actual public Vercel app; backend analytics and React source unchanged from the recorded deployment commit"
+}

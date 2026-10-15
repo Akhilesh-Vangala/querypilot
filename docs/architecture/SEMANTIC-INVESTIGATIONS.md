@@ -54,27 +54,27 @@ Arithmetic uses Decimal after reading the original floating-point fixture fields
 The report retains the typed request, contract version, executed SQL, raw aggregate columns/rows, coverage metadata, checks, limitations and content SHA-256. Numbers are normalized to canonical decimal strings for fingerprinting so a browser converting `123.0` to `123` does not invalidate an unchanged download. The product exports the run as `querypilot-report-v1` JSON. Run:
 
 ```sh
-python scripts/verify_report.py path/to/querypilot-run.json
+python scripts/evaluation/verify_report.py path/to/querypilot-run.json
 ```
 
 The verifier needs neither a model key nor a database. It checks the typed-request/raw-aggregate fingerprint and recomputes the comparison object from retained aggregates. Display prose and unrelated export metadata are outside that fingerprint. This detects accidental changes/inconsistent summaries; an unsigned hash does not authenticate origin, stop a party from replacing both rows and hash, prove natural-language intent, or certify the source data. Model prompts/hidden reasoning are not included in operational trace attributes.
 
 ## Evaluation and limits
 
-`backend/tests/test_semantic.py` supplies independently authored row-level oracles over three uneven data distributions, all five metric families and ten metric/dimension combinations. It also checks quoted filters, hostile literal values, overlap/unsupported scope, missing/empty/future periods, missing calendar/observed weeks, negative/invalid counts, zero denominators, truncation, corrupted totals, isolated Shapley factors, undefined segment prices and altered exported evidence. This is compiler/accounting regression evidence, not live-model question understanding.
+`backend/tests/analytics/test_semantic.py` supplies independently authored row-level oracles over three uneven data distributions, all five metric families and ten metric/dimension combinations. It also checks quoted filters, hostile literal values, overlap/unsupported scope, missing/empty/future periods, missing calendar/observed weeks, negative/invalid counts, zero denominators, truncation, corrupted totals, isolated Shapley factors, undefined segment prices and altered exported evidence. This is compiler/accounting regression evidence, not live-model question understanding.
 
-`scripts/comparison_benchmark.py` compares ten reviewed Q1/Q2 questions with separately authored quarterly SQL, checks selected scope as well as totals and segment values, records rounds/attempts/latency/tokens and hashes the source. Default mode has zero model calls; live mode requires a private key, `ALLOW_LIVE_AI=true` and `--ack-live-spend`. The original 12-case regression and 34-case filtered/safety suite remain separately scoped. The new known templates are not renamed as held-out model accuracy.
+`scripts/evaluation/comparison_benchmark.py` compares ten reviewed Q1/Q2 questions with separately authored quarterly SQL, checks selected scope as well as totals and segment values, records rounds/attempts/latency/tokens and hashes the source. Default mode has zero model calls; live mode requires a private key, `ALLOW_LIVE_AI=true` and `--ack-live-spend`. The original 12-case regression and 34-case filtered/safety suite remain separately scoped. The new known templates are not renamed as held-out model accuracy.
 
 Customer pilot gaps remain: live quality/cost comparisons, managed migrations, OIDC/organization warehouse permissions, shared spend reservations, backup restore, controlled checkpoints, retention, persistent monitored cloud staging, load/SLO evidence and actual user feedback. Vercel continues to serve a forced synthetic guided demo with browser-session history.
 
 ## Implementation and references
 
-- `backend/app/agent/semantic.py`: strict contracts, compiler, metric checks and Shapley accounting.
-- `backend/app/agent/comparison.py`: owned LangGraph subworkflow.
-- `backend/app/agent/evidence.py`: reusable offline verification packaged with the backend; CLI and tests import this module without depending on repository layout.
-- `backend/app/agent/llm.py`: native Responses call IDs, typed function outputs and replayed response items; generation retries remain disabled.
-- `frontend/src/pages/Compare.tsx`, `frontend/src/components/ComparisonReport.tsx`: scope form, report, contribution display and export.
-- `backend/app/eval/comparisons.py`: independent known-case SQL oracles, never imported into model context.
+- `backend/app/analytics/semantic.py`: strict contracts, compiler, metric checks and Shapley accounting.
+- `backend/app/analytics/comparison.py`: owned LangGraph subworkflow.
+- `backend/app/analytics/evidence.py`: reusable offline verification packaged with the backend; CLI and tests import this module without depending on repository layout.
+- `backend/app/agents/analytics/llm.py`: native Responses call IDs, typed function outputs and replayed response items; generation retries remain disabled.
+- `frontend/src/features/comparisons/Compare.tsx`, `frontend/src/components/reports/ComparisonReport.tsx`: scope form, report, contribution display and export.
+- `backend/app/evaluation/comparisons.py`: independent known-case SQL oracles, never imported into model context.
 - [OpenAI function calling](https://developers.openai.com/api/docs/guides/function-calling): strict object schemas and correlated native tool results. Local validation and business checks remain application-owned.
 - [MetricFlow](https://docs.getdbt.com/docs/build/about-metricflow): reference for centralized executable metric semantics. Five supported metrics justify the small owned compiler here; no dbt/warehouse compatibility claim or unused dependency.
 - [Semantic evaluation with distilled test suites](https://aclanthology.org/2020.emnlp-main.29/): motivation for independent data variants rather than treating one successful SQL execution as semantic correctness.

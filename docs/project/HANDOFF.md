@@ -6,7 +6,7 @@ React and FastAPI connect authenticated admission to separate PostgreSQL workers
 
 Public app: https://querypilot-five.vercel.app. Recording: https://querypilot-five.vercel.app/recordings/. Synthetic claims/network data and a guided investigator execute guarded SQL within the HTTP request. Compare periods across five reviewed metric families, inspect contributions and fifteen checks, export evidence for offline recomputation, and withhold unsupported future-period conclusions. Both mode and dataset scope must stay visible. No live-model quality, customer feedback or monitored persistent cloud claim is established.
 
-The `chore/repository-structure` increment moves sources/docs into explicit areas and refreshes actual recordings. Native suites pass 137cases; actual Linux/container/deployment conclusions belong to required CI and source-linked publication records, not prepared files. Publish only through the [protected branch workflow](../../BRANCHING.md).
+The `refactor/component-structure` increment groups modules/tests by capability, moves versioned data/dbt under backend, separates native frontend scripts/styles/media, consolidates infrastructure/tooling and refreshes actual source-bound recordings. Native suites pass 137cases; actual Linux/container/deployment conclusions belong to required CI and source-linked publication records, not prepared files. Publish only through the [protected branch workflow](../development/BRANCHING.md).
 
 Keep data and ignored `.env`/runtime state unchanged. Do not copy provider keys between projects. The public entrypoint disables live model credentials. Interrupted model work requires explicit resubmission; the inner graph is not checkpointed.
 

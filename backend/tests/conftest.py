@@ -8,15 +8,16 @@ os.environ.pop("OPENAI_API_KEY", None)
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, event
+from sqlalchemy import create_engine
+from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app import db as db_module
-from app.db import get_db
+from app.persistence import db as db_module
+from app.persistence.db import get_db
 from app.main import app
-from app.models import Base
-from app.warehouse import seed_all
+from app.persistence.models import Base
+from app.warehouse.service import seed_all
 
 _test_engine = create_engine(
     "sqlite:///:memory:",

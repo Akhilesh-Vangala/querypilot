@@ -6,16 +6,17 @@ import uuid
 import threading
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
+from fastapi import Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError as PydanticValidationError
 from sqlalchemy import text
 
-from . import db as db_module
-from .api import router
-from .models import Base
-from .config import get_settings
+from app.persistence import db as db_module
+from app.api.routes import router
+from app.persistence.models import Base
+from app.core.config import get_settings
 
 logger = logging.getLogger("querypilot")
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -27,20 +28,20 @@ async def lifespan(_app: FastAPI):
     if settings.auto_create_schema:
         Base.metadata.create_all(bind=db_module.engine)
     if settings.seed_demo:
-        from .warehouse import seed_all
+        from app.warehouse.service import seed_all
         from sqlalchemy.orm import Session
 
         with Session(db_module.engine) as session:
             seed_all(session)
     if settings.app_environment == "production":
-        from .production_checks import verify_warehouse_role
+        from app.core.production_checks import verify_warehouse_role
 
         verify_warehouse_role(db_module.warehouse_engine)
     stopped = threading.Event()
     thread = None
     if settings.embedded_worker:
-        from .worker import process_one
-        from .runs import RunRepository
+        from app.workers.worker import process_one
+        from app.persistence.runs import RunRepository
 
         def work():
             repository = RunRepository(db_module.engine)

@@ -4,7 +4,7 @@ updates:
     directory: /frontend
     schedule: {interval: weekly}
   - package-ecosystem: pip
-    directory: /backend
+    directory: /backend/requirements
     schedule: {interval: weekly}
   - package-ecosystem: github-actions
     directory: /
