@@ -71,6 +71,9 @@ def main():
                 continue
             location, _, fragment = target.partition("#")
             destination = (path.parent / location).resolve() if location else path
+            if "artifacts/generated/" in target or ".tools/" in target or "__pycache__/" in target:
+                errors.append(str(path.relative_to(ROOT)) + ": link points to ignored local state " + target)
+                continue
             if not destination.exists():
                 errors.append(str(path.relative_to(ROOT)) + ": missing " + target)
             elif (
