@@ -23,6 +23,8 @@ with Session(db.engine) as session:seed_all(session)
 static=root/'frontend'/'dist'
 if static.exists():
     app.mount('/assets',StaticFiles(directory=static/'assets'),name='assets')
+    if (static/'recordings').is_dir():
+        app.mount('/recordings',StaticFiles(directory=static/'recordings',html=True),name='recordings')
     @app.get('/{path:path}',include_in_schema=False)
     def frontend(path:str):
         if path.startswith(('api/','health/','ready/')):

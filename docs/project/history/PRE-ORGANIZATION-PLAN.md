@@ -1,3 +1,5 @@
+> Historical record. [Current project overview](../../../README.md) and [current handoff](../HANDOFF.md) take precedence.
+
 # QueryPilot delivery plan
 
 - [x] Inspect/preserve original repository and verify original regression baseline.
