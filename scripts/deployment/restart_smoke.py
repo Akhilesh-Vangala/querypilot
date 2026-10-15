@@ -20,7 +20,7 @@ run = client.post(
 )
 run.raise_for_status()
 identity = run.json()["id"]
-subprocess.run(["docker", "compose", "restart", "api"], check=True)
+subprocess.run(["scripts/deployment/compose.sh", "restart", "api"], check=True)
 for _ in range(60):
     try:
         state = client.get("/api/analyses/" + identity)
