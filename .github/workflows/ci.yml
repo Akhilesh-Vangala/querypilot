@@ -39,7 +39,7 @@ jobs:
         env:
           QUERY_PRODUCT_TEST_ADMIN_URL: postgresql://product_owner:local-test-password@127.0.0.1:5432/product_test
         run: python scripts/checks/product_rls.py
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: backend-evidence
@@ -98,7 +98,7 @@ jobs:
       - name: Container diagnostics
         if: always()
         run: scripts/deployment/compose.sh ps -a && scripts/deployment/compose.sh logs --no-color --tail=100
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: container-evidence
