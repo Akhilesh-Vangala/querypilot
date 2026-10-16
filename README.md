@@ -1,6 +1,6 @@
 <p align="center"><img src="docs/assets/branding/hero.svg" alt="QueryPilot — Agentic analytics" width="100%"></p>
 
-**Use your own data:** [Open the CSV workspace](https://querypilot-five.vercel.app/uploads) · [Contracts, verification and data handling](docs/product/USER-DATA.md). Upload, map columns, review business rules, and download checked source-derived results. Public processing is contract-driven; live model interpretation remains unavailable.
+**Use your own data:** [Open QueryPilot](https://querypilot-five.vercel.app/) · [Start with your CSV](https://querypilot-five.vercel.app/uploads) · [Product walkthrough and storage](docs/product/PRODUCT-WORKSPACE.md). Guided source/rule review, observed execution stages, independently checked results, consented device projects/history and portable backups. Inspect exact analytical values, filters and executed SQL; no inferred causal claim.
 
 <p align="center"><a href="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml"><img src="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml/badge.svg" alt="Required engineering checks"></a> &nbsp; Python · LangGraph · FastAPI · PostgreSQL</p>
 
@@ -18,6 +18,10 @@ Answer claims and provider-network questions with executed SQL, reviewed metric 
 <a id="see-the-workbench"></a>
 
 ## Run the workflow
+
+![QueryPilot actual own-data product result](docs/assets/demos/product-report.png)
+
+[Watch the actual upload walkthrough](https://querypilot-five.vercel.app/uploads/recording.html) · [Product architecture and validation](docs/product/PRODUCT-WORKSPACE.md). The original guided synthetic agent demonstration follows; neither recording claims live inference.
 
 <picture>
   <source media="(prefers-reduced-motion: reduce)" srcset="docs/assets/demos/querypilot-demo-poster.png">

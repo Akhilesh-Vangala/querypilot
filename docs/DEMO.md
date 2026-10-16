@@ -1,3 +1,7 @@
+# Current product recording
+
+The [upload walkthrough](demos/uploads-recording.json) now records the complete product journey: real file selection, source preview, reviewed definition, executed independently checked results, exports, explicit device save and saved history. [Product result screenshot](assets/demos/product-report.png). This is one continuous Chromium capture using authored test data, with readable pauses; it is not customer feedback or live-model inference. The original guided sample recording remains distinct below. Previous capture manifests are retained under `docs/demos/history/`.
+
 # QueryPilot recorded demonstration
 
 [Open the working app](https://querypilot-five.vercel.app) · [Watch the continuous recording](https://querypilot-five.vercel.app/recordings/) · [Download the WebM](../frontend/public/recordings/querypilot.webm) · [Capture/source manifest](demos/interactive-recording.json)
