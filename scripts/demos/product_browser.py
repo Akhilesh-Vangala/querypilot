@@ -171,9 +171,10 @@ def main():
             context.close();browser.close()
         assert not errors,errors
         sources=[root/('app.py' if relay else 'index.py')]
-        for directory in ('backend/src/relayops','frontend/apps/product') if relay else ('backend/app','frontend/src','frontend/dist/assets'):
+        for directory in ('backend/src/relayops','frontend/apps/product') if relay else ('backend/app','frontend/src'):
             sources += [f for f in sorted((root/directory).rglob('*')) if f.suffix in ('.py','.js','.css','.html','.tsx','.ts')]
-        report=dict(project=brand,passed=True,url=url,paid_model_calls=0,actual_user_feedback=False,checks=checks,page_errors=errors,frames=frames,automated_accessibility_views=len(audits),source_sha256={str(f.relative_to(root)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sources})
+        build_hashes={str(f.relative_to(root)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted((root/'frontend/dist/assets').glob('*')) if f.suffix in ('.js','.css')} if not relay else {}
+        report=dict(build_sha256=build_hashes,project=brand,passed=True,url=url,paid_model_calls=0,actual_user_feedback=False,checks=checks,page_errors=errors,frames=frames,automated_accessibility_views=len(audits),source_sha256={str(f.relative_to(root)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sources})
         (output/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:v for k,v in report.items() if k not in ('source_sha256','frames')}))
     finally:
         if server:

@@ -70,3 +70,15 @@ class ProductEvidenceTests(unittest.TestCase):
         report=run(upload)
         self.assertEqual(report["summary"]["overall_value"],"4.6666666666666666666666666666666666667")
         self.assertNotEqual(report["summary"]["overall_value"],"6")
+
+    def test_recording_assets_resolve_from_built_serverless_package(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            assets=root/'frontend/dist/uploads';assets.mkdir(parents=True)
+            (assets/'poster.png').write_bytes(b'owned-built-poster')
+            app=FastAPI();attach(app,'QueryPilot',root)
+            with TestClient(app) as client:
+                response=client.get('/uploads-assets/poster.png')
+                self.assertEqual(response.status_code,200)
+                self.assertEqual(response.content,b'owned-built-poster')

@@ -1,4 +1,8 @@
 {
+  "build_sha256": {
+    "frontend/dist/assets/index-5dCd11IR.css": "e49696beacefe7dd845510703977572016a4d286ca74d202de92e8bb9ebeba7e",
+    "frontend/dist/assets/index-C6DrDEEU.js": "12829a5f4761a5dcf56bf70afb91979ae0c2b9c588ec74259db8bd33f5f804a9"
+  },
   "project": "QueryPilot",
   "passed": true,
   "url": "http://127.0.0.1:18302",
@@ -75,7 +79,7 @@
     "backend/app/security/auth.py": "bdc337ab4e40a66bc577b83622bc20181b958bb0079312cd3281dd7ce454a4db",
     "backend/app/security/provision_user.py": "d91a257a0f88360a8ac707ac9e02dddca51b4057cff30c33ec9bcbe2d98a7f4c",
     "backend/app/uploads/__init__.py": "6cf9cc3f23b8eb7fecf7b1f708e9627b7d6c5aacbe313fc0034cc082b4496ee4",
-    "backend/app/uploads/api.py": "2a787b513bb8a58823b7115804d3c5b0808ddf3b80c84ed7345d6db40eb84664",
+    "backend/app/uploads/api.py": "83e7b363d5682d4f5a31bd06673d6d496601f44f02151f3e0f26e64dfa6e60af",
     "backend/app/uploads/ingestion.py": "5d8bc63659a13b09d848639d1ce1870583f70a46c9c29f9465b521d25f9883a5",
     "backend/app/uploads/service.py": "86ae71e81412c31663ab20b38ce8a426135058b24d22cfe61c67371c46badbe6",
     "backend/app/uploads/signing.py": "104979a3e1d28791f243e1137d160162edf8cd9375df32f9ec20b756d8d2d805",
@@ -110,13 +114,11 @@
     "frontend/src/lib/api.ts": "0d21bfd52c04ca9cdae04d634f7d312b31e245296ead41bff6517df726027eb8",
     "frontend/src/main.tsx": "0302a9f1d2daa8a744074dc07fdef8e7d58777c76e9c6599979d56038de6498f",
     "frontend/src/styles/index.css": "56e63395aa23b2aa9ccdadb36c020e36f712217e9becd1e5dc20af8903123068",
-    "frontend/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
-    "frontend/dist/assets/index-5dCd11IR.css": "e49696beacefe7dd845510703977572016a4d286ca74d202de92e8bb9ebeba7e",
-    "frontend/dist/assets/index-C6DrDEEU.js": "12829a5f4761a5dcf56bf70afb91979ae0c2b9c588ec74259db8bd33f5f804a9"
+    "frontend/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5"
   },
   "recording": "Continuous actual Chromium upload/rules/verification/exports/device history journey; automated fixtures, no live model inference or actual-user feedback",
   "media_sha256": {
-    "frontend/public/uploads/walkthrough.webm": "23404f825148630c7c4c2aed8b8ad9d22f0a3ab48ab026e776ad3d24689e67e5",
-    "frontend/public/uploads/poster.png": "bfb096a8aa03afc89c52c2b176e6cb6616ad30cbae1abd2e093bbc645e05811e"
+    "frontend/public/uploads/walkthrough.webm": "61d24efdd8efcfb173437bc41a8bdb171f5d467c650da490870c59365db41ae3",
+    "frontend/public/uploads/poster.png": "e436226b76bf0d3388dc241412cbfed9ce5ed767721b2d84772ced464f3d7112"
   }
 }

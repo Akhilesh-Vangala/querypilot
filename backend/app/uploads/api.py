@@ -54,7 +54,9 @@ CONFIGS = {
 
 def attach(app, project, root):
     config = CONFIGS[project]
-    static = Path(root)/"frontend/public/uploads"
+    static = Path(root)/"frontend/dist/uploads"
+    if not static.is_dir():
+        static = Path(root)/"frontend/public/uploads"
     app.add_middleware(UploadBoundary)
     session = None
     if project == "RelayOps":
