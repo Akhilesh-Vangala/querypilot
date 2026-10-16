@@ -42,6 +42,12 @@ export type Report = {
   attestation: { version: string; signature: string };
 };
 export type Draft = Contract & {
+  importSource?: {
+    format: string;
+    sheet?: string;
+    original_sha256: string;
+    normalized_sha256: string;
+  };
   id: string;
   title: string;
   filename: string;

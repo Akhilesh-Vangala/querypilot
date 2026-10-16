@@ -414,12 +414,12 @@ export default function ProductApp() {
       <div className="empty">
         <h2>Your first analysis starts here.</h2>
         <p>
-          Bring a CSV or explore the sample. Only work you explicitly save
-          appears here.
+          Bring a table export or explore the sample. Only work you explicitly
+          save appears here.
         </p>
         <div className="actions">
           <Link className="primary" to="/uploads?new=1">
-            Upload a CSV
+            Upload a data file
           </Link>
           <button className="secondary" onClick={sample}>
             Explore the sample

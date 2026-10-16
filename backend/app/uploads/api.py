@@ -13,8 +13,9 @@ from pydantic import BaseModel, ConfigDict, Field
 from .ingestion import Upload, Preview, UploadBoundary, UploadProblem, fingerprint, profile, preview
 from .service import run
 from .signing import attest, verify_report
+from .imports import FileImport, FORMATS, import_file
 
-WRITE_PATHS = {"/api/uploads/profile", "/api/uploads/preview", "/api/uploads/analyze", "/api/uploads/analyze-stream", "/api/uploads/check-report", "/api/uploads/approve"}
+WRITE_PATHS = {"/api/uploads/import", "/api/uploads/profile", "/api/uploads/preview", "/api/uploads/analyze", "/api/uploads/analyze-stream", "/api/uploads/check-report", "/api/uploads/approve"}
 
 
 class ReportCheck(BaseModel):
@@ -90,13 +91,22 @@ def attach(app, project, root):
             session.visitor(request, response)
         response.headers["Cache-Control"] = "no-store"
         return {"project": project, **{k: v for k, v in config.items() if k != "template"},
-                "live_ai": False, "max_csv_bytes": 400000, "max_rows": 30 if project == "RelayOps" else 5000,
+                "live_ai": False, "formats": sorted(FORMATS), "max_csv_bytes": 400000, "max_rows": 30 if project == "RelayOps" else 5000,
                 "retention": "Unsaved files are processed for this request and remain in browser memory. Optional device history or configured account storage requires explicit save consent. Hosting metadata may be retained; file contents are not deliberately logged.",
                 "approval_available": session is not None}
 
     @app.get("/api/uploads/template")
     def template():
         return Response(config["template"], media_type="text/csv", headers={"Content-Disposition": f'attachment; filename="{project.lower()}-template.csv"', "Cache-Control": "no-store"})
+
+    @app.post("/api/uploads/import")
+    def import_tabular(body: FileImport):
+        try:
+            return JSONResponse(import_file(body, max_rows=30 if project == "RelayOps" else 5000), headers={"Cache-Control":"no-store"})
+        except UploadProblem as error:
+            return JSONResponse(error.response(), status_code=422)
+        except ValueError:
+            raise HTTPException(422, "Invalid tabular file; check the export and retry") from None
 
     @app.post("/api/uploads/profile")
     def inspect(upload: Upload):

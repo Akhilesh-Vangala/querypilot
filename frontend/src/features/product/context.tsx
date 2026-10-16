@@ -1,3 +1,4 @@
+import { importFile, type Imported } from "./lib/imports";
 import {
   createContext,
   useContext,
@@ -160,8 +161,11 @@ function useController() {
     setProblem(null);
   }
   async function loadFile(file: File, kind = "upload") {
-    if (file.size > 400000 || !file.name.toLowerCase().endsWith(".csv")) {
-      fail(Error("Choose a UTF-8 .csv no larger than 400 KB."));
+    if (
+      file.size > 400000 ||
+      !/\.(csv|tsv|xlsx|json|jsonl)$/i.test(file.name)
+    ) {
+      fail(Error("Choose CSV, TSV, Excel .xlsx, JSON or JSONL, up to 400 KB."));
       return;
     }
     const base = kind === "sample" ? fresh() : draft;
@@ -171,15 +175,17 @@ function useController() {
     setBusy(true);
     setProblem(null);
     try {
-      const csv = new TextDecoder("utf-8", {
-        fatal: true,
-        ignoreBOM: true,
-      }).decode(await file.arrayBuffer());
-      const profile = await request<Profile>(
-        "/api/uploads/profile",
-        { csv },
+      const imported = await importFile(
+        file,
+        (body) =>
+          request<Imported>(
+            "/api/uploads/import",
+            body,
+            controller.current?.signal,
+          ),
         controller.current.signal,
       );
+      const { csv, profile } = imported;
       if (current !== epoch.current) return;
       if (base.requiredSourceHash && profile.sha256 !== base.requiredSourceHash)
         throw Error(
@@ -198,6 +204,7 @@ function useController() {
         id: crypto.randomUUID(),
         csv,
         profile,
+        importSource: imported.source,
         filename: file.name.slice(0, 160),
         report: null,
         storage: "memory",
@@ -211,7 +218,9 @@ function useController() {
           ? base.title
           : kind === "sample"
             ? "Sample · Revenue by region"
-            : file.name.replace(/\.csv$/i, "").slice(0, 100),
+            : file.name
+                .replace(/\.(csv|tsv|xlsx|json|jsonl)$/i, "")
+                .slice(0, 100),
       });
     } catch (error) {
       if (current === epoch.current) fail(error);
