@@ -70,6 +70,9 @@ def main():
             def rules():
                 page.locator('#review-rules').click()
                 if not relay:
+                    # Suggestions are optional and can arrive after profile on a
+                    # cold serverless start. Review the intended contract explicitly.
+                    page.locator('#mapping-measure').select_option('c1');page.locator('#mapping-group').select_option('c0')
                     page.locator('#mapping-filter').select_option('c2');page.locator('#filter-value').fill('done')
             def run():
                 rules();page.locator('#review-definition').click();expect(page.locator('#analyze')).to_be_disabled()
