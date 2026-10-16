@@ -1,6 +1,8 @@
 <p align="center"><img src="docs/assets/branding/hero.svg" alt="QueryPilot — Agentic analytics" width="100%"></p>
 
-**Use your own data:** [Open QueryPilot](https://querypilot-five.vercel.app/) · [Start with your CSV](https://querypilot-five.vercel.app/uploads) · [Product walkthrough and storage](docs/product/PRODUCT-WORKSPACE.md). Guided source/rule review, observed execution stages, independently checked results, consented device projects/history and portable backups. Inspect exact analytical values, filters and executed SQL; no inferred causal claim.
+**Use your own data:** [Open QueryPilot](https://querypilot-five.vercel.app/) · [Start with your data file](https://querypilot-five.vercel.app/uploads) · [Product walkthrough and storage](docs/product/PRODUCT-WORKSPACE.md). Guided source/rule review, observed execution stages, independently checked results, consented device projects/history and portable backups. Inspect exact analytical values, filters and executed SQL; no inferred causal claim.
+
+**File imports:** CSV · TSV · Excel `.xlsx` with worksheet choice · JSON · JSONL. [Import contract and limits](docs/product/FILE-IMPORTS.md). Existing independent checks and approval rules apply to every format.
 
 <p align="center"><a href="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml"><img src="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml/badge.svg" alt="Required engineering checks"></a> &nbsp; Python · LangGraph · FastAPI · PostgreSQL</p>
 

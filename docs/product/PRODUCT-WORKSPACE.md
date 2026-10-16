@@ -1,3 +1,7 @@
+## Multiple tabular formats — October16
+
+CSV, TSV, Excel .xlsx, JSON and JSONL are accepted through the guided product. [Formats, worksheet selection, exact conversion and limits](FILE-IMPORTS.md). Existing domain contracts and result/approval checks remain applicable; PDFs/images are unsupported. Earlier CSV-specific implementation descriptions below remain historical context for the normalized analysis engine.
+
 # QueryPilot product workspace
 
 The public product offers a real source-to-result journey. The original guided synthetic application remains at `/demo`; its sample datasets and history are separate. [Own-data contract](USER-DATA.md).

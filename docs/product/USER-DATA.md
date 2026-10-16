@@ -1,3 +1,7 @@
+## Multiple tabular formats — October16
+
+CSV, TSV, Excel .xlsx, JSON and JSONL are accepted through the guided product. [Formats, worksheet selection, exact conversion and limits](FILE-IMPORTS.md). Existing domain contracts and result/approval checks remain applicable; PDFs/images are unsupported. Earlier CSV-specific implementation descriptions below remain historical context for the normalized analysis engine.
+
 # QueryPilot: work with your own data
 
 The public `/uploads` workspace accepts visitor-owned CSVs and returns source-derived results. Existing sample investigations remain separate. No provider keys are configured in the public deployment: these are explicitly reviewed contract workflows, not live language interpretation or measured general-purpose agent accuracy.
