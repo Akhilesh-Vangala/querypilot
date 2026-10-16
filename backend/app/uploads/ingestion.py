@@ -15,6 +15,16 @@ CSV_LIMIT = 400_000
 MAX_ROWS = 5000
 
 
+class UploadProblem(ValueError):
+    """Recoverable client issue, with record/column locations and no cell values."""
+    def __init__(self, message, *, code="invalid_file", issues=None, hint="Review the file and try again."):
+        super().__init__(message)
+        self.code, self.issues, self.hint = code, (issues or [])[:20], hint
+
+    def response(self):
+        return {"detail": str(self), "code": self.code, "issues": self.issues, "hint": self.hint}
+
+
 class Upload(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
     csv: str = Field(min_length=1, max_length=CSV_LIMIT)
@@ -46,13 +56,18 @@ def parse(source):
         if not 1 <= len(headers) <= 60 or any(not h.strip() or len(h) > 120 for h in headers):
             raise ValueError("CSV needs 1–60 named columns, each at most 120 characters")
         if len({h.strip().casefold() for h in headers}) != len(headers):
-            raise ValueError("Duplicate column names are ambiguous")
+            raise UploadProblem("Duplicate column names are ambiguous", code="duplicate_headers",
+                                issues=[{"row": 1, "column": name, "message": "This header is repeated."}
+                                        for name in headers if sum(h.strip().casefold() == name.strip().casefold() for h in headers) > 1],
+                                hint="Give each column a unique name in the header row, then upload the corrected file.")
         rows = []
         for number, row in enumerate(reader, 2):
             if len(rows) >= MAX_ROWS:
                 raise ValueError("CSV exceeds 5,000 records")
             if len(row) != len(headers) or any(len(cell) > 2048 for cell in row):
-                raise ValueError(f"CSV row {number} has an invalid column count or oversized field")
+                raise UploadProblem(f"CSV row {number} has an invalid column count or oversized field",
+                                    code="invalid_record", issues=[{"row": number, "column": "", "message": f"Expected {len(headers)} fields, each at most 2,048 characters."}],
+                                    hint="Check the highlighted record's comma separators, quoting and field lengths.")
             rows.append(row)
         if not rows:
             raise ValueError("CSV has no records")
@@ -63,11 +78,38 @@ def parse(source):
 
 def profile(source):
     headers, rows = parse(source)
+    def numeric(value):
+        try:
+            decimal_value(value)
+            return True
+        except ValueError:
+            return False
     return {"rows": len(rows), "sha256": hashlib.sha256(source.encode()).hexdigest(),
             "columns": [{"id": f"c{i}", "name": name,
                          "missing": sum(not row[i].strip() for row in rows),
+                         "distinct": len({row[i] for row in rows}),
+                         "numeric": sum(numeric(row[i]) for row in rows),
                          "samples": [row[i][:100] for row in rows[:3]]}
-                        for i, name in enumerate(headers)]}
+                        for i, name in enumerate(headers)],
+            "preview": [{"row": i+2, "cells": row} for i, row in enumerate(rows[:10])]}
+
+
+class Preview(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    csv: str = Field(min_length=1, max_length=CSV_LIMIT)
+    offset: int = Field(default=0, ge=0, le=MAX_ROWS)
+    search: str = Field(default="", max_length=120)
+    rows: list[int] = Field(default_factory=list, max_length=20)
+
+
+def preview(request):
+    headers, rows = parse(request.csv)
+    if any(type(n) is not int or n < 1 or n > MAX_ROWS+1 for n in request.rows):
+        raise ValueError("Invalid record selection")
+    selected = [{"row": i+2, "cells": row} for i, row in enumerate(rows)
+                if (not request.rows or i+2 in request.rows)
+                and (not request.search or any(request.search.casefold() in cell.casefold() for cell in row))]
+    return {"headers": headers, "rows": selected[request.offset:request.offset+25], "matches": len(selected), "total": len(rows)}
 
 
 def column(mapping, name, headers, optional=False):
@@ -116,7 +158,7 @@ class UploadBoundary:
         self.app = app
 
     async def __call__(self, scope, receive, send):
-        if scope["type"] != "http" or not scope["path"].startswith("/api/uploads/"):
+        if scope["type"] != "http" or not scope["path"].startswith(("/api/uploads/", "/api/account/")):
             return await self.app(scope, receive, send)
         if scope["method"] == "POST":
             headers = dict(scope.get("headers", []))

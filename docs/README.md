@@ -1,3 +1,5 @@
+[Product pages, storage and verification](product/PRODUCT-WORKSPACE.md) · [Own-data business contract](product/USER-DATA.md)
+
 # QueryPilot technical documentation
 
 [Project overview](../README.md) · [Working app](https://querypilot-five.vercel.app) · [Recorded demo](DEMO.md)

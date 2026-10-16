@@ -9,4 +9,4 @@
 
 Run `npm ci` and `npm run build` from this directory. [Full layout](../docs/development/LAYOUT.md).
 
-- [Own-data workspace](public/uploads/): file selection, explicit contracts, checked results, approval and downloads.
+- [Own-data product](src/features/product/): landing/workspace, guided contracts, exact analytical results, device projects/history, recovery and optional accounts. [Upload recordings](public/uploads/) retain the public media routes.

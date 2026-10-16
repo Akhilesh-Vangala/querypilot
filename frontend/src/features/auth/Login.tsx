@@ -17,7 +17,7 @@ export default function Login() {
     try {
       await login(e, p);
       await api.me();
-      navigate("/");
+      navigate("/demo");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign-in failed");
       setBusy(false);

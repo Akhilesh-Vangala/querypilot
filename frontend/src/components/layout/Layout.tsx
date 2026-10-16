@@ -17,7 +17,7 @@ export default function Layout() {
     api.config().then(setConfig);
   }, []);
   const links = [
-    ["/", "Overview"],
+    ["/demo", "Overview"],
     ["/new", "New investigation"],
     ["/compare", "Compare periods"],
     ["/history", "Investigations"],
@@ -34,7 +34,7 @@ export default function Layout() {
         <p className="sidebar-caption">ANALYTICS WORKSPACE</p>
         <nav>
           {links.map(([path, title]) => (
-            <NavLink end={path === "/"} key={path} to={path}>
+            <NavLink end={path === "/demo"} key={path} to={path}>
               {title}
             </NavLink>
           ))}

@@ -1,4 +1,12 @@
-:root {
+/* The original synthetic workbench has its own theme boundary. */
+body {
+  margin: 0;
+}
+.legacy-root {
+  min-height: 100vh;
+  color-scheme: dark;
+}
+.legacy-root {
   font-family:
     Inter,
     ui-sans-serif,
@@ -14,27 +22,27 @@
   --muted: #a0a0a0;
   line-height: 1.55;
 }
-* {
+.legacy-root * {
   box-sizing: border-box;
 }
-body {
+.legacy-root {
   margin: 0;
 }
-a {
+.legacy-root a {
   color: inherit;
   text-decoration: none;
 }
-a:hover {
+.legacy-root a:hover {
   color: #fff;
 }
-button,
-input,
-textarea,
-select {
+.legacy-root button,
+.legacy-root input,
+.legacy-root textarea,
+.legacy-root select {
   font: inherit;
 }
-button,
-.button {
+.legacy-root button,
+.legacy-root .button {
   background: #f0f0f0;
   color: #111;
   border: 1px solid #f0f0f0;
@@ -48,27 +56,27 @@ button,
   justify-content: center;
   gap: 10px;
 }
-button:hover,
-.button:hover {
+.legacy-root button:hover,
+.legacy-root .button:hover {
   background: #fff;
   color: #000;
 }
-button:disabled {
+.legacy-root button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
-.secondary {
+.legacy-root .secondary {
   background: #151515;
   border-color: #363636;
   color: #ddd;
 }
-.secondary:hover {
+.legacy-root .secondary:hover {
   background: #202020;
   color: #fff;
 }
-input,
-textarea,
-select {
+.legacy-root input,
+.legacy-root textarea,
+.legacy-root select {
   width: 100%;
   padding: 12px 14px;
   color: #eee;
@@ -77,31 +85,31 @@ select {
   border-radius: 6px;
   outline: none;
 }
-input:focus,
-textarea:focus,
-select:focus {
+.legacy-root input:focus,
+.legacy-root textarea:focus,
+.legacy-root select:focus {
   border-color: #bbb;
   box-shadow: 0 0 0 2px #ffffff12;
 }
-textarea {
+.legacy-root textarea {
   resize: vertical;
   min-height: 130px;
 }
-label {
+.legacy-root label {
   display: block;
   color: #bbb;
   font-size: 12px;
   font-weight: 500;
   margin: 0 0 8px;
 }
-.eyebrow {
+.legacy-root .eyebrow {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 1.8px;
   color: #9b9b9b;
   margin-bottom: 12px;
 }
-h1 {
+.legacy-root h1 {
   font-size: clamp(28px, 3.4vw, 45px);
   font-weight: 500;
   line-height: 1.15;
@@ -109,7 +117,7 @@ h1 {
   margin: 14px 0 16px;
   overflow-wrap: anywhere;
 }
-h2 {
+.legacy-root h2 {
   font-size: 19px;
   line-height: 1.4;
   font-weight: 500;
@@ -117,28 +125,28 @@ h2 {
   letter-spacing: -0.3px;
   overflow-wrap: anywhere;
 }
-h3 {
+.legacy-root h3 {
   font-size: 14px;
   font-weight: 500;
   margin: 14px 0 8px;
 }
-p {
+.legacy-root p {
   font-size: 13px;
   margin: 0 0 16px;
 }
-.muted {
+.legacy-root .muted {
   color: var(--muted);
 }
-.small-note {
+.legacy-root .small-note {
   font-size: 11px;
   color: #969696;
   line-height: 1.7;
 }
-.app-shell {
+.legacy-root .app-shell {
   display: flex;
   min-height: 100vh;
 }
-.sidebar {
+.legacy-root .sidebar {
   position: fixed;
   inset: 0 auto 0 0;
   width: 224px;
@@ -148,7 +156,7 @@ p {
   display: flex;
   flex-direction: column;
 }
-.brand {
+.legacy-root .brand {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -156,7 +164,7 @@ p {
   font-weight: 550;
   letter-spacing: -0.6px;
 }
-.brand-mark {
+.legacy-root .brand-mark {
   width: 29px;
   height: 29px;
   display: grid;
@@ -167,48 +175,48 @@ p {
   font-size: 18px;
   font-weight: 600;
 }
-.sidebar-caption {
+.legacy-root .sidebar-caption {
   font-size: 9px;
   letter-spacing: 1.7px;
   color: #727272;
   margin-top: 36px;
 }
-.sidebar nav {
+.legacy-root .sidebar nav {
   display: grid;
   gap: 5px;
 }
-.sidebar nav a {
+.legacy-root .sidebar nav a {
   padding: 11px 13px;
   border-radius: 5px;
   font-size: 12px;
   color: #a1a1a1;
   border: 1px solid transparent;
 }
-.sidebar nav a.active {
+.legacy-root .sidebar nav a.active {
   background: #1b1b1b;
   color: #eee;
   border-color: #303030;
 }
-.sidebar nav a:hover {
+.legacy-root .sidebar nav a:hover {
   color: white;
   background: #151515;
 }
-.sidebar-bottom {
+.legacy-root .sidebar-bottom {
   margin-top: auto;
   padding-top: 36px;
   font-size: 10px;
   color: #999;
   overflow-wrap: anywhere;
 }
-.sidebar-bottom p {
+.legacy-root .sidebar-bottom p {
   font-size: 10px;
   margin: 9px 0 14px;
 }
-.sidebar-bottom button {
+.legacy-root .sidebar-bottom button {
   font-size: 10px;
   padding: 6px 12px;
 }
-.status-dot {
+.legacy-root .status-dot {
   display: inline-block;
   width: 5px;
   height: 5px;
@@ -216,13 +224,13 @@ p {
   border-radius: 50%;
   margin-right: 7px;
 }
-.workspace {
+.legacy-root .workspace {
   margin-left: 224px;
   width: calc(100% - 224px);
   padding: 0 44px 60px;
   max-width: 1560px;
 }
-.workspace-header {
+.legacy-root .workspace-header {
   height: 76px;
   border-bottom: 1px solid var(--border);
   display: flex;
@@ -231,7 +239,7 @@ p {
   gap: 15px;
   font-size: 11px;
 }
-.pill {
+.legacy-root .pill {
   font-size: 10px;
   border: 1px solid #3a3a3a;
   border-radius: 4px;
@@ -240,33 +248,33 @@ p {
   white-space: nowrap;
   display: inline-block;
 }
-.demo-note {
+.legacy-root .demo-note {
   font-size: 10px;
   color: #969696;
   margin-top: 18px;
 }
-.page-heading {
+.legacy-root .page-heading {
   padding: 42px 0 24px;
 }
-.page-heading p {
+.legacy-root .page-heading p {
   color: #a0a0a0;
   max-width: 660px;
   font-size: 13px;
 }
-.home-heading {
+.legacy-root .home-heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 32px;
   padding: 54px 0 36px;
 }
-.back-link {
+.legacy-root .back-link {
   font-size: 11px;
   display: inline-block;
   color: #aaa;
   margin-bottom: 23px;
 }
-.card {
+.legacy-root .card {
   min-width: 0;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -274,24 +282,24 @@ p {
   padding: 25px;
   margin-bottom: 20px;
 }
-.section-heading {
+.legacy-root .section-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 18px;
 }
-.section-heading > a {
+.legacy-root .section-heading > a {
   font-size: 10px;
   color: #aaa;
   white-space: nowrap;
 }
-.section-heading h2 {
+.legacy-root .section-heading h2 {
   margin-bottom: 0;
 }
-.section-heading {
+.legacy-root .section-heading {
   margin-bottom: 20px;
 }
-.stats {
+.legacy-root .stats {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   border: 1px solid var(--border);
@@ -300,19 +308,19 @@ p {
   margin-bottom: 28px;
   background: #101010;
 }
-.stats > div {
+.legacy-root .stats > div {
   padding: 22px 25px;
   border-right: 1px solid var(--border);
 }
-.stats > div:last-child {
+.legacy-root .stats > div:last-child {
   border: 0;
 }
-.stats span {
+.legacy-root .stats span {
   font-size: 10px;
   display: block;
   color: #969696;
 }
-.stats strong {
+.legacy-root .stats strong {
   display: block;
   font-size: 30px;
   font-weight: 500;
@@ -320,71 +328,71 @@ p {
   margin-top: 10px;
   overflow-wrap: anywhere;
 }
-.stats strong.text-value {
+.legacy-root .stats strong.text-value {
   font-size: 16px;
   letter-spacing: -0.3px;
   padding-top: 12px;
 }
-.compact > div {
+.legacy-root .compact > div {
   padding: 17px;
 }
-.compact strong {
+.legacy-root .compact strong {
   font-size: 23px;
 }
-.two-columns {
+.legacy-root .two-columns {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   gap: 24px;
 }
-.empty-state {
+.legacy-root .empty-state {
   text-align: center;
   padding: 55px 20px;
 }
-.empty-state > span {
+.legacy-root .empty-state > span {
   font-size: 25px;
   color: #999;
 }
-.empty-state p {
+.legacy-root .empty-state p {
   font-size: 11px;
   color: #999;
   max-width: 310px;
   margin: 0 auto 20px;
 }
-.empty-state a {
+.legacy-root .empty-state a {
   font-size: 11px;
 }
-.flow-list {
+.legacy-root .flow-list {
   list-style: none;
   padding: 0;
   margin: 18px 0 0;
 }
-.flow-list li {
+.legacy-root .flow-list li {
   display: flex;
   gap: 20px;
   align-items: flex-start;
   padding: 15px 0;
   border-bottom: 1px solid #262626;
 }
-.flow-list li:last-child {
+.legacy-root .flow-list li:last-child {
   border: 0;
 }
-.flow-list li > span {
+.legacy-root .flow-list li > span {
   font:
     11px ui-monospace,
     monospace;
   color: #777;
   padding-top: 4px;
 }
-.flow-list strong {
+.legacy-root .flow-list strong {
   font-size: 12px;
   font-weight: 500;
 }
-.flow-list p {
+.legacy-root .flow-list p {
   font-size: 11px;
   color: #929292;
   margin: 5px 0 0;
 }
-.run-row {
+.legacy-root .run-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -393,35 +401,35 @@ p {
   border-bottom: 1px solid var(--border);
   font-size: 12px;
 }
-.run-row:last-child {
+.legacy-root .run-row:last-child {
   border: 0;
 }
-.run-row strong {
+.legacy-root .run-row strong {
   font-size: 12px;
   font-weight: 500;
   overflow-wrap: anywhere;
 }
-.run-row small {
+.legacy-root .run-row small {
   font-size: 10px;
   display: block;
   color: #8f8f8f;
   margin-top: 6px;
 }
-.form-grid {
+.legacy-root .form-grid {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
   gap: 20px;
   align-items: center;
   margin-top: 20px;
 }
-.form-actions {
+.legacy-root .form-actions {
   margin-top: 25px;
 }
-.example-list {
+.legacy-root .example-list {
   display: grid;
   gap: 0;
 }
-.example {
+.legacy-root .example {
   border: 0;
   border-bottom: 1px solid #292929;
   border-radius: 0;
@@ -434,29 +442,29 @@ p {
   font-size: 11px;
   font-weight: 400;
 }
-.example:hover {
+.legacy-root .example:hover {
   background: none;
   color: #fff;
 }
-.example:last-child {
+.legacy-root .example:last-child {
   border-bottom: 0;
 }
-.example span {
+.legacy-root .example span {
   padding-left: 14px;
   color: #999;
 }
-.run-layout {
+.legacy-root .run-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 255px;
   gap: 24px;
 }
-.tabs {
+.legacy-root .tabs {
   display: flex;
   gap: 4px;
   border-bottom: 1px solid #333;
   margin-bottom: 22px;
 }
-.tabs button {
+.legacy-root .tabs button {
   border: 0;
   border-radius: 0;
   background: none;
@@ -465,50 +473,50 @@ p {
   font-size: 11px;
   border-bottom: 2px solid transparent;
 }
-.tabs button.active {
+.legacy-root .tabs button.active {
   color: #eee;
   border-bottom-color: #ddd;
 }
-.tabs button:hover {
+.legacy-root .tabs button:hover {
   color: white;
 }
-.result-card h2 {
+.legacy-root .result-card h2 {
   margin-bottom: 26px;
 }
-.result-card table {
+.legacy-root .result-card table {
   margin-top: 28px;
 }
-.table-wrap {
+.legacy-root .table-wrap {
   overflow: auto;
   max-width: 100%;
 }
-table {
+.legacy-root table {
   width: 100%;
   border-collapse: collapse;
   font-size: 11px;
 }
-td,
-th {
+.legacy-root td,
+.legacy-root th {
   padding: 13px 12px;
   border-bottom: 1px solid #292929;
   text-align: left;
   white-space: nowrap;
 }
-th {
+.legacy-root th {
   font-weight: 500;
   color: #8f8f8f;
 }
-.timeline {
+.legacy-root .timeline {
   list-style: none;
   padding: 0 0 0 15px;
   margin: 24px 0 0;
   border-left: 1px solid #444;
 }
-.timeline li {
+.legacy-root .timeline li {
   position: relative;
   padding-bottom: 25px;
 }
-.timeline li:before {
+.legacy-root .timeline li:before {
   content: "";
   position: absolute;
   left: -18px;
@@ -518,24 +526,24 @@ th {
   width: 5px;
   height: 5px;
 }
-.timeline strong {
+.legacy-root .timeline strong {
   font-size: 11px;
   text-transform: capitalize;
   font-weight: 500;
 }
-.timeline small {
+.legacy-root .timeline small {
   display: block;
   color: #8c8c8c;
   font-size: 10px;
   margin-top: 3px;
 }
-.activity-card {
+.legacy-root .activity-card {
   align-self: start;
 }
-.activity-card h2 {
+.legacy-root .activity-card h2 {
   font-size: 15px;
 }
-.bar-row {
+.legacy-root .bar-row {
   display: grid;
   grid-template-columns: minmax(90px, 160px) minmax(30px, 1fr) minmax(
       65px,
@@ -546,24 +554,24 @@ th {
   align-items: center;
   margin: 15px 0;
 }
-.bar-track {
+.legacy-root .bar-track {
   background: #252525;
   height: 6px;
   border-radius: 2px;
   overflow: hidden;
 }
-.bar-fill {
+.legacy-root .bar-fill {
   background: #c8c8c8;
   height: 100%;
   border-radius: 2px;
 }
-.mono,
-pre,
-code {
+.legacy-root .mono,
+.legacy-root pre,
+.legacy-root code {
   font-family: ui-monospace, SFMono-Regular, monospace;
 }
-pre,
-.sql-block {
+.legacy-root pre,
+.legacy-root .sql-block {
   display: block;
   background: #0b0b0b;
   border: 1px solid #2d2d2d;
@@ -575,26 +583,26 @@ pre,
   border-radius: 5px;
   overflow: auto;
 }
-.metric-grid {
+.legacy-root .metric-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
-.metric-meta {
+.legacy-root .metric-meta {
   display: grid;
   grid-template-columns: 55px minmax(0, 1fr);
   gap: 10px;
   font-size: 10px;
 }
-.metric-meta > span {
+.legacy-root .metric-meta > span {
   color: #777;
 }
-.metric-meta strong {
+.legacy-root .metric-meta strong {
   font-weight: 400;
   color: #bbb;
   overflow-wrap: anywhere;
 }
-.settings-row {
+.legacy-root .settings-row {
   display: flex;
   gap: 20px;
   justify-content: space-between;
@@ -602,17 +610,17 @@ pre,
   border-bottom: 1px solid var(--border);
   font-size: 12px;
 }
-.settings-row:last-child {
+.legacy-root .settings-row:last-child {
   border: 0;
 }
-.settings-row strong {
+.legacy-root .settings-row strong {
   font-weight: 400;
   text-align: right;
   overflow-wrap: anywhere;
 }
-.error,
-.refused,
-.callout {
+.legacy-root .error,
+.legacy-root .refused,
+.legacy-root .callout {
   background: #1a1a1a;
   border: 1px solid #444;
   border-left: 2px solid #ccc;
@@ -621,80 +629,80 @@ pre,
   font-size: 12px;
   overflow-wrap: anywhere;
 }
-.score {
+.legacy-root .score {
   font-size: 40px;
 }
-.login-page {
+.legacy-root .login-page {
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 100vh;
 }
-.login-story {
+.legacy-root .login-story {
   padding: 55px 70px;
   background: #101010;
   border-right: 1px solid #2c2c2c;
   position: relative;
 }
-.login-story > .eyebrow {
+.legacy-root .login-story > .eyebrow {
   margin-top: 110px;
 }
-.login-story h1 {
+.legacy-root .login-story h1 {
   font-size: clamp(50px, 5.5vw, 82px);
   letter-spacing: -4px;
   line-height: 1.02;
   margin: 25px 0;
 }
-.login-story p {
+.legacy-root .login-story p {
   color: #8e8e8e;
   max-width: 390px;
   margin-top: 32px;
   font-size: 13px;
 }
-.login-footer {
+.legacy-root .login-footer {
   font-size: 10px;
   color: #797979;
   margin-top: 85px;
 }
-.login-panel {
+.legacy-root .login-panel {
   display: grid;
   place-items: center;
   padding: 50px;
 }
-.login-card {
+.legacy-root .login-card {
   width: 100%;
   max-width: 365px;
 }
-.login-card h2 {
+.legacy-root .login-card h2 {
   font-size: 27px;
   letter-spacing: -1px;
 }
-.login-card p {
+.legacy-root .login-card p {
   font-size: 12px;
 }
-.login-card label {
+.legacy-root .login-card label {
   margin-top: 20px;
 }
-.login-card form > button {
+.legacy-root .login-card form > button {
   margin-top: 25px;
   width: 100%;
 }
-.demo-buttons {
+.legacy-root .demo-buttons {
   margin-top: 35px;
   display: grid;
   gap: 10px;
   border-top: 1px solid #303030;
   padding-top: 26px;
 }
-.demo-buttons .eyebrow {
+.legacy-root .demo-buttons .eyebrow {
   margin-bottom: 5px;
 }
-.loading-page {
+.legacy-root .loading-page {
   padding: 70px;
   text-align: center;
   color: #aaa;
   font-size: 13px;
 }
-.drawer-backdrop {
+.legacy-root .drawer-backdrop {
   position: fixed;
   inset: 0;
   background: #0009;
@@ -702,153 +710,153 @@ pre,
   justify-content: flex-end;
   z-index: 5;
 }
-.drawer {
+.legacy-root .drawer {
   width: min(520px, 100vw);
   background: #111;
   border-left: 1px solid #444;
   padding: 32px;
   overflow: auto;
 }
-.drawer h2 {
+.legacy-root .drawer h2 {
   margin-top: 30px;
 }
-button:focus-visible,
-a:focus-visible {
+.legacy-root button:focus-visible,
+.legacy-root a:focus-visible {
   outline: 2px solid #ddd;
   outline-offset: 4px;
 }
 @media (max-width: 1100px) {
-  .workspace {
+  .legacy-root .workspace {
     padding: 0 24px 40px;
   }
-  .run-layout {
+  .legacy-root .run-layout {
     grid-template-columns: minmax(0, 1fr);
   }
-  .activity-card {
+  .legacy-root .activity-card {
     margin-top: 0;
   }
-  .stats > div {
+  .legacy-root .stats > div {
     padding: 18px;
   }
-  .home-heading {
+  .legacy-root .home-heading {
     align-items: flex-start;
   }
-  .login-story {
+  .legacy-root .login-story {
     padding: 40px;
   }
-  .login-panel {
+  .legacy-root .login-panel {
     padding: 30px;
   }
 }
 @media (max-width: 800px) {
-  .sidebar {
+  .legacy-root .sidebar {
     position: static;
     width: auto;
     padding: 20px;
     border-right: 0;
     border-bottom: 1px solid #333;
   }
-  .app-shell {
+  .legacy-root .app-shell {
     display: block;
   }
-  .sidebar-caption,
-  .sidebar-bottom {
+  .legacy-root .sidebar-caption,
+  .legacy-root .sidebar-bottom {
     display: none;
   }
-  .sidebar nav {
+  .legacy-root .sidebar nav {
     display: flex;
     flex-wrap: wrap;
     margin-top: 18px;
     gap: 4px;
   }
-  .sidebar nav a {
+  .legacy-root .sidebar nav a {
     padding: 7px 8px;
     font-size: 10px;
   }
-  .workspace {
+  .legacy-root .workspace {
     margin: 0;
     width: 100%;
     padding: 0 18px 35px;
   }
-  .workspace-header {
+  .legacy-root .workspace-header {
     height: 60px;
   }
-  .home-heading {
+  .legacy-root .home-heading {
     display: block;
     padding: 35px 0 18px;
   }
-  .home-heading > .button {
+  .legacy-root .home-heading > .button {
     margin-top: 12px;
   }
-  .two-columns,
-  .metric-grid {
+  .legacy-root .two-columns,
+  .legacy-root .metric-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-  .page-heading {
+  .legacy-root .page-heading {
     padding-top: 30px;
   }
-  .stats {
+  .legacy-root .stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .stats > div:nth-child(2) {
+  .legacy-root .stats > div:nth-child(2) {
     border-right: 0;
   }
-  .stats > div:nth-child(-n + 2) {
+  .legacy-root .stats > div:nth-child(-n + 2) {
     border-bottom: 1px solid #292929;
   }
-  .card {
+  .legacy-root .card {
     padding: 20px;
   }
-  .login-page {
+  .legacy-root .login-page {
     grid-template-columns: 1fr;
   }
-  .login-story {
+  .legacy-root .login-story {
     padding: 25px;
     border-right: 0;
     border-bottom: 1px solid #333;
   }
-  .login-story > .eyebrow {
+  .legacy-root .login-story > .eyebrow {
     margin-top: 35px;
   }
-  .login-story h1 {
+  .legacy-root .login-story h1 {
     font-size: 45px;
     letter-spacing: -2px;
   }
-  .login-story p,
-  .login-footer {
+  .legacy-root .login-story p,
+  .legacy-root .login-footer {
     display: none;
   }
-  .login-panel {
+  .legacy-root .login-panel {
     padding: 35px 22px;
   }
-  .run-row {
+  .legacy-root .run-row {
     gap: 12px;
   }
-  .form-grid {
+  .legacy-root .form-grid {
     grid-template-columns: 1fr;
   }
-  .section-heading {
+  .legacy-root .section-heading {
     align-items: flex-start;
   }
-  .settings-row {
+  .legacy-root .settings-row {
     font-size: 10px;
   }
-  .bar-row {
+  .legacy-root .bar-row {
     grid-template-columns: minmax(80px, 1fr) minmax(20px, 1fr) minmax(60px, 1fr);
     gap: 10px;
   }
-  .metric-grid {
+  .legacy-root .metric-grid {
     gap: 0;
   }
-  .page-heading h1 {
+  .legacy-root .page-heading h1 {
     letter-spacing: -1px;
   }
-  .result-card .section-heading {
+  .legacy-root .result-card .section-heading {
     flex-wrap: wrap;
   }
 }
 
-dialog.drawer {
+.legacy-root dialog.drawer {
   border: 0;
   margin: 0 0 0 auto;
   position: fixed;
@@ -856,54 +864,54 @@ dialog.drawer {
   max-height: 100dvh;
   width: min(540px, 100vw);
 }
-dialog.drawer::backdrop {
+.legacy-root dialog.drawer::backdrop {
   background: rgba(0, 0, 0, 0.48);
 }
 
-.comparison-entry {
+.legacy-root .comparison-entry {
   display: block;
   border-color: #555;
 }
-.comparison-entry:hover {
+.legacy-root .comparison-entry:hover {
   background: #181818;
 }
-fieldset {
+.legacy-root fieldset {
   border: 1px solid var(--border);
   border-radius: 6px;
   margin: 22px 0;
   padding: 16px;
   min-width: 0;
 }
-legend {
+.legacy-root legend {
   padding: 0 8px;
   color: #bbb;
   font-size: 13px;
 }
-.comparison-report {
+.legacy-root .comparison-report {
   border-block: 1px solid var(--border);
   padding-block: 22px;
   margin-block: 24px;
 }
-.comparison-totals strong {
+.legacy-root .comparison-totals strong {
   font-size: clamp(15px, 1.5vw, 23px);
   overflow-wrap: anywhere;
 }
-.contribution-row {
+.legacy-root .contribution-row {
   padding-block: 12px;
 }
-.contribution-track {
+.legacy-root .contribution-track {
   height: 6px;
   background: #252525;
   margin-top: 10px;
 }
-.contribution-track > div {
+.legacy-root .contribution-track > div {
   height: 100%;
   min-width: 1px;
 }
-.contribution-track .positive {
+.legacy-root .contribution-track .positive {
   background: #e8e8e8;
 }
-.contribution-track .negative {
+.legacy-root .contribution-track .negative {
   background: repeating-linear-gradient(
     135deg,
     #999,
@@ -912,60 +920,60 @@ legend {
     #333 6px
   );
 }
-.contribution-row .section-heading {
+.legacy-root .contribution-row .section-heading {
   margin: 0;
   gap: 12px;
   font-size: 13px;
 }
-.factor-section {
+.legacy-root .factor-section {
   margin-top: 30px;
 }
-.factor-grid {
+.legacy-root .factor-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
   margin: 20px 0;
 }
-.factor-grid > div {
+.legacy-root .factor-grid > div {
   border: 1px solid var(--border);
   padding: 16px;
   min-width: 0;
 }
-.factor-grid span {
+.legacy-root .factor-grid span {
   display: block;
   text-transform: capitalize;
   color: var(--muted);
   font-size: 12px;
 }
-.factor-grid strong {
+.legacy-root .factor-grid strong {
   display: block;
   font-size: 15px;
   margin-top: 12px;
   overflow-wrap: anywhere;
 }
-.check-row {
+.legacy-root .check-row {
   display: flex;
   gap: 16px;
   padding: 18px 0;
   border-bottom: 1px solid var(--border);
   align-items: flex-start;
 }
-.check-row strong {
+.legacy-root .check-row strong {
   font-size: 13px;
   text-transform: capitalize;
 }
-.check-row p {
+.legacy-root .check-row p {
   margin-bottom: 0;
   font-size: 12px;
 }
 @media (max-width: 700px) {
-  .factor-grid {
+  .legacy-root .factor-grid {
     grid-template-columns: 1fr;
   }
-  .comparison-totals strong {
+  .legacy-root .comparison-totals strong {
     font-size: 17px;
   }
-  .contribution-row .section-heading {
+  .legacy-root .contribution-row .section-heading {
     flex-wrap: wrap;
   }
 }
