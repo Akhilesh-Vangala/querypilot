@@ -18,7 +18,7 @@
   "page_errors": [],
   "paid_model_calls": 0,
   "recording_player": true,
-  "url": "http://127.0.0.1:18302",
+  "url": "http://127.0.0.1:18403",
   "frames": [
     {
       "stage": "overview",
@@ -28,30 +28,30 @@
     {
       "stage": "executed-investigation",
       "path": "01-executed-investigation.png",
-      "sha256": "9137326a134b1e3aa4816e127a78894d27bfe8368b48f057bbb153c7dece6160"
+      "sha256": "4b8b44b894986d23e2f0a805fe9384599d98e5175ac621f4f751cd8d7c4fd21c"
     },
     {
       "stage": "guarded-sql",
       "path": "02-guarded-sql.png",
-      "sha256": "cbe6f57b2ae4104c0bee3fdccb6315365284e826d59d03aaf91857d3802d46c5"
+      "sha256": "d13dea4b2babea697f1100f77be795919444682e1ae5da4e9617b94030ad6afb"
     },
     {
       "stage": "reconciled-periods",
       "path": "03-reconciled-periods.png",
-      "sha256": "4d3a848806addfd51420a28cc10adf3c2548fda892facf8f3fc6485a2c0e8087"
+      "sha256": "5180e95699030f70da88a993bcb1535d344f1540af15b012ebbc3b6c8cf846cb"
     },
     {
       "stage": "independent-checks",
       "path": "04-independent-checks.png",
-      "sha256": "10a8031d42d3bbf05a86ea3d3cedab5bc80ecd52c1e6e06bcdf70353ee5bb41c"
+      "sha256": "4f966823806ce86ab276cc3ea20d3dbef19dd8a6a786d2cc3e6379dd548c9c90"
     },
     {
       "stage": "exported-evidence",
       "path": "05-exported-evidence.png",
-      "sha256": "2e322e458bfaac35eaf768ba9f53224315a9f9f0603c95f4f1f0bd2bbcefed95"
+      "sha256": "25c799081e00a73d7cfcb7ceea99c5a12fe522ffd7045d7e94cbed666d5f8944"
     }
   ],
-  "video_sha256": "fc308cf80c9c25fe8f4977daa0627c3d170ffa3c8c672d73fc93141ace11846f",
+  "video_sha256": "d9f87541f293573e5990fdd6238e941948a1e7b06a8d8f219647e0693c300b26",
   "recording": "Continuous actual Chromium capture; guided synthetic data, automated interactions, no live model inference",
   "captured_deployment_source": null,
   "source_sha256": {
@@ -62,12 +62,12 @@
     "frontend/src/features/evaluation/EvalPage.tsx": "63035b5290199f188a1cf39faba482516831eae1b75ce2976fbab3784d006059",
     "frontend/src/features/history/History.tsx": "0609253100c239d31b9d32e2423b607584f71401f5b364a3dc2fe3794fc2f8cd",
     "frontend/src/features/investigations/Ask.tsx": "6f5d4d09092af35c2dc32234f8b141a8ff1d0bcb8b40647b476d219b9ab7b43c",
-    "frontend/src/features/product/ProductApp.tsx": "f22224de1e94d67e1cac940f3e165e05394eea40df6065058989a23a6bc87d96",
+    "frontend/src/features/product/ProductApp.tsx": "d0c9984fb8b865227eb799e2ac1f63646e603e1318bf19c3cc4aac04f91b3477",
     "frontend/src/features/product/ProductHome.tsx": "54fa230e5ba3d63814dae1e6131823e6b091ecf845cc6b6f81f2db0ae7598ce0",
-    "frontend/src/features/product/ProductIntake.tsx": "7bb25231267d61eec22ff2260c9bd86ad3faf0711b6fb01a097fa6409a337c47",
+    "frontend/src/features/product/ProductIntake.tsx": "8f05e82a3db400a46bfc18691659b3a690e3b1ec23e257968479776a755abdf8",
     "frontend/src/features/product/ProductReport.tsx": "1873b9170fbec61808604f25f6fa6f20546cbba164b56fe54355d4a968d0b6c6",
     "frontend/src/features/product/components.tsx": "712992956b7c0b9e83cdf93eda2280ce4ff711dfbae19e939ef222c4d8b33b75",
-    "frontend/src/features/product/context.tsx": "b5e819b0ba626b387f97e10811a65e4701e824b9ed490dc6926009ca7709b828",
+    "frontend/src/features/product/context.tsx": "c2a0807ee369751a282b874da14f12317372ac256b3397b122bb26a2d3b66990",
     "frontend/src/features/workbench/Workbench.tsx": "92fd8a9e681d876d6af56f43421caf3e45fd577ebd1644ebfbed3d35786547f0",
     "backend/app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "backend/app/agents/analytics/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -107,7 +107,8 @@
     "backend/app/security/auth.py": "bdc337ab4e40a66bc577b83622bc20181b958bb0079312cd3281dd7ce454a4db",
     "backend/app/security/provision_user.py": "d91a257a0f88360a8ac707ac9e02dddca51b4057cff30c33ec9bcbe2d98a7f4c",
     "backend/app/uploads/__init__.py": "6cf9cc3f23b8eb7fecf7b1f708e9627b7d6c5aacbe313fc0034cc082b4496ee4",
-    "backend/app/uploads/api.py": "83e7b363d5682d4f5a31bd06673d6d496601f44f02151f3e0f26e64dfa6e60af",
+    "backend/app/uploads/api.py": "547d7dd0c12213c5f170e616469cd5ebebe2c4da1475adfb2701d616e6af4dc8",
+    "backend/app/uploads/imports.py": "d025a3e701bca899913b580737065f1cb2f87084babc8699d582c03cb5ed778f",
     "backend/app/uploads/ingestion.py": "5d8bc63659a13b09d848639d1ce1870583f70a46c9c29f9465b521d25f9883a5",
     "backend/app/uploads/service.py": "86ae71e81412c31663ab20b38ce8a426135058b24d22cfe61c67371c46badbe6",
     "backend/app/uploads/signing.py": "104979a3e1d28791f243e1137d160162edf8cd9375df32f9ec20b756d8d2d805",

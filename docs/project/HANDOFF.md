@@ -1,3 +1,7 @@
+# October16 — bounded multi-format import
+
+The product accepts CSV, TSV, Excel .xlsx, JSON and JSONL, with explicit worksheet selection, deterministic normalization and unchanged domain rules. New parser/domain equivalence and actual five-format browser journeys are part of required CI. [Import contract](../product/FILE-IMPORTS.md). Publication status must be verified through the protected PR and canonical source metadata; live inference, hosted Auth and monitored durable customer execution remain separate gates. Previous release notes below are preserved.
+
 # Active: complete own-data product workspace
 
 QueryPilot now has domain-specific landing/workspace, source/rule review, real streamed execution, results/evidence, consented immutable device projects/history and portable restore. Overall average is weighted from the underlying included records; exact decimal strings remain inspectable. Optional account adapter/RLS is prepared and locally tested; genuine hosted authentication is not configured. Protected CI, source-bound deployment and media checks must pass before release is marked delivered. See [product documentation](../product/PRODUCT-WORKSPACE.md).

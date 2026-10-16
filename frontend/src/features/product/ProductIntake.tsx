@@ -1,3 +1,4 @@
+import { ACCEPT, FORMAT_HELP } from "./lib/imports";
 import { useEffect, useState, type ChangeEvent } from "react";
 import { useProduct } from "./context";
 import { request } from "./lib/api";
@@ -149,19 +150,19 @@ export default function ProductIntake({
                 onDrop={(e) => {
                   e.preventDefault();
                   if (e.dataTransfer.files.length !== 1) {
-                    ctx.fail(Error("Choose one CSV file at a time."));
+                    ctx.fail(Error("Choose one tabular file at a time."));
                     return;
                   }
                   ctx.loadFile(e.dataTransfer.files[0]);
                 }}
               >
-                <span className="eyebrow">CSV SOURCE</span>
+                <span className="eyebrow">TABULAR SOURCE</span>
                 <strong>Choose a file or drop it here</strong>
-                <span>UTF-8 CSV · up to 400 KB · 5,000 records</span>
+                <span>{FORMAT_HELP} · 5,000 records</span>
                 <input
                   id="file"
                   type="file"
-                  accept=".csv,text/csv"
+                  accept={ACCEPT}
                   onChange={file}
                   disabled={busy}
                 />
@@ -233,6 +234,21 @@ export default function ProductIntake({
               </select>
             </label>
           </div>
+          {draft.importSource && (
+            <div className="callout">
+              <p>
+                Imported{" "}
+                {String(draft.importSource.format || "table")
+                  .slice(0, 12)
+                  .toUpperCase()}
+                {draft.importSource.sheet
+                  ? " · Worksheet: " + draft.importSource.sheet
+                  : ""}
+                . Review source values and mappings. Original formatting and
+                formulas are not used.
+              </p>
+            </div>
+          )}
           {draft.profile && draft.csv && (
             <div className="spaced">
               <h3>Inspect the actual records.</h3>
