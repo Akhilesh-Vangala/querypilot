@@ -40,6 +40,19 @@ class Media(HTMLParser):
 
 
 def main():
+    # Vercel installs root uv.lock; runtime requirements alone do not update it.
+    import tomllib
+    project = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]
+    packages = tomllib.loads((ROOT / "uv.lock").read_text())["package"]
+    normalize = lambda name: re.sub(r"[-_.]+", "-", name).lower()
+    versions = {normalize(p["name"]): p.get("version") for p in packages}
+    root_package = next(p for p in packages if p["name"] == project["name"])
+    included = {normalize(p["name"]) for p in root_package.get("dependencies", [])}
+    for dependency in project["dependencies"]:
+        match = re.fullmatch(r"([A-Za-z0-9_.-]+)(?:\[[^]]+\])?==([^; ]+)", dependency)
+        assert match, "Pin root deployment dependencies exactly"
+        name, version = normalize(match[1]), match[2]
+        assert name in included and versions.get(name) == version, "Stale deployment uv.lock: " + name
     assert (ROOT / "backend").is_dir()
     assert (ROOT / "frontend").is_dir()
     for name in ("HANDOFF", "PLAN", "PROGRESS"):
