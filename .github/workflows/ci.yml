@@ -52,7 +52,7 @@ jobs:
         working-directory: frontend
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           cache: npm
@@ -84,7 +84,7 @@ jobs:
           python scripts/deployment/postgres_rehearsal.py
           python scripts/evaluation/comparison_benchmark.py
           scripts/deployment/compose.sh start worker
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
       - run: npm install --prefix /tmp/product-a11y --ignore-scripts --no-audit --no-fund axe-core@4.14.0
