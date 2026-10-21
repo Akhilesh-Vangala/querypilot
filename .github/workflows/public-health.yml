@@ -1,0 +1,29 @@
+name: Public application health
+on:
+  schedule:
+    - cron: '25,55 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: public-application-health
+  cancel-in-progress: false
+jobs:
+  public-health:
+    name: Deployed synthetic upload and result
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify current public app with five real file formats
+        run: python scripts/checks/public_health.py
+      - name: Keep bounded public health evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-health
+          path: artifacts/generated/public-health.json
+          retention-days: 7

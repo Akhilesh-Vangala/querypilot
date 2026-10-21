@@ -72,6 +72,11 @@ def main():
    for width in (320,390,768,1440):
     page.set_viewport_size({'width':width,'height':900});assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),width
    context.close();browser.close()
+  import runpy
+  monitor=runpy.run_path(str(root/'scripts/checks/public_health.py'))
+  public_health=monitor['Probe'](url).run()
+  (out/'public-health.json').write_text(json.dumps(public_health,indent=2)+'\n')
+  assert public_health['passed'] and public_health['live_model_calls']==0
   assert not errors,errors
   result=dict(project=brand,passed=True,url=url,checks=checks,page_errors=errors,accessibility=audits,paid_model_calls=0,actual_user_feedback=False)
   (out/'report.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k!='accessibility'}))

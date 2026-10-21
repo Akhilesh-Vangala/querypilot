@@ -18,7 +18,7 @@
   "page_errors": [],
   "paid_model_calls": 0,
   "recording_player": true,
-  "url": "http://127.0.0.1:18403",
+  "url": "http://127.0.0.1:61811",
   "frames": [
     {
       "stage": "overview",
@@ -28,30 +28,30 @@
     {
       "stage": "executed-investigation",
       "path": "01-executed-investigation.png",
-      "sha256": "4b8b44b894986d23e2f0a805fe9384599d98e5175ac621f4f751cd8d7c4fd21c"
+      "sha256": "b6f743bf2f42ea6a4828494c1ef63ca76e4f5b302c1aa8b8f087247f262e8b8a"
     },
     {
       "stage": "guarded-sql",
       "path": "02-guarded-sql.png",
-      "sha256": "d13dea4b2babea697f1100f77be795919444682e1ae5da4e9617b94030ad6afb"
+      "sha256": "97c1d1ae3ec46af41cce1b029db6ffbb2b8d0c167d10cffb6b511b827d91e36b"
     },
     {
       "stage": "reconciled-periods",
       "path": "03-reconciled-periods.png",
-      "sha256": "5180e95699030f70da88a993bcb1535d344f1540af15b012ebbc3b6c8cf846cb"
+      "sha256": "b17c9b44cf887cb0df23a4a41dd6895f7a4c10bda1da5394b6925357359d65a3"
     },
     {
       "stage": "independent-checks",
       "path": "04-independent-checks.png",
-      "sha256": "4f966823806ce86ab276cc3ea20d3dbef19dd8a6a786d2cc3e6379dd548c9c90"
+      "sha256": "04c0239ffb6062c28e9850920eed72c6f722e7dc713a0b1efa63ea38a390c62d"
     },
     {
       "stage": "exported-evidence",
       "path": "05-exported-evidence.png",
-      "sha256": "25c799081e00a73d7cfcb7ceea99c5a12fe522ffd7045d7e94cbed666d5f8944"
+      "sha256": "ff03b48ac2b148bca6b8f07c52a3d14385bdf681d57557888c797ec61bcd4989"
     }
   ],
-  "video_sha256": "d9f87541f293573e5990fdd6238e941948a1e7b06a8d8f219647e0693c300b26",
+  "video_sha256": "08cbbde99c34d80a7715adc39af95df47541585ad756d9704a68d1eefdc62910",
   "recording": "Continuous actual Chromium capture; guided synthetic data, automated interactions, no live model inference",
   "captured_deployment_source": null,
   "source_sha256": {
@@ -72,11 +72,11 @@
     "backend/app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "backend/app/agents/analytics/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "backend/app/agents/analytics/intents.py": "075441547ae78ee2cc980f0f485eb693beec66319dc884e0a078d6ea668fcd7a",
-    "backend/app/agents/analytics/llm.py": "64abbfe0319b211cdbcf55304b18bcf7bb10a9f087538ab80d3de84f55827b4c",
+    "backend/app/agents/analytics/llm.py": "fb2359caebda19c11059c8a00f8f0f21c178c115e950ec63f988c842a8d8858a",
     "backend/app/agents/analytics/planner.py": "9630a5ea56bd3f02c92a2748da0e3a54ac56f576e763f8e78c9cbad660302ae3",
     "backend/app/agents/analytics/protocol.py": "97c2b9bb9ddf9c3d47227d51ee837ac2e726619204b76da315b1f20b7fd4ecf4",
     "backend/app/agents/analytics/tools.py": "463b52cb9bd6372923432bafebfbed1ff8b25ef2e564d43ececfdbe0c1f4094a",
-    "backend/app/agents/analytics/workflow.py": "416a18f3d318cbafd917d2f8ab4ff1d4c0a42024b0256378e187f48a582d41a5",
+    "backend/app/agents/analytics/workflow.py": "51bab28c211cc6ed36753547a6afe1b4729b6a9c3c3b0ecd9b222ebb9411f840",
     "backend/app/analytics/__init__.py": "514df2388c50d0ecedcd2f4820fb0cf4e60dcfbfa9a03ad0ec75ba40aa4fa42f",
     "backend/app/analytics/catalog.py": "66c377322a6ac614f230586063d215d1a6b5e030c2ea2a0df8d876f24b598825",
     "backend/app/analytics/comparison.py": "f84387d0be85c4a503c424df7da1691dcf90c0a257d19546d2682cba9aafe2c8",
@@ -112,7 +112,7 @@
     "backend/app/uploads/ingestion.py": "5d8bc63659a13b09d848639d1ce1870583f70a46c9c29f9465b521d25f9883a5",
     "backend/app/uploads/service.py": "86ae71e81412c31663ab20b38ce8a426135058b24d22cfe61c67371c46badbe6",
     "backend/app/uploads/signing.py": "104979a3e1d28791f243e1137d160162edf8cd9375df32f9ec20b756d8d2d805",
-    "backend/app/uploads/stream.py": "e36cf3eb18a6421d2f7496cf6c8d03d44031270622e1d77fdd5de14aff111ce8",
+    "backend/app/uploads/stream.py": "7bae483dc25d25905549a4ce7eacefcb7de4613a9f1d11c24b704ec08dc7e552",
     "backend/app/warehouse/__init__.py": "5bb23bdc221cf95aa275ebc90cf39d7276087ae5019f99186bffd5d4071c0948",
     "backend/app/warehouse/bootstrap.py": "371c3213b73db8b70ec8f73c445da437c281421e3b8a0afd5fae50951a83d103",
     "backend/app/warehouse/service.py": "f1da56e8eccf9be25db00dfd597934d9422f870fe9c610f7da2b4ba0be0ce1ee",

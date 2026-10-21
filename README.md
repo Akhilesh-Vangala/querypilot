@@ -4,6 +4,8 @@
 
 **File imports:** CSV · TSV · Excel `.xlsx` with worksheet choice · JSON · JSONL. [Import contract and limits](docs/product/FILE-IMPORTS.md). Existing independent checks and approval rules apply to every format.
 
+**Availability and reliability:** [public synthetic monitoring and recovery](docs/operations/AVAILABILITY.md). Five-format upload/result checks run without model credits; live-model quality remains a separate gate.
+
 <p align="center"><a href="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml"><img src="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml/badge.svg" alt="Required engineering checks"></a> &nbsp; Python · LangGraph · FastAPI · PostgreSQL</p>
 
 # QueryPilot
