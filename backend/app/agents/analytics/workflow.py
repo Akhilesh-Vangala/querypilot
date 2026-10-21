@@ -83,10 +83,12 @@ class AnalyticsWorkflow:
                     {"final"},
                 ):
                     raise ValueError("Strict action envelope required")
-            except (ValueError, TypeError):
+                transcript = raw
+            except (ValueError, TypeError, RecursionError):
                 action = {"tool": "invalid", "args": {}}
+                transcript = json.dumps(action)
             messages = state["messages"] + [
-                {"role": "assistant", "content": raw[:24000]}
+                {"role": "assistant", "content": transcript}
             ]
             return {
                 "action": action,
