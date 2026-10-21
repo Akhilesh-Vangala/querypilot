@@ -76,3 +76,19 @@ class StreamRecoveryTests(unittest.IsolatedAsyncioTestCase):
             release.set();self.assertTrue(await asyncio.to_thread(finished.wait,1))
             await asyncio.sleep(.01);self.assertEqual(signed,[])
         finally:release.set()
+
+    async def test_deadline_stops_late_signing_even_when_consumer_pauses_on_problem(self):
+        release=threading.Event();finished=threading.Event();signed=[]
+        def run(_,progress):
+            try: release.wait(2);return {"verified":True}
+            finally:finished.set()
+        iterator=None
+        try:
+            with patch.object(runtime,"run",run),patch.object(runtime,"STREAM_DEADLINE_SECONDS",.03):
+                iterator=runtime.stream(None,finish=lambda v:signed.append(v)).body_iterator
+                self.assertIn("time limit",await asyncio.wait_for(anext(iterator),1))
+                release.set();self.assertTrue(await asyncio.to_thread(finished.wait,1))
+                await asyncio.sleep(.01);self.assertEqual(signed,[])
+        finally:
+            release.set()
+            if iterator is not None:await iterator.aclose()

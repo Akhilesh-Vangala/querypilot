@@ -18,7 +18,7 @@
   "page_errors": [],
   "paid_model_calls": 0,
   "recording_player": true,
-  "url": "http://127.0.0.1:61811",
+  "url": "http://127.0.0.1:61966",
   "frames": [
     {
       "stage": "overview",
@@ -28,30 +28,30 @@
     {
       "stage": "executed-investigation",
       "path": "01-executed-investigation.png",
-      "sha256": "b6f743bf2f42ea6a4828494c1ef63ca76e4f5b302c1aa8b8f087247f262e8b8a"
+      "sha256": "887c104a98a8d6aaef8a4abcff6d257f3727f5b1ae4bd4fb021582f93831879e"
     },
     {
       "stage": "guarded-sql",
       "path": "02-guarded-sql.png",
-      "sha256": "97c1d1ae3ec46af41cce1b029db6ffbb2b8d0c167d10cffb6b511b827d91e36b"
+      "sha256": "95de3095cfcc66d0631d565f42eff668803019034e314cef1d7bf002ebbe9cb3"
     },
     {
       "stage": "reconciled-periods",
       "path": "03-reconciled-periods.png",
-      "sha256": "b17c9b44cf887cb0df23a4a41dd6895f7a4c10bda1da5394b6925357359d65a3"
+      "sha256": "c2fa85ea25ae8b7c1ce87dad3900eb1bad41e89802940e24cebbc8243cb066e2"
     },
     {
       "stage": "independent-checks",
       "path": "04-independent-checks.png",
-      "sha256": "04c0239ffb6062c28e9850920eed72c6f722e7dc713a0b1efa63ea38a390c62d"
+      "sha256": "ae6a0f45331b365c7f021322f563fc9677dde6d3c9e37ec58652a8b3beafc9cc"
     },
     {
       "stage": "exported-evidence",
       "path": "05-exported-evidence.png",
-      "sha256": "ff03b48ac2b148bca6b8f07c52a3d14385bdf681d57557888c797ec61bcd4989"
+      "sha256": "692f6799f00161d3a6de5c8d2473da37bbbb0bab87b25d90135aff2126e48e0b"
     }
   ],
-  "video_sha256": "08cbbde99c34d80a7715adc39af95df47541585ad756d9704a68d1eefdc62910",
+  "video_sha256": "6e3e07ac62ec1055c0bff8a2d3a42cc6303a1a4b14a532fb3d20811404e0f114",
   "recording": "Continuous actual Chromium capture; guided synthetic data, automated interactions, no live model inference",
   "captured_deployment_source": null,
   "source_sha256": {
@@ -112,7 +112,7 @@
     "backend/app/uploads/ingestion.py": "5d8bc63659a13b09d848639d1ce1870583f70a46c9c29f9465b521d25f9883a5",
     "backend/app/uploads/service.py": "86ae71e81412c31663ab20b38ce8a426135058b24d22cfe61c67371c46badbe6",
     "backend/app/uploads/signing.py": "104979a3e1d28791f243e1137d160162edf8cd9375df32f9ec20b756d8d2d805",
-    "backend/app/uploads/stream.py": "7bae483dc25d25905549a4ce7eacefcb7de4613a9f1d11c24b704ec08dc7e552",
+    "backend/app/uploads/stream.py": "e8a56931777202f52ba616a4194dd77fa2a1e369ac6628e6956e8b0ea1635643",
     "backend/app/warehouse/__init__.py": "5bb23bdc221cf95aa275ebc90cf39d7276087ae5019f99186bffd5d4071c0948",
     "backend/app/warehouse/bootstrap.py": "371c3213b73db8b70ec8f73c445da437c281421e3b8a0afd5fae50951a83d103",
     "backend/app/warehouse/service.py": "f1da56e8eccf9be25db00dfd597934d9422f870fe9c610f7da2b4ba0be0ce1ee",

@@ -5,7 +5,7 @@
   },
   "project": "QueryPilot",
   "passed": true,
-  "url": "http://127.0.0.1:61813",
+  "url": "http://127.0.0.1:61968",
   "paid_model_calls": 0,
   "actual_user_feedback": false,
   "checks": [
@@ -84,7 +84,7 @@
     "backend/app/uploads/ingestion.py": "5d8bc63659a13b09d848639d1ce1870583f70a46c9c29f9465b521d25f9883a5",
     "backend/app/uploads/service.py": "86ae71e81412c31663ab20b38ce8a426135058b24d22cfe61c67371c46badbe6",
     "backend/app/uploads/signing.py": "104979a3e1d28791f243e1137d160162edf8cd9375df32f9ec20b756d8d2d805",
-    "backend/app/uploads/stream.py": "7bae483dc25d25905549a4ce7eacefcb7de4613a9f1d11c24b704ec08dc7e552",
+    "backend/app/uploads/stream.py": "e8a56931777202f52ba616a4194dd77fa2a1e369ac6628e6956e8b0ea1635643",
     "backend/app/warehouse/__init__.py": "5bb23bdc221cf95aa275ebc90cf39d7276087ae5019f99186bffd5d4071c0948",
     "backend/app/warehouse/bootstrap.py": "371c3213b73db8b70ec8f73c445da437c281421e3b8a0afd5fae50951a83d103",
     "backend/app/warehouse/service.py": "f1da56e8eccf9be25db00dfd597934d9422f870fe9c610f7da2b4ba0be0ce1ee",
@@ -121,7 +121,7 @@
   },
   "recording": "Actual continuous product/upload/source/rules/results/history capture with reviewed fixture data; no live inference or customer-feedback claim.",
   "media_sha256": {
-    "frontend/public/uploads/poster.png": "307ba95024d1457cc4949474c79e1bcba24bba2f5373b45c5cf164c1a5445bc6",
-    "frontend/public/uploads/walkthrough.webm": "71630f35fdce0b6d438f9bb824aecadf82267e49daa12dca609c98cb040e44ab"
+    "frontend/public/uploads/poster.png": "9ad2cce6a0faf02749de4924d80b34d58478885ccec6b00262b5f371ca6c29cb",
+    "frontend/public/uploads/walkthrough.webm": "2bc356d7f3b9127bde4ce4e4acdfbffc2403bea26b46013c4675372e6e0e245b"
   }
 }

@@ -90,6 +90,9 @@ def stream(upload, finish=None):
             while True:
                 remaining = STREAM_DEADLINE_SECONDS - (time.monotonic()-started)
                 if remaining <= 0:
+                    # Close before yielding: a slow consumer may suspend here.
+                    stopped.set()
+                    mailbox.close()
                     kind, value = "problem", {"detail": "Verification exceeded the request time limit. No result was published.",
                         "issues": [], "hint": "Use a smaller export or retry. Your source and rules remain available."}
                 else:
