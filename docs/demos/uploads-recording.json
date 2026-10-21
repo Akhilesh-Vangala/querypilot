@@ -5,7 +5,7 @@
   },
   "project": "QueryPilot",
   "passed": true,
-  "url": "http://127.0.0.1:61968",
+  "url": "http://127.0.0.1:62944",
   "paid_model_calls": 0,
   "actual_user_feedback": false,
   "checks": [
@@ -61,6 +61,7 @@
     "backend/app/core/__init__.py": "25140f5e7fdde23ec36a1d2a4e4b0073a037be8ef27ccf6202dccb6cc1e4cbc1",
     "backend/app/core/config.py": "e1a103aa35edff3ae4b93e982241623004d24585b1f05cc95b39ad45455459e8",
     "backend/app/core/production_checks.py": "c72a1f48788da78ab04c990d5a15b3f0a573571b98df2467cbad324f2b64d187",
+    "backend/app/core/public_health.py": "944324f3a66ce6085e0bdfdec4bf7a41fec600abea043a97e1a3995317dbb1dc",
     "backend/app/core/rate_limits.py": "43321b00f8ccfbb3ecec738629908ed4982e86411cf811cb3e21b0a4476fe0c6",
     "backend/app/core/telemetry.py": "7a870bd41513471aedeac06458dbfe486dad680caca77bc22bd60b80fd0c887d",
     "backend/app/evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -121,7 +122,7 @@
   },
   "recording": "Actual continuous product/upload/source/rules/results/history capture with reviewed fixture data; no live inference or customer-feedback claim.",
   "media_sha256": {
-    "frontend/public/uploads/poster.png": "9ad2cce6a0faf02749de4924d80b34d58478885ccec6b00262b5f371ca6c29cb",
-    "frontend/public/uploads/walkthrough.webm": "2bc356d7f3b9127bde4ce4e4acdfbffc2403bea26b46013c4675372e6e0e245b"
+    "frontend/public/uploads/poster.png": "aea1d444b73b018ef21baff5bc1a2b39a553a87fcb022e3d3f9f17743e921205",
+    "frontend/public/uploads/walkthrough.webm": "6fab1db90a8b57fb8fcf0a729135ec80107965e56d4d04584997fe192071a520"
   }
 }

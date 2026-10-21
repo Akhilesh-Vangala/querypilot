@@ -4,7 +4,8 @@ import json
 from pathlib import Path
 import runpy
 import unittest
-probe=runpy.run_path(str(Path(__file__).resolve().parents[3]/"scripts/checks/public_health.py"))
+from app.core import public_health
+probe=vars(public_health)
 
 class PublicHealthContractTests(unittest.TestCase):
  def test_missing_progress_error_terminal_and_duplicate_result_cannot_pass(self):

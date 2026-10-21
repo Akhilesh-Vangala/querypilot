@@ -18,7 +18,7 @@
   "page_errors": [],
   "paid_model_calls": 0,
   "recording_player": true,
-  "url": "http://127.0.0.1:61966",
+  "url": "http://127.0.0.1:62940",
   "frames": [
     {
       "stage": "overview",
@@ -28,30 +28,30 @@
     {
       "stage": "executed-investigation",
       "path": "01-executed-investigation.png",
-      "sha256": "887c104a98a8d6aaef8a4abcff6d257f3727f5b1ae4bd4fb021582f93831879e"
+      "sha256": "b7f71e85fd8df9e17a26b98e139f6ba86969abe40a39e7681f369b30b9ebf906"
     },
     {
       "stage": "guarded-sql",
       "path": "02-guarded-sql.png",
-      "sha256": "95de3095cfcc66d0631d565f42eff668803019034e314cef1d7bf002ebbe9cb3"
+      "sha256": "1bd06aab3e9343a1effd4342e8eccba8d0cb5b561b926b6c94487f4de093dedf"
     },
     {
       "stage": "reconciled-periods",
       "path": "03-reconciled-periods.png",
-      "sha256": "c2fa85ea25ae8b7c1ce87dad3900eb1bad41e89802940e24cebbc8243cb066e2"
+      "sha256": "3014ce161dc5c7805bdfc06bea36bcd034d5f74d939a8b5722b18d502a75ef6e"
     },
     {
       "stage": "independent-checks",
       "path": "04-independent-checks.png",
-      "sha256": "ae6a0f45331b365c7f021322f563fc9677dde6d3c9e37ec58652a8b3beafc9cc"
+      "sha256": "c33ecba5620836e8e6626d039c07397134729cfe5250b6ed2d76478bb9cf5e70"
     },
     {
       "stage": "exported-evidence",
       "path": "05-exported-evidence.png",
-      "sha256": "692f6799f00161d3a6de5c8d2473da37bbbb0bab87b25d90135aff2126e48e0b"
+      "sha256": "38d3cd09010f7eed7ae627c4fb1f99a301cf2d6370d0e0cce2fa8eb10b1143a3"
     }
   ],
-  "video_sha256": "6e3e07ac62ec1055c0bff8a2d3a42cc6303a1a4b14a532fb3d20811404e0f114",
+  "video_sha256": "e35aa8be55ee370d3c13455f905e3e008d392a215045319bd7192db324063d4e",
   "recording": "Continuous actual Chromium capture; guided synthetic data, automated interactions, no live model inference",
   "captured_deployment_source": null,
   "source_sha256": {
@@ -89,6 +89,7 @@
     "backend/app/core/__init__.py": "25140f5e7fdde23ec36a1d2a4e4b0073a037be8ef27ccf6202dccb6cc1e4cbc1",
     "backend/app/core/config.py": "e1a103aa35edff3ae4b93e982241623004d24585b1f05cc95b39ad45455459e8",
     "backend/app/core/production_checks.py": "c72a1f48788da78ab04c990d5a15b3f0a573571b98df2467cbad324f2b64d187",
+    "backend/app/core/public_health.py": "944324f3a66ce6085e0bdfdec4bf7a41fec600abea043a97e1a3995317dbb1dc",
     "backend/app/core/rate_limits.py": "43321b00f8ccfbb3ecec738629908ed4982e86411cf811cb3e21b0a4476fe0c6",
     "backend/app/core/telemetry.py": "7a870bd41513471aedeac06458dbfe486dad680caca77bc22bd60b80fd0c887d",
     "backend/app/evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
