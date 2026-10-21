@@ -132,12 +132,15 @@ class OpenAILLM:
         self.client = client or OpenAI(api_key=api_key, timeout=30, max_retries=0)
         self.usage = {"input_tokens": 0, "output_tokens": 0}
         self.requests = 0
+        self.failure_billing_unknown = False
         self.history = []
         self.seen_messages = 0
         self.pending_call_id = None
         self.last_action = None
 
     def complete(self, messages: list[dict[str, str]]) -> str:
+        if self.failure_billing_unknown:
+            raise RuntimeError("Uncertain prior generation requires explicit billing reconciliation; automatic replay blocked")
         from app.core.config import get_settings
         from app.agents.analytics.protocol import tool_definitions
 
@@ -171,6 +174,7 @@ class OpenAILLM:
         ):
             raise RuntimeError("Model run budget exceeded")
         self.requests += 1
+        self.failure_billing_unknown = True
         response = self.client.responses.create(
             model=self.model,
             input=native_input,
@@ -181,9 +185,12 @@ class OpenAILLM:
             store=False,
         )
         usage = response.usage
-        if usage:
-            self.usage["input_tokens"] += usage.input_tokens
-            self.usage["output_tokens"] += usage.output_tokens
+        if usage is None or any(type(getattr(usage, key, None)) is not int or getattr(usage, key) < 0
+                                for key in ("input_tokens", "output_tokens")):
+            raise RuntimeError("Complete nonnegative provider usage is required; billing remains unknown")
+        self.usage["input_tokens"] += usage.input_tokens
+        self.usage["output_tokens"] += usage.output_tokens
+        self.failure_billing_unknown = False
         if (
             response.status != "completed"
             or sum(self.usage.values()) > settings.max_run_tokens
@@ -195,7 +202,7 @@ class OpenAILLM:
         if len(calls) != 1:
             raise RuntimeError("Exactly one typed model action is required")
         call = calls[0]
-        arguments = json.loads(call.arguments)
+        arguments = parse_action(call.arguments)
         self.history = native_input + [
             item.model_dump(exclude_none=True) for item in response.output
         ]
@@ -222,8 +229,21 @@ def get_llm() -> LLMClient:
 
 
 def parse_action(raw: str) -> dict[str, Any]:
+    # Reject ambiguity before schema validation; JSON's last-key-wins behavior
+    # must not silently select a different tool or SQL statement.
+    if not isinstance(raw, str) or len(raw.encode("utf-8")) > 64000:
+        raise ValueError("Model action exceeds the text envelope")
+    def unique(pairs):
+        result = {}
+        for name, value in pairs:
+            if name in result:
+                raise ValueError("Duplicate model action key")
+            result[name] = value
+        return result
+    def finite(value):
+        raise ValueError("Non-finite model action value")
     text = raw.strip()
     if text.startswith("```"):
         text = re.sub(r"^```(?:json)?", "", text).strip()
         text = re.sub(r"```$", "", text).strip()
-    return json.loads(text)
+    return json.loads(text, object_pairs_hook=unique, parse_constant=finite)

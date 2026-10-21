@@ -247,7 +247,7 @@ def test_sdk_replays_native_call_ids_and_reasoning_items_not_user_tool_text():
                         "status": "completed",
                     },
                 ],
-                "usage": None,
+                "usage": {"input_tokens":120,"output_tokens":30,"total_tokens":150},
             },
         )
 
