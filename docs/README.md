@@ -19,3 +19,5 @@ Detailed implementation: [metric comparison subgraph](architecture/SEMANTIC-INVE
 ## Visitor-owned data
 
 [CSV workspace contracts, limits and verification](product/USER-DATA.md).
+
+Current scoped implementation: [project status](project/STATUS.md).

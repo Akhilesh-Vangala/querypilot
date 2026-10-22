@@ -1,3 +1,7 @@
+## Current scoped increment — October21 pre-live contracts
+
+See [current implementation status](STATUS.md) for this increment, its evidence boundaries and remaining gates. Earlier dated entries below are preserved history.
+
 ## October21 — no-credit reliability and availability
 
 Public SSE delivery now retains terminal results/errors separately from a bounded progress mailbox, coalesces cross-thread wakeups and ends with actionable failure after 25 seconds. Slow/disconnected consumers do not receive late reports. Tests inject progress floods, worker faults, deadline expiry and disconnects; a running read-only thread may finish and is not claimed killed.

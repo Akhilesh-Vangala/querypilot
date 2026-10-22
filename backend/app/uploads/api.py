@@ -91,7 +91,7 @@ def attach(app, project, root):
             session.visitor(request, response)
         response.headers["Cache-Control"] = "no-store"
         return {"project": project, **{k: v for k, v in config.items() if k != "template"},
-                "live_ai": False, "formats": sorted(FORMATS), "max_csv_bytes": 400000, "max_rows": 30 if project == "RelayOps" else 5000,
+                "live_ai": False, "run_record_schema": "run-v1", "formats": sorted(FORMATS), "max_csv_bytes": 400000, "max_rows": 30 if project == "RelayOps" else 5000,
                 "retention": "Unsaved files are processed for this request and remain in browser memory. Optional device history or configured account storage requires explicit save consent. Hosting metadata may be retained; file contents are not deliberately logged.",
                 "approval_available": session is not None}
 
@@ -132,7 +132,7 @@ def attach(app, project, root):
             result["review"] = session.seal({"visitor": session.visitor(request),
                 "source": fingerprint({"csv": upload.csv, "mapping": upload.mapping, "options": upload.options}),
                 "plan": result["plan_sha256"], "expires": int(time.time())+900}, "upload-review-v1")
-        return JSONResponse(attest(result), headers={"Cache-Control": "no-store"})
+        return JSONResponse(attest(result), headers={"Cache-Control": "no-store", "X-Run-ID": result["run_record"]["run_id"]})
 
     @app.post("/api/uploads/preview")
     def preview_rows(body: Preview):
@@ -178,4 +178,4 @@ def attach(app, project, root):
             result = run(upload, approved=True)
         except ValueError as error:
             raise HTTPException(422, str(error)) from None
-        return JSONResponse(attest(result), headers={"Cache-Control": "no-store"})
+        return JSONResponse(attest(result), headers={"Cache-Control": "no-store", "X-Run-ID": result["run_record"]["run_id"]})

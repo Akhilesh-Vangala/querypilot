@@ -140,6 +140,12 @@ class Probe:
             body,headers=self.request('/api/uploads/analyze-stream',upload)
             require('text/event-stream' in headers.get('content-type',''),'sse-content-type')
             final=terminal_result(body.decode());validate_result(final)
+            if caps.get('run_record_schema')=='run-v1':
+                record=final.get('run_record',{})
+                require(record.get('schema_version')=='run-v1' and record.get('owner_scope')=='request-local'
+                        and record.get('billing')=='not-used' and record.get('verification_passed') is True,'run-provenance')
+                expected=hashlib.sha256(json.dumps(upload,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
+                require(record.get('input_sha256')==expected and isinstance(record.get('run_id'),str),'run-source-contract-binding')
             require(final.get('source_sha256')==hashlib.sha256(upload['csv'].encode()).hexdigest(),'source-bound-result')
         require(self.json('/api/uploads/check-report',{'report':final}).get('verified') is True,'authentic-result')
         changed=copy.deepcopy(final);changed['summary']['synthetic_tamper']=True

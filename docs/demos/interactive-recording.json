@@ -18,7 +18,7 @@
   "page_errors": [],
   "paid_model_calls": 0,
   "recording_player": true,
-  "url": "http://127.0.0.1:62940",
+  "url": "http://127.0.0.1:51704",
   "frames": [
     {
       "stage": "overview",
@@ -28,30 +28,30 @@
     {
       "stage": "executed-investigation",
       "path": "01-executed-investigation.png",
-      "sha256": "b7f71e85fd8df9e17a26b98e139f6ba86969abe40a39e7681f369b30b9ebf906"
+      "sha256": "3eb0a64e160f0a72459e218306ac8fcd8341cb119cdbb478e054b19ab7a78f15"
     },
     {
       "stage": "guarded-sql",
       "path": "02-guarded-sql.png",
-      "sha256": "1bd06aab3e9343a1effd4342e8eccba8d0cb5b561b926b6c94487f4de093dedf"
+      "sha256": "2086ff9ed0cbd165b0cd722352919f57d2f0168e30cc1d66ec2336cc85a8ae68"
     },
     {
       "stage": "reconciled-periods",
       "path": "03-reconciled-periods.png",
-      "sha256": "3014ce161dc5c7805bdfc06bea36bcd034d5f74d939a8b5722b18d502a75ef6e"
+      "sha256": "8677fec4de6cfba4c5160e8894682a1e0aa85e010a6676b81784b932bf2b3a45"
     },
     {
       "stage": "independent-checks",
       "path": "04-independent-checks.png",
-      "sha256": "c33ecba5620836e8e6626d039c07397134729cfe5250b6ed2d76478bb9cf5e70"
+      "sha256": "fa585b58070e37d6b7da3718923e05bd9c970d8d78af9fe6d5d2b26554ab3775"
     },
     {
       "stage": "exported-evidence",
       "path": "05-exported-evidence.png",
-      "sha256": "38d3cd09010f7eed7ae627c4fb1f99a301cf2d6370d0e0cce2fa8eb10b1143a3"
+      "sha256": "2884610b92b1d9ef0d3732578e934e3a95963974a6e6e50c0a8049facd3ef653"
     }
   ],
-  "video_sha256": "e35aa8be55ee370d3c13455f905e3e008d392a215045319bd7192db324063d4e",
+  "video_sha256": "60a4ff5853351d100d9292c5fe789efb012712fbc29cb749c234a7dcd11527fa",
   "recording": "Continuous actual Chromium capture; guided synthetic data, automated interactions, no live model inference",
   "captured_deployment_source": null,
   "source_sha256": {
@@ -76,7 +76,7 @@
     "backend/app/agents/analytics/planner.py": "9630a5ea56bd3f02c92a2748da0e3a54ac56f576e763f8e78c9cbad660302ae3",
     "backend/app/agents/analytics/protocol.py": "97c2b9bb9ddf9c3d47227d51ee837ac2e726619204b76da315b1f20b7fd4ecf4",
     "backend/app/agents/analytics/tools.py": "463b52cb9bd6372923432bafebfbed1ff8b25ef2e564d43ececfdbe0c1f4094a",
-    "backend/app/agents/analytics/workflow.py": "51bab28c211cc6ed36753547a6afe1b4729b6a9c3c3b0ecd9b222ebb9411f840",
+    "backend/app/agents/analytics/workflow.py": "93073f44f0cddd71b86d884c1737c525faf91ce834911814c633ff582ba039ba",
     "backend/app/analytics/__init__.py": "514df2388c50d0ecedcd2f4820fb0cf4e60dcfbfa9a03ad0ec75ba40aa4fa42f",
     "backend/app/analytics/catalog.py": "66c377322a6ac614f230586063d215d1a6b5e030c2ea2a0df8d876f24b598825",
     "backend/app/analytics/comparison.py": "f84387d0be85c4a503c424df7da1691dcf90c0a257d19546d2682cba9aafe2c8",
@@ -89,8 +89,9 @@
     "backend/app/core/__init__.py": "25140f5e7fdde23ec36a1d2a4e4b0073a037be8ef27ccf6202dccb6cc1e4cbc1",
     "backend/app/core/config.py": "e1a103aa35edff3ae4b93e982241623004d24585b1f05cc95b39ad45455459e8",
     "backend/app/core/production_checks.py": "c72a1f48788da78ab04c990d5a15b3f0a573571b98df2467cbad324f2b64d187",
-    "backend/app/core/public_health.py": "944324f3a66ce6085e0bdfdec4bf7a41fec600abea043a97e1a3995317dbb1dc",
+    "backend/app/core/public_health.py": "14d7ba42b40c4785964f0fd726e9ea5b9fdf159f817f23e899cd7fd9e6838e1c",
     "backend/app/core/rate_limits.py": "43321b00f8ccfbb3ecec738629908ed4982e86411cf811cb3e21b0a4476fe0c6",
+    "backend/app/core/run_contract.py": "1c82e1f108d5cfff0304994f1e1991efa328a5ae8f439fdb681f19d398eed5e8",
     "backend/app/core/telemetry.py": "7a870bd41513471aedeac06458dbfe486dad680caca77bc22bd60b80fd0c887d",
     "backend/app/evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "backend/app/evaluation/comparisons.py": "84dec093710ce91d0eeb63e769134e3b14a4d7b66a726d7f7eec15c51e48f2e8",
@@ -108,17 +109,17 @@
     "backend/app/security/auth.py": "bdc337ab4e40a66bc577b83622bc20181b958bb0079312cd3281dd7ce454a4db",
     "backend/app/security/provision_user.py": "d91a257a0f88360a8ac707ac9e02dddca51b4057cff30c33ec9bcbe2d98a7f4c",
     "backend/app/uploads/__init__.py": "6cf9cc3f23b8eb7fecf7b1f708e9627b7d6c5aacbe313fc0034cc082b4496ee4",
-    "backend/app/uploads/api.py": "547d7dd0c12213c5f170e616469cd5ebebe2c4da1475adfb2701d616e6af4dc8",
+    "backend/app/uploads/api.py": "ffa3767f2ea1afa0582b0a1b68af4fd53fc0f940c7c3c29f2e075cba5d02e47b",
     "backend/app/uploads/imports.py": "d025a3e701bca899913b580737065f1cb2f87084babc8699d582c03cb5ed778f",
     "backend/app/uploads/ingestion.py": "5d8bc63659a13b09d848639d1ce1870583f70a46c9c29f9465b521d25f9883a5",
-    "backend/app/uploads/service.py": "86ae71e81412c31663ab20b38ce8a426135058b24d22cfe61c67371c46badbe6",
+    "backend/app/uploads/service.py": "2dd011a978fc7b4a61366f2f0f4832b6aeafec33b946a0d6722aa6c0ff7ac277",
     "backend/app/uploads/signing.py": "104979a3e1d28791f243e1137d160162edf8cd9375df32f9ec20b756d8d2d805",
-    "backend/app/uploads/stream.py": "e8a56931777202f52ba616a4194dd77fa2a1e369ac6628e6956e8b0ea1635643",
+    "backend/app/uploads/stream.py": "5b02320090f91893d35dfe70d439dde553e3cbc775ec2556948dba851a3596a8",
     "backend/app/warehouse/__init__.py": "5bb23bdc221cf95aa275ebc90cf39d7276087ae5019f99186bffd5d4071c0948",
     "backend/app/warehouse/bootstrap.py": "371c3213b73db8b70ec8f73c445da437c281421e3b8a0afd5fae50951a83d103",
     "backend/app/warehouse/service.py": "f1da56e8eccf9be25db00dfd597934d9422f870fe9c610f7da2b4ba0be0ce1ee",
     "backend/app/workers/__init__.py": "8bf0670a840fdf42a71b598ea2086b7cae8c2dde307f3c7eb4118e968761e911",
-    "backend/app/workers/worker.py": "159edafe6b67bc93a7321f8a7fd3ba975bae90230be776388208c3557b315a21"
+    "backend/app/workers/worker.py": "c0afb6041c529b44e5500840c24e00eb678f22aa6dde430626e0d393a2fed33c"
   },
   "video_path": "frontend/public/recordings/querypilot.webm",
   "preview_path": "docs/assets/demos/querypilot-demo.gif"

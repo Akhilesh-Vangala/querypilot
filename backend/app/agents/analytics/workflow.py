@@ -4,6 +4,8 @@ from __future__ import annotations
 import hashlib
 import json
 import time
+from pathlib import Path
+from app.core.run_contract import current_run_id, fingerprint, record
 from typing import TypedDict
 from langgraph.graph import StateGraph
 from langgraph.graph import START
@@ -51,10 +53,12 @@ class AnalyticsWorkflow:
         self.events = []
         self.settings = get_settings()
         self.started = time.perf_counter()
+        self.run_id = current_run_id()
 
     def event(self, stage, status="complete", **details):
         value = {
             "sequence": len(self.events) + 1,
+            "run_id": self.run_id,
             "stage": stage,
             "status": status,
             "elapsed_ms": round((time.perf_counter() - self.started) * 1000),
@@ -397,5 +401,15 @@ class AnalyticsWorkflow:
                 "framework": "LangGraph",
             }
         )
+        mode = "baseline" if isinstance(self.llm, StubLLM) else "live" if getattr(self.llm, "mode", None) == "live" else "scripted"
+        usage = getattr(self.llm, "usage", {})
+        billing = ("provider-reported" if not getattr(self.llm, "failure_billing_unknown", False)
+                   and all(type(usage.get(k)) is int for k in ("input_tokens", "output_tokens")) else "unknown") if mode == "live" else "not-used"
+        result["run_record"] = record(run_id=self.run_id, task="analytics", mode=mode,
+            owner_scope="operator-workspace", input_sha256=fingerprint({"question": question, "contract": CONTRACT}),
+            contract=CONTRACT, result={"answer": result.get("answer"), "sql": result.get("sql"), "rows": result.get("rows", [])},
+            verification_scope="execution-only", verification_passed=result["status"] == "completed",
+            check_count=1, evidence_count=len(state.get("receipts", {})), billing=billing,
+            producer_versions={"workflow": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "contract": CONTRACT["version"]})
         self.event("publish_answer", status=result["status"])
         return result

@@ -9,6 +9,7 @@ from fastapi.responses import StreamingResponse
 from .ingestion import UploadProblem
 from .service import run
 from .signing import attest
+from app.core.run_contract import current_run_id, run_scope
 
 STREAM_DEADLINE_SECONDS = 25.0
 
@@ -64,14 +65,16 @@ def stream(upload, finish=None):
         mailbox = _Mailbox(loop)
         stopped = threading.Event()
         started = time.monotonic()
+        run_id = current_run_id()
 
         def execute():
             def progress(stage, state):
                 if not stopped.is_set():
-                    mailbox.publish("stage", {"stage": stage, "state": state,
+                    mailbox.publish("stage", {"stage": stage, "state": state, "run_id": run_id,
                         "elapsed_ms": round((time.monotonic()-started)*1000)})
             try:
-                result = run(upload, progress=progress)
+                with run_scope(run_id):
+                    result = run(upload, progress=progress)
                 if stopped.is_set():
                     return
                 result["elapsed_ms"] = round((time.monotonic()-started)*1000)
