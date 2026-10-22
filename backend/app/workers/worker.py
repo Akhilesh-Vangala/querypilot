@@ -14,6 +14,7 @@ from app.persistence.runs import RunConflict
 from app.agents.analytics.workflow import AnalyticsWorkflow
 from app.agents.analytics.llm import StubLLM
 from app.agents.analytics.llm import get_llm
+from app.core.run_contract import run_scope
 
 
 def stamp():
@@ -54,7 +55,8 @@ def process_one(repository, stopped=None, identity=None):
                 raise RuntimeError(
                     "Live investigator is unavailable in this worker; no fallback"
                 )
-            workflow = AnalyticsWorkflow(session, llm=client, progress=progress)
+            with run_scope(job["id"]):
+                workflow = AnalyticsWorkflow(session, llm=client, progress=progress)
             try:
                 result = workflow.run(job["question"])
             finally:

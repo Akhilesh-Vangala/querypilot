@@ -4,6 +4,8 @@ import sqlite3
 from collections import defaultdict
 from decimal import Decimal, localcontext
 
+from app.core.run_contract import upload_record
+
 from .ingestion import UploadProblem, column, decimal_value, fingerprint, parse, safe_csv
 
 
@@ -85,5 +87,6 @@ def run(upload, progress=None):
             "csv": safe_csv(["segment", "value", "records"], [[r["segment"], Decimal(r["value"]), r["records"]] for r in results]),
             "scope": "Read-only analytics for the explicitly selected measure, grouping and exact-match filter. Missing or invalid included numeric values refuse the request. No causal inference or live language interpretation.",
             "activity": ["profile-upload", "review-metric-contract", "compile-typed-aggregate", "execute-in-memory", "independent-decimal-reconciliation", "export-evidence"]}
+    result["run_record"] = upload_record(upload, result)
     progress("report", "complete")
     return result
