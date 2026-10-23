@@ -1,23 +1,16 @@
-[Product pages, storage and verification](product/PRODUCT-WORKSPACE.md) · [Own-data business contract](product/USER-DATA.md)
+# QueryPilot documentation
 
-# QueryPilot technical documentation
+[App](https://querypilot-five.vercel.app/) · [Project overview](../README.md)
 
-[Project overview](../README.md) · [Working app](https://querypilot-five.vercel.app) · [Recorded demo](DEMO.md)
-
-| Review question | Current source |
+| Question | Read |
 | --- | --- |
-| Where do frontend, backend and tests live? | [Layout and commands](development/LAYOUT.md) |
-| How does the system work? | [Architecture](architecture/OVERVIEW.md) |
-| What do the checks establish? | [Evaluation](evaluation/README.md), [progress and source-linked evidence](project/PROGRESS.md) |
-| How do I run/deploy it? | [Operations](operations/DEPLOYMENT.md) |
-| What are the design tradeoffs? | [Decisions](DECISIONS.md) |
-| How was the demo captured? | [Actual continuous recording and provenance](DEMO.md) |
-| What is current versus historical? | [Handoff](project/HANDOFF.md), [plan](project/PLAN.md), [dated history](project/history/PRE-ORGANIZATION-README.md) |
+| How is the system split? | [Architecture](architecture/OVERVIEW.md) |
+| Where does the code live? | [Layout and commands](development/LAYOUT.md) |
+| What do the checks actually establish? | [Evaluation](evaluation/README.md) |
+| How do I run it? | [Deployment](operations/DEPLOYMENT.md) |
+| Why these boundaries? | [Decisions](DECISIONS.md) |
+| What does the recording show? | [Demo](DEMO.md) |
 
-Detailed implementation: [metric comparison subgraph](architecture/SEMANTIC-INVESTIGATIONS.md), [source-linked delivery evidence](evaluation/EVIDENCE.md).
+Metric comparisons and the delivery evidence for them: [semantic investigations](architecture/SEMANTIC-INVESTIGATIONS.md) · [evidence](evaluation/EVIDENCE.md).
 
-## Visitor-owned data
-
-[CSV workspace contracts, limits and verification](product/USER-DATA.md).
-
-Current scoped implementation: [project status](project/STATUS.md).
+Uploaded files and the product pages: [file contracts](product/USER-DATA.md) · [product workspace](product/PRODUCT-WORKSPACE.md).

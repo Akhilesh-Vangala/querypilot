@@ -1,29 +1,18 @@
-<p align="center"><img src="docs/assets/branding/hero.svg" alt="QueryPilot — Agentic analytics" width="100%"></p>
+# QueryPilot
 
-**Analytical questions to executed evidence.** [Open QueryPilot](https://querypilot-five.vercel.app/) · [Upload your data](https://querypilot-five.vercel.app/uploads) · [Docs](docs/README.md)
+Analytics questions over a claims and provider-network warehouse. A bounded LangGraph agent compiles guarded SQL against reviewed metrics. An independent check reconciles totals and contributions, and withholds a conclusion the query does not support.
+
+[Open the app](https://querypilot-five.vercel.app/) · [Upload a file](https://querypilot-five.vercel.app/uploads) · [Architecture](docs/architecture/OVERVIEW.md) · [What the checks measure](docs/evaluation/README.md) · [Run locally](docs/operations/DEPLOYMENT.md)
 
 <p align="center"><a href="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml"><img src="https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml/badge.svg" alt="Required engineering checks"></a> &nbsp; Python · LangGraph · FastAPI · PostgreSQL</p>
 
-# QueryPilot
-
-Agentic analytics for claims and provider-network questions: reviewed metrics, guarded SQL, and independently reconciled period comparisons — without inventing causal claims the data does not support.
-
-[**Open the app ↗**](https://querypilot-five.vercel.app/) · [Technical documentation](docs/README.md) · [Repository layout](docs/development/LAYOUT.md)
+The public app uses synthetic fixtures and does not call a model. A live benchmark has not been run, and no accuracy number is stated for one.
 
 ## Architecture
 
-![QueryPilot architecture](docs/assets/diagrams/system-map.svg)
+FastAPI admits the question and the metric scope. The agent may only compile and execute read-only SQL. Reconciliation of totals, weighted contributions, and factor accounting is separate from the model, and the report stays descriptive.
 
-```mermaid
-%%{init: {"theme": "neutral"}}%%
-flowchart LR
-  Question --> Scope[Reviewed metric and scope]
-  Scope --> Agent[Bounded LangGraph actions]
-  Agent --> SQL[Compile and execute guarded SQL]
-  SQL --> Verify[Reconcile totals and contributions]
-  Verify --> Result[Descriptive report and evidence]
-  Verify --> Withhold[Withhold unsupported conclusions]
-```
+![System map: React workbench, FastAPI scope, bounded LangGraph, read-only SQL, independent reconciliation](docs/assets/diagrams/system-map.svg)
 
 | Component | Responsibility |
 | --- | --- |
