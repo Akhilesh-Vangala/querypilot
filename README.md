@@ -14,23 +14,20 @@ FastAPI admits the question and the metric scope. The agent may only compile and
 
 ![System map: React workbench, FastAPI scope, bounded LangGraph, read-only SQL, independent reconciliation](docs/assets/diagrams/system-map.svg)
 
-| Component | Responsibility |
-| --- | --- |
-| Frontend | Product pages, SQL/plan/verification tabs, comparison reports |
-| Backend | FastAPI admission, bounded LangGraph actions, SQL policy |
-| Independent checking | Read-only warehouse, receipts, contribution/Shapley accounting |
-| Runtime | PostgreSQL workers and owner-fenced publication |
+| Layer | Where | Responsibility |
+| --- | --- | --- |
+| Frontend | `frontend/` | Question, SQL, plan, and verification views |
+| Agent | `backend/app/agents/analytics/` | Bounded LangGraph actions and model transport |
+| Backend | `backend/app/` | Admission, guarded SQL, reconciliation, warehouse |
+
+The agent package stays inside the backend import root. Reconciliation does not run inside the model.
 
 ## Repository layout
 
 ```text
-querypilot/
-├── backend/          app, tests, requirements, docker
-├── frontend/         React/TypeScript product UI
-├── infrastructure/   containers
-├── scripts/
-├── docs/
-└── .github/
+frontend/                          React workbench
+backend/app/agents/analytics/      LangGraph, tools, model transport
+backend/app/                       API, warehouse, persistence, workers
 ```
 
 ## Run locally
