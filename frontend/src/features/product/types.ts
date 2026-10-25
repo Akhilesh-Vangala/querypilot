@@ -19,7 +19,23 @@ export type Contract = {
   mapping: Record<string, string>;
   options: Record<string, string>;
 };
+export type RunRecord = {
+  schema_version: "run-v1";
+  run_id: string;
+  mode: "reviewed-aggregate" | "baseline" | "scripted" | "live";
+  owner_scope: "request-local" | "operator-workspace";
+  verification_scope:
+    "declared-contract" | "execution-only" | "semantic-reconciliation";
+  verification_passed: boolean;
+  check_count: number;
+  evidence_count: number;
+  input_sha256: string;
+  contract_sha256: string;
+  result_sha256: string;
+  billing: "not-used" | "provider-reported" | "unknown";
+};
 export type Report = {
+  run_record?: RunRecord;
   source_sha256: string;
   live_ai: boolean;
   verified_at: string;

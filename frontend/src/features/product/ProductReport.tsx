@@ -99,6 +99,46 @@ export default function ProductReport({
           <span className="badge">Independent checks passed</span>
         </div>
       </section>
+      {report.run_record && (
+        <section className="report-lineage" aria-label="Execution provenance">
+          <div>
+            <span className="eyebrow">EXECUTION MODE</span>
+            <strong>
+              {report.run_record.mode === "reviewed-aggregate"
+                ? "Reviewed aggregate"
+                : report.run_record.mode}
+            </strong>
+          </div>
+          <div>
+            <span className="eyebrow">VERIFICATION</span>
+            <strong>
+              {report.run_record.check_count} independent{" "}
+              {report.run_record.check_count === 1 ? "check" : "checks"}
+            </strong>
+          </div>
+          <div>
+            <span className="eyebrow">MODEL USAGE</span>
+            <strong>
+              {report.run_record.billing === "not-used"
+                ? "No model calls"
+                : report.run_record.billing}
+            </strong>
+          </div>
+          <details>
+            <summary>Inspect run identity</summary>
+            <dl>
+              <dt>Run ID</dt>
+              <dd>{report.run_record.run_id}</dd>
+              <dt>Verification scope</dt>
+              <dd>{report.run_record.verification_scope}</dd>
+              <dt>Contract SHA-256</dt>
+              <dd>{report.run_record.contract_sha256}</dd>
+              <dt>Result SHA-256</dt>
+              <dd>{report.run_record.result_sha256}</dd>
+            </dl>
+          </details>
+        </section>
+      )}
       <div className="stats spaced">
         {[
           [
@@ -200,7 +240,7 @@ export default function ProductReport({
                           (Math.abs(Number(r.value)) / maximum) *
                           (negative ? 48 : 100)
                         }
-                        fill="#444"
+                        fill={r.value.startsWith("-") ? "#c4523f" : "#6850d8"}
                       />
                       {negative && (
                         <line

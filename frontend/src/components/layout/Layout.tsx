@@ -6,6 +6,7 @@ import {
   useLocation,
   Link,
 } from "react-router-dom";
+import StudioIcon from "./StudioIcon";
 import { api, UserMe, RuntimeConfig } from "../../lib/api";
 export default function Layout() {
   const navigate = useNavigate(),
@@ -29,12 +30,25 @@ export default function Layout() {
     <div className="app-shell">
       <aside className="sidebar">
         <Link to="/" className="brand">
-          <span className="brand-mark">Q</span>QueryPilot
+          <span className="brand-mark">q</span>QueryPilot
         </Link>
-        <p className="sidebar-caption">ANALYTICS WORKSPACE</p>
+        <p className="sidebar-caption">INVESTIGATION STUDIO</p>
         <nav>
-          {links.map(([path, title]) => (
+          {links.map(([path, title], i) => (
             <NavLink end={path === "/demo"} key={path} to={path}>
+              <StudioIcon
+                name={
+                  [
+                    "overview",
+                    "query",
+                    "compare",
+                    "clock",
+                    "guide",
+                    "data",
+                    "settings",
+                  ][i]
+                }
+              />
               {title}
             </NavLink>
           ))}

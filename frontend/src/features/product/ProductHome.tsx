@@ -1,42 +1,44 @@
 import { Link } from "react-router-dom";
 import { useProduct } from "./context";
+import StudioIcon from "../../components/layout/StudioIcon";
 export function Brand() {
   return (
     <Link to="/" className="brand" id="brand">
       <span className="brand-symbol" aria-hidden="true">
-        Q
+        q<span />
       </span>
-      QueryPilot
+      QueryPilot<span className="brand-edition">STUDIO</span>
     </Link>
   );
 }
 export default function ProductHome({ sample }: { sample: () => void }) {
   const ctx = useProduct();
   return (
-    <div className="marketing">
+    <div className="marketing studio-home">
       <header className="marketing-header">
         <Brand />
         <nav aria-label="Main navigation">
-          <a href="#how-it-works">How it works</a>
-          <Link to="/workspace/guide">Documentation</Link>
+          <a href="#how-it-works">The workflow</a>
+          <Link to="/demo">Investigation studio</Link>
           <Link className="primary" to="/workspace">
-            Open workspace
+            Open workspace <StudioIcon name="arrow" />
           </Link>
         </nav>
       </header>
       <main className="marketing-main" id="main">
-        <section className="marketing-hero">
-          <div>
-            <span className="badge">ANALYTICS, WITH EXECUTED EVIDENCE</span>
+        <section className="studio-hero">
+          <div className="studio-hero-copy">
+            <span className="studio-kicker">
+              <span /> A CLEARER WAY THROUGH YOUR DATA
+            </span>
             <h1>
-              Ask a precise question.
+              Good questions.
               <br />
-              Keep the evidence.
+              <em>Verifiable answers.</em>
             </h1>
             <p className="lead">
-              Bring your data. Review the metric and filter, inspect the
-              executed SQL, and get a result independently reconciled from the
-              source.
+              A space to explore the numbers, define what matters, and follow
+              every answer back to its source.
             </p>
             <div className="actions">
               <Link className="primary" to="/uploads?new=1">
@@ -50,98 +52,196 @@ export default function ProductHome({ sample }: { sample: () => void }) {
                 Try a sample file
               </button>
             </div>
-            <p className="hint spaced">
-              Start without an account. Saving is an explicit choice.
+            <p className="studio-formats">
+              CSV <span>·</span> TSV <span>·</span> Excel <span>·</span> JSON{" "}
+              <span>·</span> JSONL
+            </p>
+            <p className="hint">
+              No account needed. Save only when you choose.
             </p>
           </div>
           <div
-            className="hero-proof"
-            aria-label="Illustrative result from the downloadable sample file"
+            className="studio-canvas"
+            aria-label="Illustrative calculation: 0.10 plus 0.20 equals 0.30, checked independently"
           >
-            <div className="proof-top">
-              <span>REVENUE BY REGION</span>
-              <span className="badge">Sample report</span>
+            <div className="canvas-heading">
+              <span className="canvas-dots">
+                <i />
+                <i />
+                <i />
+              </span>
+              <span>THE EVIDENCE DESK</span>
+              <StudioIcon name="data" />
             </div>
-            <div className="proof-body">
-              <p className="eyebrow">THE CHECKED SUM</p>
-              <strong className="proof-amount">265.50</strong>
-              <p className="hint spaced">
-                4 included source records · 2 groups · No filter
-              </p>
-              {[
-                "A reviewed measure and grouping",
-                "SQL sums and counts independently reconciled",
-                "Exact decimal strings preserved in exports",
-              ].map((t) => (
-                <div className="proof-line" key={t}>
-                  ✓ {t}
+            <div className="canvas-question">
+              <span className="canvas-avatar">Q</span>
+              <div>
+                <small>YOUR QUESTION</small>
+                <p>What is our total for completed records?</p>
+              </div>
+            </div>
+            <div className="canvas-columns">
+              <div className="canvas-source">
+                <span className="eyebrow">01 / SOURCE</span>
+                <div className="mini-table">
+                  <div>
+                    <b>region</b>
+                    <b>amount</b>
+                  </div>
+                  <div>
+                    <span>North</span>
+                    <span>0.10</span>
+                  </div>
+                  <div>
+                    <span>North</span>
+                    <span>0.20</span>
+                  </div>
+                  <div className="excluded">
+                    <span>South</span>
+                    <span>5.00</span>
+                  </div>
                 </div>
-              ))}
+                <small>
+                  Filter: status = done
+                  <br />
+                  Illustrative data · 2 included rows
+                </small>
+              </div>
+              <div className="canvas-result">
+                <span className="eyebrow">02 / CHECKED RESULT</span>
+                <strong>0.30</strong>
+                <div className="sample-bars" aria-hidden="true">
+                  <i />
+                  <i />
+                </div>
+                <span className="canvas-verified">
+                  <StudioIcon name="check" /> SQL = Decimal reference
+                </span>
+              </div>
             </div>
-            <div className="proof-footer">
-              Descriptive analytics under explicit rules. No invented causal
-              explanation.
+            <div className="canvas-code">
+              <span>03 / EXECUTION</span>
+              <code>SUM(amount) WHERE status = 'done'</code>
+              <span className="canvas-caption">
+                Illustrative expression · inspect executed SQL in your report
+              </span>
+            </div>
+            <div className="canvas-footer">
+              <span className="canvas-label">
+                SOURCE → DEFINITION → EVIDENCE
+              </span>
+              <span>Every step, inspectable.</span>
             </div>
           </div>
         </section>
-        <div className="marketing-divider">
-          <span>Reviewed metric contracts</span>
-          <span>Independent Decimal reference</span>
-          <span>Read-only source processing</span>
-        </div>
-        <section className="marketing-section" id="how-it-works">
-          <p className="eyebrow">FROM QUESTION TO AN INSPECTABLE ANSWER</p>
-          <h2>Make the definition part of the result.</h2>
-          <div className="marketing-steps">
+        <section
+          className="studio-paths"
+          aria-label="Choose an analytical workflow"
+        >
+          <Link className="path-card path-upload" to="/uploads?new=1">
+            <span className="path-icon">
+              <StudioIcon name="upload" />
+            </span>
+            <div>
+              <span className="eyebrow">YOUR FILES</span>
+              <h2>From export to insight.</h2>
+              <p>Profile a table, review a metric, and reconcile the result.</p>
+            </div>
+            <StudioIcon name="arrow" />
+          </Link>
+          <Link className="path-card path-investigate" to="/demo">
+            <span className="path-icon">
+              <StudioIcon name="query" />
+            </span>
+            <div>
+              <span className="eyebrow">WAREHOUSE STUDIO</span>
+              <h2>Follow the analytical trail.</h2>
+              <p>
+                Explore claims and provider metrics with a guided investigator.
+              </p>
+            </div>
+            <StudioIcon name="arrow" />
+          </Link>
+        </section>
+        <section className="studio-method" id="how-it-works">
+          <div className="method-intro">
+            <span className="eyebrow">THE WORKFLOW</span>
+            <h2>
+              The answer is only
+              <br />
+              half the story.
+            </h2>
+            <p>
+              The definition, calculation and independent checks travel with
+              every report.
+            </p>
+            <Link className="text-link" to="/workspace/guide">
+              Explore the guide →
+            </Link>
+          </div>
+          <div className="method-steps">
             {[
               [
-                "01 / INSPECT",
-                "Start with your export.",
-                "Preview actual rows, inspect missing values and numeric coverage, and find the records behind an error.",
+                "01",
+                "Bring the source.",
+                "Preview actual records and inspect missing values before choosing what to measure.",
+                "data",
               ],
               [
-                "02 / DEFINE",
-                "Say what should count.",
-                "Choose sum, count or average. Review the measure, grouping and exact-match filter before executing.",
+                "02",
+                "Make the rules explicit.",
+                "Select a sum, count or weighted overall average. Review grouping and exact-match filters.",
+                "settings",
               ],
               [
-                "03 / VERIFY",
-                "Keep an answer you can inspect.",
-                "Compare the SQL output with a separate Decimal reference, inspect exact group values and export evidence.",
+                "03",
+                "Inspect the evidence.",
+                "Reconcile executed SQL with a separate Decimal computation. Keep exact values and export the report.",
+                "check",
               ],
-            ].map(([n, h, p]) => (
+            ].map(([n, h, p, icon]) => (
               <article key={n}>
-                <span className="step-label">{n}</span>
-                <h3>{h}</h3>
-                <p>{p}</p>
+                <span className="method-number">{n}</span>
+                <div>
+                  <h3>{h}</h3>
+                  <p>{p}</p>
+                </div>
+                <StudioIcon name={icon} />
               </article>
             ))}
           </div>
         </section>
-        <section className="marketing-section">
-          <p className="eyebrow">RECOVERABLE WORK</p>
-          <h2>Keep context when you come back.</h2>
-          <p>
-            Save deliberate device snapshots, organize projects and transfer a
-            validated backup to another browser. Public own-data analysis uses
-            reviewed contracts; live language interpretation remains
-            unavailable.
-          </p>
-        </section>
-        <section className="marketing-cta">
+        <section className="studio-bottom">
           <div>
-            <h2>Bring the question behind the spreadsheet.</h2>
-            <p>Use data you are authorized to share.</p>
+            <span className="eyebrow">
+              A WORKSPACE THAT REMEMBERS WHAT YOU KEEP
+            </span>
+            <h2>
+              Less spreadsheet guesswork.
+              <br />
+              More context with every number.
+            </h2>
+            <p>
+              Organize projects, keep immutable device snapshots, and transfer
+              validated backups between browsers.
+            </p>
           </div>
-          <Link className="primary" to="/uploads?new=1">
-            Start an analysis →
-          </Link>
+          <div className="studio-bottom-actions">
+            <Link className="primary" to="/uploads?new=1">
+              Start an analysis →
+            </Link>
+            <span>
+              Public analysis uses reviewed rules.
+              <br />
+              Warehouse exploration uses a guided baseline.
+            </span>
+          </div>
         </section>
         <footer className="marketing-footer">
-          <span>QueryPilot · Questions to executed evidence</span>
+          <Brand />
+          <span>Questions. Definitions. Executed evidence.</span>
           <div className="actions">
             <Link to="/workspace/settings">Data handling</Link>
-            <Link to="/demo">Guided analytics demo</Link>
             <a
               href="https://github.com/Akhilesh-Vangala/querypilot"
               target="_blank"
