@@ -4,7 +4,7 @@
 
 QueryPilot turns analytical questions into bounded SQL investigations and evidence-backed reports. LangGraph orchestrates typed actions; application code controls warehouse authority, metric definitions, independent numerical checks and result publication.
 
-[Open the studio](https://querypilot-five.vercel.app/) · [Analyze your data](https://querypilot-five.vercel.app/uploads) · [Technical report](docs/TECHNICAL-REPORT.md) · [Code map](docs/development/LAYOUT.md) · [CI](https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml)
+[Open the studio](https://querypilot-five.vercel.app/)
 
 ## What it does
 
