@@ -57,9 +57,9 @@ flowchart TD
 | Model output tokens / reported total tokens | 1,024 / 24,000 |
 | Active run capacity | 16 globally |
 
-Token accounting is checked after provider responses and before further rounds; it is not a hard dollar cap. SDK transport timeout is 30 seconds, retries are disabled, and exceptions fail the run without paid replay. There is no streaming UI/token generation yet. The row-cap flag is conservative: exactly 500 returned rows may mean a complete result or truncation.
+Token accounting is checked after provider responses and before further rounds; it is not a hard dollar cap. SDK transport timeout is 30 seconds, retries are disabled, and exceptions fail the run without paid replay. Model token generation is returned as complete responses; public file-analysis progress uses bounded SSE. The row-cap flag is conservative: exactly 500 returned rows may mean a complete result or truncation.
 
-SQL safety and successful execution do not establish that a model chose the right denominator, time window, join or interpretation. The metric catalog supplies guidance, not a universal semantic theorem prover. The original weekly “last 12 months” benchmark means 52 snapshots anchored on latest data. Monetary fixture columns remain floating point; finance-grade decimal migration is a future schema change. This is organization-shared synthetic data with user-scoped investigations, not multi-tenant enterprise row-level access control.
+SQL safety and successful execution do not establish that a model chose the right denominator, time window, join or interpretation. The metric catalog supplies guidance, not a universal semantic theorem prover. The original weekly “last 12 months” benchmark means 52 snapshots anchored on latest data. Monetary fixture columns remain floating point; their financial interpretation follows the fixture schema. This is organization-shared synthetic data with user-scoped investigations, not multi-tenant enterprise row-level access control.
 
 ## Observability
 

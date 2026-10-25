@@ -85,7 +85,7 @@ def main():
                 expect(page).not_to_have_url(previous);expect(page).to_have_url(re.compile('/workspace/'+plural+'/'))
                 expect(page.locator('#output')).to_be_visible();return page.url
             def stored():return page.evaluate(STORE,{'name':namespace,'action':'list'})
-            page.goto(url+'/');expect(page.get_by_role('heading',level=1)).to_contain_text('Resolve exceptions' if relay else 'Ask a precise question')
+            page.goto(url+'/');expect(page.get_by_role('heading',level=1)).to_contain_text('Resolve exceptions' if relay else 'Good questions.')
             capture('01-home');page.get_by_role('link',name='Open workspace',exact=True).click()
             expect(page.get_by_role('heading',name='Your first '+noun+' starts here.')).to_be_visible();capture('02-empty-workspace')
             checks.append('real-empty-workspace-no-invented-metrics')
@@ -112,6 +112,13 @@ def main():
             else:
                 assert result['summary']['overall_value']=='0.30' and result['summary']['included_rows']==2 and result['summary']['excluded_rows']==1
                 assert result['results'][0]['segment']=='North'
+            if not relay:
+                provenance=page.get_by_role('region',name='Execution provenance')
+                expect(provenance).to_contain_text('No model calls')
+                provenance.get_by_text('Inspect run identity',exact=True).click()
+                expect(provenance).to_contain_text(result['run_record']['run_id'])
+                expect(provenance).to_contain_text(result['run_record']['contract_sha256'])
+                provenance.get_by_text('Inspect run identity',exact=True).click()
             capture('06-verified-report')
             page.get_by_role('tab').first.focus();page.keyboard.press('ArrowRight')
             expect(page.get_by_role('tab').nth(1)).to_be_focused();expect(page.get_by_role('tab').nth(1)).to_have_attribute('aria-selected','true');capture('07-quality-or-stock')
@@ -176,6 +183,10 @@ def main():
         sources=[root/('app.py' if relay else 'index.py')]
         for directory in ('backend/src/relayops','frontend/apps/product') if relay else ('backend/app','frontend/src'):
             sources += [f for f in sorted((root/directory).rglob('*')) if f.suffix in ('.py','.js','.css','.html','.tsx','.ts')]
+        if not relay:
+            sources += [root/f for f in ('frontend/index.html','frontend/package.json','frontend/package-lock.json','frontend/vite.config.ts')]
+            sources += [f for f in sorted((root/'frontend/public').rglob('*')) if f.suffix in ('.html','.css','.js')]
+            sources += list(sorted((root/'scripts/demos').glob('*.py')))
         build_hashes={str(f.relative_to(root)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted((root/'frontend/dist/assets').glob('*')) if f.suffix in ('.js','.css')} if not relay else {}
         report=dict(build_sha256=build_hashes,project=brand,passed=True,url=url,paid_model_calls=0,actual_user_feedback=False,checks=checks,page_errors=errors,frames=frames,automated_accessibility_views=len(audits),source_sha256={str(f.relative_to(root)):hashlib.sha256(f.read_bytes()).hexdigest() for f in sources})
         (output/'report.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({k:v for k,v in report.items() if k not in ('source_sha256','frames')}))

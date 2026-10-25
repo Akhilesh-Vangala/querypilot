@@ -16,7 +16,9 @@ import { Dialog, Heading, Issue, Table } from "./components";
 import ProductHome, { Brand } from "./ProductHome";
 import ProductIntake from "./ProductIntake";
 import ProductReport from "./ProductReport";
+import StudioIcon from "../../components/layout/StudioIcon";
 import "./styles.css";
+import "./studio.css";
 type Modal =
   | "save"
   | "project"
@@ -449,6 +451,25 @@ export default function ProductApp() {
             </Link>
           }
         />
+        <section
+          className="workspace-launchpad"
+          aria-label="Choose your next analytical task"
+        >
+          <Link to="/uploads?new=1" className="launch-upload">
+            <StudioIcon name="upload" />
+            <span className="eyebrow">ANALYZE A FILE</span>
+            <h2>Your data. Your definition.</h2>
+            <p>Upload, profile and reconcile a table export.</p>
+            <span>Start an analysis →</span>
+          </Link>
+          <Link to="/compare" className="launch-compare">
+            <StudioIcon name="compare" />
+            <span className="eyebrow">COMPARE WAREHOUSE PERIODS</span>
+            <h2>Understand what changed.</h2>
+            <p>Inspect contributions across reviewed synthetic metrics.</p>
+            <span>Open period comparison →</span>
+          </Link>
+        </section>
         <div className="stats">
           {[
             [
@@ -776,18 +797,35 @@ export default function ProductApp() {
         <div className="app-shell">
           <aside className="sidebar">
             <Brand />
-            <p className="eyebrow">ANALYTICS WORKSPACE</p>
+            <Link className="rail-create" to="/uploads?new=1">
+              <StudioIcon name="upload" /> New analysis <span>+</span>
+            </Link>
+            <p className="eyebrow">YOUR STUDIO</p>
             <nav className="app-nav" aria-label="Workspace navigation">
-              {nav.map(([href, label]) => (
+              {nav.map(([href, label], index) => (
                 <Link
                   key={href}
                   to={href}
                   aria-current={path === href ? "page" : undefined}
                 >
+                  <StudioIcon
+                    name={
+                      ["overview", "analyses", "projects", "guide", "settings"][
+                        index
+                      ]
+                    }
+                  />
                   {label}
                 </Link>
               ))}
             </nav>
+            <div className="rail-lab">
+              <span className="eyebrow">EXPLORE THE WAREHOUSE</span>
+              <Link to="/demo">
+                <StudioIcon name="query" /> Investigation studio <span>↗</span>
+              </Link>
+              <p>Reviewed metrics. Guarded SQL. Reconciled comparisons.</p>
+            </div>
             <div className="sidebar-foot">
               <span className="badge">
                 {ctx.user ? "Account connected" : "Device workspace"}
@@ -801,7 +839,7 @@ export default function ProductApp() {
           <div className="workspace">
             <header className="workspace-bar">
               <span>
-                Workspace /{" "}
+                <span className="bar-context">QueryPilot studio</span> /{" "}
                 {analysis
                   ? "Analysis"
                   : nav.find(([p]) => p === path)?.[1] || "Details"}
@@ -812,7 +850,7 @@ export default function ProductApp() {
                   onClick={() => show("commands")}
                   aria-label="Find work"
                 >
-                  Find work <kbd>⌘ K</kbd>
+                  <StudioIcon name="search" /> Find work <kbd>⌘ K</kbd>
                 </button>
                 <span className="badge">
                   {ctx.user ? "Account" : "This device"}

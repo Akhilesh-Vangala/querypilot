@@ -192,9 +192,13 @@ if args.record:
         "source_sha256": {
             str(path): hashlib.sha256(path.read_bytes()).hexdigest()
             for path in [
-                Path("frontend/src/app/App.tsx"),
-                *sorted(Path("frontend/src/features").rglob("*.tsx")),
+                Path("index.py"), Path("frontend/index.html"),
+                Path("frontend/package.json"), Path("frontend/package-lock.json"),
+                Path("frontend/vite.config.ts"),
+                *[f for f in sorted(Path("frontend/src").rglob("*")) if f.suffix in (".ts", ".tsx", ".css", ".js")],
+                *[f for f in sorted(Path("frontend/public").rglob("*")) if f.suffix in (".html", ".css", ".js")],
                 *sorted(Path("backend/app").rglob("*.py")),
+                *sorted(Path("scripts/demos").glob("*.py")),
             ]
         },
     }

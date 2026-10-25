@@ -14,7 +14,7 @@ The separate held-out suite contains 30 specialty × employer × year filtered q
 
 Reports retain suite/mode, per-case execution accuracy, errors, rounds/SQL attempts, usage, latency and source hashes. Optional per-million input/output prices supplied by the operator compute a rough cost estimate; cached-token discounts are not modeled. No model quality number or cost estimate is invented before a run. Each case creates a fresh investigator to avoid cross-case context contamination. Gold SQL exists only in the evaluator, never in agent context.
 
-Remaining evaluation: independently curated held-out data distributions, semantic perturbations, robustness to hostile table text, prompt/plan ablations, provider/model comparisons, streaming/cancellation behavior, high concurrency/cost load and actual user feedback. The token cap is response-accounting based, not a provider-enforced spend limit. No live benchmark has been completed in this work.
+Model scoring is separate from deterministic regression. Public execution uses no provider calls; no live-model quality, cost or latency result is reported. Token accounting follows provider responses and is not a provider-enforced spend ceiling.
 
 ## Executable comparison increment
 

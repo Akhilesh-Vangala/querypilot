@@ -1,0 +1,1085 @@
+/* QueryPilot evidence studio. Colour encodes task and verification state. */
+.product-root {
+  --ink: #28243e;
+  --muted: #68647a;
+  --line: #e5e1ef;
+  --soft: #f3f0fa;
+  --ground: #f8f7fb;
+  --paper: #fff;
+  --violet: #6146c6;
+  --teal: #176b61;
+  --coral: #b64431;
+  font-family:
+    "IBM Plex Sans",
+    -apple-system,
+    sans-serif;
+}
+.studio-icon {
+  flex: 0 0 20px;
+  vertical-align: middle;
+}
+.product-root h1,
+.product-root h2,
+.product-root h3 {
+  font-weight: 600;
+}
+.product-root :focus-visible {
+  outline-color: #7052d6;
+}
+.product-root .primary {
+  background: #6146c6;
+  border-color: #6146c6;
+  border-radius: 9px;
+  box-shadow: 0 3px 0 #442f94;
+}
+.product-root .primary:hover:enabled,
+.product-root a.primary:hover {
+  background: #5036ac;
+}
+.product-root .secondary {
+  border-color: #dcd5ec;
+  color: #4a3c75;
+  border-radius: 9px;
+}
+.product-root .secondary:hover:enabled,
+.product-root a.secondary:hover {
+  background: #f0ebfc;
+  border-color: #b9a9e5;
+  color: #42298a;
+}
+.product-root .quiet {
+  color: #655781;
+}
+.product-root .quiet:hover {
+  background: #eee8f9;
+  color: #432c8f;
+}
+.product-root .eyebrow {
+  color: #6b587f;
+}
+.product-root .badge {
+  color: #55506a;
+  background: #f2eff9;
+  border-color: #e1daed;
+  border-radius: 6px;
+}
+.product-root .badge.strong {
+  background: #6146c6;
+  color: #fff;
+  border-color: #6146c6;
+}
+.product-root .brand {
+  gap: 9px;
+  letter-spacing: -1px;
+  flex-wrap: wrap;
+}
+.product-root .brand-symbol {
+  background: #6850ce;
+  width: 35px;
+  height: 35px;
+  border-radius: 11px;
+  font:
+    600 29px/1 "IBM Plex Sans",
+    sans-serif;
+  letter-spacing: -2px;
+  padding: 0 3px 6px 0;
+  position: relative;
+}
+.product-root .brand-symbol > span {
+  position: absolute;
+  height: 5px;
+  width: 5px;
+  background: #bfe7d7;
+  border-radius: 50%;
+  right: 4px;
+  top: 5px;
+}
+.product-root .brand-edition {
+  font:
+    500 8px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #75668a;
+  border: 1px solid #dbd3e7;
+  padding: 3px 4px;
+  border-radius: 4px;
+}
+.product-root .app-shell {
+  grid-template-columns: 236px minmax(0, 1fr);
+}
+.product-root .sidebar {
+  background: #272148;
+  border: 0;
+  color: #ece7fc;
+  padding: 28px 17px;
+}
+.product-root .sidebar .brand {
+  margin: 0 8px 28px;
+  font-size: 21px;
+}
+.product-root .sidebar .brand-edition {
+  color: #c7bce6;
+  border-color: #5b4d79;
+}
+.product-root .sidebar .eyebrow {
+  color: #c0b4da;
+  margin: 27px 0 10px;
+  font-size: 9px;
+}
+.product-root .rail-create {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+  background: #b8a3f4;
+  color: #251b48;
+  padding: 13px 14px;
+  border-radius: 9px;
+  font-weight: 600;
+  font-size: 12px;
+}
+.product-root .rail-create:hover {
+  background: #c8b7fa;
+}
+.product-root .rail-create > span {
+  margin-left: auto;
+  font-size: 18px;
+}
+.product-root .app-nav a {
+  color: #c8bfde;
+  border-radius: 8px;
+}
+.product-root .app-nav a:hover {
+  color: #fff;
+  background: #3b315d;
+}
+.product-root .app-nav a[aria-current="page"] {
+  color: #f5f1ff;
+  background: #4c3d77;
+  border-color: #6b5696;
+  box-shadow: none;
+}
+.product-root .rail-lab {
+  margin: 12px 0 30px;
+  border-top: 1px solid #504166;
+  padding: 4px 10px;
+}
+.product-root .rail-lab .eyebrow {
+  padding: 0;
+}
+.product-root .rail-lab a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: #e2d8fb;
+}
+.product-root .rail-lab a > span {
+  margin-left: auto;
+}
+.product-root .rail-lab p {
+  font-size: 11px;
+  color: #bfb3d7;
+  margin-top: 12px;
+  line-height: 1.8;
+}
+.product-root .sidebar-foot {
+  color: #bfb3d7;
+  padding: 14px 10px;
+  border-top: 1px solid #504166;
+}
+.product-root .sidebar-foot .badge {
+  color: #d9eeea;
+  background: #31474b;
+  border-color: #5a7677;
+}
+.product-root .workspace-bar {
+  min-height: 72px;
+  color: #6c617e;
+  border-bottom-color: #e6e1ee;
+  background: #fffdfb;
+}
+.product-root .bar-context {
+  color: #383049;
+  font-weight: 600;
+}
+.product-root .workspace main {
+  padding-top: 33px;
+}
+.product-root .command-button {
+  background: #f5f1fb;
+  border-color: #e4ddef;
+  border-radius: 8px;
+  color: #645577;
+}
+.product-root .command-button .studio-icon {
+  width: 14px;
+  height: 14px;
+  flex-basis: 14px;
+}
+.product-root .page-heading {
+  margin-bottom: 30px;
+}
+.product-root .page-heading h1 {
+  font-size: clamp(27px, 3vw, 37px);
+  letter-spacing: -1.3px;
+}
+.product-root .panel {
+  border-color: #e6e0ee;
+  border-radius: 13px;
+  box-shadow: 0 3px 15px #37225704;
+}
+.product-root .stats {
+  gap: 14px;
+}
+.product-root .stats .stat {
+  background: #fff;
+  border-color: #e4ddee;
+  border-radius: 11px;
+  border-top: 3px solid #9d88d7;
+}
+.product-root .stats .stat:nth-child(2) {
+  border-top-color: #65a99a;
+}
+.product-root .stats .stat:nth-child(3) {
+  border-top-color: #d58e72;
+}
+.product-root .stat strong {
+  color: #49377d;
+}
+.product-root .workspace-launchpad {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 18px;
+  margin-bottom: 25px;
+}
+.product-root .workspace-launchpad > a {
+  position: relative;
+  border: 1px solid #d9cdef;
+  background: #ede5fc;
+  padding: 25px;
+  border-radius: 14px;
+}
+.product-root .workspace-launchpad .launch-compare {
+  background: #e6f3ed;
+  border-color: #c8e2d5;
+}
+.product-root .workspace-launchpad > a > .studio-icon {
+  position: absolute;
+  right: 23px;
+  top: 23px;
+  color: #6a4a9a;
+}
+.product-root .workspace-launchpad h2 {
+  font-size: 23px;
+  margin: 13px 0 8px;
+  max-width: 90%;
+}
+.product-root .workspace-launchpad p {
+  color: #615775;
+  font-size: 12px;
+}
+.product-root .workspace-launchpad a > span:last-child {
+  display: block;
+  margin-top: 23px;
+  color: #4b337f;
+  font-size: 12px;
+  font-weight: 600;
+}
+.product-root .workspace-launchpad > a:hover {
+  border-color: #9c81cb;
+}
+.product-root .wizard-steps {
+  background: #fff;
+  border: 1px solid #e3daee;
+  border-radius: 10px;
+  overflow: hidden;
+  gap: 0;
+}
+.product-root .wizard-steps li {
+  padding: 14px;
+  color: #6d627b;
+}
+.product-root .wizard-steps li.active {
+  background: #eee8fa;
+  color: #51358d;
+}
+.product-root .wizard-steps li.active:after {
+  background: #7654c7;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+}
+.product-root .wizard-steps li.complete .step-number {
+  background: #256d60;
+  border-color: #256d60;
+}
+.product-root .step-number {
+  border-color: #d3c8e4;
+  color: #685180;
+}
+.product-root .dropzone {
+  border-color: #bcaae0;
+  background: #faf7ff;
+  border-radius: 12px;
+}
+.product-root .dropzone:focus-within,
+.product-root .dropzone:hover {
+  background: #f0eafa;
+  border-color: #7550bc;
+}
+.product-root .definition {
+  background: #f6f1fc;
+  border-color: #e2d7ee;
+  border-left: 3px solid #8b6ec6;
+  border-radius: 8px;
+}
+.product-root .finding-hero {
+  color: #254d43;
+  background: #e9f5ef;
+  border: 1px solid #bcded0;
+  border-left: 4px solid #398472;
+  border-radius: 12px;
+}
+.product-root .finding-hero .eyebrow {
+  color: #226658;
+}
+.product-root #verification .badge {
+  background: #d7eee2;
+  border-color: #a4d2ba;
+  color: #205b44;
+}
+.product-root .tabs {
+  border-bottom-color: #dfd6ed;
+}
+.product-root .tabs button[aria-selected="true"] {
+  color: #5b3ea3;
+  border-bottom-color: #7554bd;
+}
+.product-root .table-scroll th {
+  color: #5d5074;
+  background: #f5f1fa;
+}
+.product-root .table-scroll td {
+  border-color: #eee8f4;
+}
+.product-root .table-scroll tbody tr:hover {
+  background: #fcf9ff;
+}
+.product-root pre {
+  background: #282440;
+  color: #e9e1ff;
+  border-radius: 9px;
+}
+.product-root input:focus,
+.product-root select:focus,
+.product-root textarea:focus {
+  border-color: #8c71c7;
+  box-shadow: 0 0 0 3px #8c71c71a;
+}
+.product-root input[type="checkbox"],
+.product-root input[type="radio"] {
+  accent-color: #6146c6;
+}
+.product-root .issue-box,
+.product-root .inline-error {
+  background: #fff4ee;
+  border-color: #e0ac97;
+  color: #823c28;
+}
+.product-root dialog {
+  border: 1px solid #ded3ed;
+  border-radius: 16px;
+  box-shadow: 0 25px 100px #24163945;
+}
+.product-root dialog::backdrop {
+  background: #231b3d70;
+  backdrop-filter: blur(4px);
+}
+.product-root .toast {
+  background: #30264e;
+  color: #fff;
+  border-color: #6c5888;
+}
+/* Landing: an editorial canvas and a concrete, explicitly illustrative calculation. */
+.product-root .studio-home {
+  background: #fcfaf7;
+}
+.product-root .marketing-header {
+  max-width: 1376px;
+  padding: 26px 48px;
+  border-bottom: 1px solid #eae4dc;
+}
+.product-root .marketing-main {
+  max-width: 1376px;
+  padding: 0 48px;
+}
+.product-root .marketing-header nav {
+  color: #655c70;
+  font-size: 12px;
+  gap: 27px;
+}
+.product-root .studio-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+  padding: 85px 0 70px;
+}
+.product-root .studio-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font:
+    500 10px "IBM Plex Mono",
+    monospace;
+  color: #686078;
+  letter-spacing: 0.7px;
+}
+.product-root .studio-kicker > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #378674;
+}
+.product-root .studio-hero h1 {
+  font-size: clamp(40px, 4.8vw, 70px);
+  font-weight: 500;
+  letter-spacing: -3.4px;
+  line-height: 1.08;
+  margin: 24px 0;
+}
+.product-root .studio-hero h1 em {
+  color: #6849ae;
+  font-style: normal;
+}
+.product-root .studio-hero .lead {
+  max-width: 440px;
+  color: #72697a;
+  font-size: 17px;
+  line-height: 1.8;
+}
+.product-root .studio-hero .actions {
+  margin-top: 29px;
+  gap: 12px;
+}
+.product-root .studio-formats {
+  font:
+    11px "IBM Plex Mono",
+    monospace;
+  color: #6c6177;
+  margin: 28px 0 9px;
+}
+.product-root .studio-formats span {
+  padding: 0 6px;
+  color: #8a719a;
+}
+.product-root .studio-canvas {
+  background: #fff;
+  border: 1px solid #e0d4ed;
+  border-radius: 16px;
+  box-shadow:
+    13px 16px 0 #ece4f4,
+    0 18px 65px #59457610;
+  overflow: hidden;
+}
+.product-root .canvas-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  background: #eee7f8;
+  color: #65507d;
+  font:
+    9px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #e1d7ed;
+}
+.product-root .canvas-dots {
+  display: flex;
+  gap: 5px;
+}
+.product-root .canvas-dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #bc94b1;
+}
+.product-root .canvas-dots i:nth-child(2) {
+  background: #cca76c;
+}
+.product-root .canvas-dots i:nth-child(3) {
+  background: #77a891;
+}
+.product-root .canvas-question {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 23px;
+  border-bottom: 1px solid #ede6f2;
+}
+.product-root .canvas-avatar {
+  width: 35px;
+  height: 35px;
+  background: #f2e4d8;
+  color: #8b563c;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.product-root .canvas-question small {
+  font:
+    9px "IBM Plex Mono",
+    monospace;
+  color: #796780;
+}
+.product-root .canvas-question p {
+  font-size: 13px;
+  margin-top: 5px;
+}
+.product-root .canvas-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 23px;
+  gap: 22px;
+}
+.product-root .canvas-columns .eyebrow {
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.product-root .mini-table {
+  margin-top: 16px;
+  font:
+    11px "IBM Plex Mono",
+    monospace;
+}
+.product-root .mini-table > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee8f5;
+}
+.product-root .mini-table b {
+  font-weight: 500;
+  color: #63516e;
+}
+.product-root .mini-table .excluded {
+  color: #7b6c7c;
+  text-decoration: line-through;
+}
+.product-root .canvas-source small {
+  display: block;
+  color: #75697c;
+  font-size: 9px;
+  line-height: 1.8;
+  margin-top: 12px;
+}
+.product-root .canvas-result {
+  border-left: 1px solid #e9e1ef;
+  padding-left: 22px;
+}
+.product-root .canvas-result > strong {
+  display: block;
+  font:
+    500 55px "IBM Plex Sans",
+    sans-serif;
+  letter-spacing: -2px;
+  margin: 15px 0 4px;
+  color: #554084;
+}
+.product-root .sample-bars {
+  height: 45px;
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  border-bottom: 1px solid #d8cce8;
+}
+.product-root .sample-bars i {
+  width: 28%;
+  background: #b8a2df;
+  height: 20px;
+  border-radius: 4px 4px 0 0;
+}
+.product-root .sample-bars i:last-child {
+  height: 40px;
+  background: #7351b0;
+}
+.product-root .canvas-verified {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-top: 16px;
+  font-size: 9px;
+  color: #246755;
+}
+.product-root .canvas-verified .studio-icon {
+  width: 14px;
+  height: 14px;
+  flex-basis: 14px;
+}
+.product-root .canvas-code {
+  display: grid;
+  gap: 9px;
+  margin: 0 23px 23px;
+  padding: 15px;
+  background: #f7f3fc;
+  border: 1px solid #e8def2;
+  border-radius: 8px;
+}
+.product-root .canvas-code > span:first-child {
+  font:
+    8px "IBM Plex Mono",
+    monospace;
+  letter-spacing: 1px;
+  color: #72607d;
+}
+.product-root .canvas-code code {
+  font:
+    10px/1.8 "IBM Plex Mono",
+    monospace;
+  color: #60448c;
+  overflow-wrap: anywhere;
+}
+.product-root .canvas-caption {
+  font-size: 8px;
+  color: #786580;
+}
+.product-root .canvas-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 15px 23px;
+  background: #f4f0f8;
+  color: #72627f;
+  font-size: 8px;
+}
+.product-root .canvas-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 0.5px;
+}
+.product-root .studio-paths {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  padding: 25px 0 70px;
+}
+.product-root .path-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #f0eaf8;
+  border: 1px solid #e1d7ec;
+  border-radius: 12px;
+  padding: 27px;
+}
+.product-root .path-card:hover {
+  border-color: #ad96ca;
+}
+.product-root .path-card > .studio-icon {
+  margin-left: auto;
+  color: #6e5687;
+}
+.product-root .path-investigate {
+  background: #eaf2ed;
+  border-color: #d1e1d5;
+}
+.product-root .path-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #ded2ef;
+  color: #604484;
+  flex-shrink: 0;
+}
+.product-root .path-investigate .path-icon {
+  background: #cce1d3;
+  color: #326851;
+}
+.product-root .path-card .eyebrow {
+  font-size: 8px;
+}
+.product-root .path-card h2 {
+  font-size: 20px;
+  margin: 7px 0;
+}
+.product-root .path-card p {
+  color: #6f6278;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.product-root .studio-method {
+  border-top: 1px solid #e8e0dc;
+  padding: 70px 0;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 80px;
+}
+.product-root .method-intro h2 {
+  font-size: 38px;
+  letter-spacing: -1.5px;
+  margin: 19px 0;
+  line-height: 1.15;
+}
+.product-root .method-intro p {
+  font-size: 14px;
+  color: #756b7b;
+  line-height: 1.8;
+  max-width: 340px;
+}
+.product-root .method-intro a {
+  display: inline-block;
+  margin-top: 25px;
+  color: #674490;
+  font-size: 12px;
+}
+.product-root .method-steps article {
+  display: flex;
+  gap: 20px;
+  padding: 25px 0;
+  border-bottom: 1px solid #e5dcd9;
+}
+.product-root .method-steps article:first-child {
+  padding-top: 0;
+}
+.product-root .method-number {
+  font:
+    12px "IBM Plex Mono",
+    monospace;
+  color: #805398;
+  padding-top: 3px;
+}
+.product-root .method-steps h3 {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+.product-root .method-steps p {
+  color: #756b7b;
+  font-size: 12px;
+  line-height: 1.9;
+}
+.product-root .method-steps .studio-icon {
+  margin-left: auto;
+  color: #8b6e9b;
+}
+.product-root .studio-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  background: #eee6f5;
+  border: 1px solid #dfd2eb;
+  padding: 40px;
+  border-radius: 16px;
+  margin: 20px 0 60px;
+}
+.product-root .studio-bottom h2 {
+  font-size: 30px;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin: 16px 0;
+}
+.product-root .studio-bottom p {
+  color: #70627d;
+  max-width: 540px;
+  font-size: 12px;
+}
+.product-root .studio-bottom-actions {
+  display: grid;
+  gap: 17px;
+  flex-shrink: 0;
+}
+.product-root .studio-bottom-actions > span {
+  color: #72617e;
+  font-size: 10px;
+  line-height: 1.8;
+}
+.product-root .marketing-footer {
+  align-items: center;
+  border-color: #e8e0dc;
+}
+.product-root .marketing-footer .brand {
+  font-size: 17px;
+}
+@media (min-width: 1600px) {
+  .product-root .studio-hero {
+    gap: 100px;
+  }
+}
+@media (max-width: 1100px) {
+  .product-root .app-shell {
+    grid-template-columns: 211px minmax(0, 1fr);
+  }
+  .product-root .sidebar .brand {
+    font-size: 19px;
+  }
+  .product-root .sidebar .brand-edition {
+    display: none;
+  }
+  .product-root .studio-hero {
+    gap: 36px;
+  }
+  .product-root .marketing-header,
+  .product-root .marketing-main {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .product-root .studio-hero h1 {
+    letter-spacing: -2.5px;
+  }
+  .product-root .path-card {
+    padding: 22px;
+    gap: 13px;
+  }
+}
+@media (max-width: 850px) {
+  .product-root .studio-hero {
+    grid-template-columns: 1fr;
+    padding: 48px 0 30px;
+    gap: 42px;
+  }
+  .product-root .studio-hero h1 {
+    font-size: 62px;
+  }
+  .product-root .studio-hero-copy {
+    max-width: 620px;
+  }
+  .product-root .studio-canvas {
+    max-width: 620px;
+  }
+  .product-root .studio-paths {
+    grid-template-columns: 1fr;
+    padding-bottom: 40px;
+  }
+  .product-root .studio-method {
+    gap: 35px;
+    padding: 45px 0;
+  }
+  .product-root .marketing-header nav > a:not(.primary) {
+    display: none;
+  }
+  .product-root .studio-bottom {
+    padding: 27px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .product-root .workspace-launchpad {
+    grid-template-columns: 1fr;
+  }
+  .product-root .bar-context {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .product-root .app-shell {
+    display: block;
+  }
+  .product-root .sidebar {
+    height: auto;
+    padding: 16px 16px 0;
+  }
+  .product-root .sidebar .brand {
+    margin: 0 0 17px;
+  }
+  .product-root .rail-create,
+  .product-root .rail-lab {
+    display: none;
+  }
+  .product-root .sidebar .app-nav a {
+    color: #d6cce8;
+  }
+  .product-root .sidebar .app-nav a[aria-current="page"] {
+    color: #fff;
+  }
+  .product-root .sidebar .app-nav .studio-icon {
+    display: none;
+  }
+  .product-root .workspace-bar {
+    min-height: 58px;
+  }
+  .product-root .workspace main {
+    padding: 26px 17px;
+  }
+  .product-root .workspace-launchpad {
+    gap: 12px;
+  }
+  .product-root .workspace-launchpad > a {
+    padding: 21px;
+  }
+  .product-root .wizard-steps li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    padding: 10px;
+    font-size: 10px;
+  }
+  .product-root .marketing-header {
+    padding: 20px;
+    gap: 10px;
+  }
+  .product-root .marketing-main {
+    padding: 0 20px;
+  }
+  .product-root .marketing-header .brand-edition {
+    display: none;
+  }
+  .product-root .marketing-header .primary {
+    min-height: 37px;
+    padding: 9px 12px;
+    font-size: 10px;
+  }
+  .product-root .marketing-header .primary .studio-icon {
+    display: none;
+  }
+  .product-root .studio-hero h1 {
+    font-size: clamp(39px, 8.5vw, 56px);
+    letter-spacing: -2px;
+  }
+  .product-root .studio-hero .lead {
+    font-size: 15px;
+  }
+  .product-root .studio-kicker {
+    font-size: 8px;
+  }
+  .product-root .studio-canvas {
+    box-shadow: 6px 7px 0 #ece4f4;
+  }
+  .product-root .canvas-columns {
+    padding: 17px;
+    gap: 14px;
+  }
+  .product-root .canvas-result {
+    padding-left: 14px;
+  }
+  .product-root .canvas-result > strong {
+    font-size: 46px;
+  }
+  .product-root .canvas-verified {
+    align-items: flex-start;
+    font-size: 8px;
+  }
+  .product-root .canvas-heading {
+    padding: 15px 17px;
+  }
+  .product-root .canvas-question {
+    padding: 17px;
+  }
+  .product-root .canvas-question p {
+    font-size: 12px;
+  }
+  .product-root .canvas-code {
+    margin: 0 17px 17px;
+    padding: 12px;
+  }
+  .product-root .canvas-code code {
+    font-size: 9px;
+  }
+  .product-root .path-card {
+    padding: 22px 17px;
+    gap: 12px;
+  }
+  .product-root .path-card h2 {
+    font-size: 18px;
+  }
+  .product-root .path-card > .studio-icon {
+    display: none;
+  }
+  .product-root .studio-method {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+  .product-root .method-intro h2 {
+    font-size: 33px;
+  }
+  .product-root .studio-bottom {
+    padding: 24px;
+    margin-bottom: 35px;
+  }
+  .product-root .studio-bottom h2 {
+    font-size: 26px;
+  }
+  .product-root .studio-bottom .eyebrow {
+    font-size: 8px;
+  }
+  .product-root .marketing-footer .brand-edition {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-root *,
+  .legacy-root * {
+    scroll-behavior: auto;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.product-root .report-lineage {
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 18px 22px;
+  background: #f1ecfa;
+  border: 1px solid #ddd0ed;
+  border-radius: 10px;
+  margin-top: 17px;
+}
+.product-root .report-lineage > div {
+  display: grid;
+  gap: 6px;
+}
+.product-root .report-lineage .eyebrow {
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.product-root .report-lineage strong {
+  font-size: 12px;
+  font-weight: 500;
+  color: #534173;
+}
+.product-root .report-lineage details {
+  flex: 1 1 200px;
+  min-width: 0;
+  margin-left: auto;
+  font-size: 11px;
+  color: #654e83;
+}
+.product-root .report-lineage summary {
+  cursor: pointer;
+  padding: 5px 0;
+}
+.product-root .report-lineage dl {
+  font:
+    10px/1.8 "IBM Plex Mono",
+    monospace;
+}
+.product-root .report-lineage dt {
+  font-weight: 500;
+  margin-top: 10px;
+}
+.product-root .report-lineage dd {
+  margin: 3px 0 0;
+  overflow-wrap: anywhere;
+  color: #69577a;
+}
+
+.product-root .finding-hero h2 {
+  color: #254d43;
+}
+.product-root .finding-hero > p {
+  color: #41685c;
+}
+
+.product-root .sidebar .brand-edition {
+  display: none;
+}
+.product-root .result-grid {
+  align-items: start;
+}

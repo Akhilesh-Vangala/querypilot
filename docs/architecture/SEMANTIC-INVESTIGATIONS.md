@@ -47,7 +47,7 @@ For additive metrics, segment contribution is the segment's comparison value min
 
 Claims spend additionally factors as `V × sum(w[s] × p[s])`: total claim volume, claim-volume segment weights, and per-segment paid cost per claim. The three-factor Shapley calculation switches these factors from baseline to comparison in each of their six possible orders and averages their marginal changes. Volume, mix and unit-cost components therefore distribute interaction terms and reconcile to total spend change. These are descriptive accounting components, not established causes, and this is not an ML classifier's SHAP explanation. New/removed/zero-volume segments have undefined unit cost; factor attribution becomes unavailable without silently imputing a price. The additive segment report remains available when its other checks pass.
 
-Arithmetic uses Decimal after reading the original floating-point fixture fields; tolerances are explicit (`max(1e-6, abs(total)×1e-10)`). Decimal cannot restore lost storage precision. A real monetary migration is still future work.
+Arithmetic uses Decimal after reading the original floating-point fixture fields; tolerances are explicit (`max(1e-6, abs(total)×1e-10)`). Decimal cannot restore lost storage precision. The verifier preserves the fixture schema’s precision boundary.
 
 ## Evidence and offline recheck
 

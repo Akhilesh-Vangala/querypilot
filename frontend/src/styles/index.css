@@ -15,11 +15,11 @@ body {
     "Segoe UI",
     sans-serif;
   color: #ededed;
-  background: #0b0b0b;
+  background: #17132b;
   font-synthesis: none;
-  --surface: #111;
-  --border: #292929;
-  --muted: #a0a0a0;
+  --surface: #27203e;
+  --border: #493b60;
+  --muted: #bbb0cd;
   line-height: 1.55;
 }
 .legacy-root * {
@@ -43,9 +43,9 @@ body {
 }
 .legacy-root button,
 .legacy-root .button {
-  background: #f0f0f0;
-  color: #111;
-  border: 1px solid #f0f0f0;
+  background: #cbb6f5;
+  color: #27203e;
+  border: 1px solid #cbb6f5;
   border-radius: 6px;
   padding: 11px 18px;
   font-size: 13px;
@@ -66,12 +66,12 @@ body {
   cursor: not-allowed;
 }
 .legacy-root .secondary {
-  background: #151515;
-  border-color: #363636;
+  background: #302446;
+  border-color: #5d4875;
   color: #ddd;
 }
 .legacy-root .secondary:hover {
-  background: #202020;
+  background: #403157;
   color: #fff;
 }
 .legacy-root input,
@@ -80,15 +80,15 @@ body {
   width: 100%;
   padding: 12px 14px;
   color: #eee;
-  background: #0d0d0d;
-  border: 1px solid #363636;
+  background: #201936;
+  border: 1px solid #5d4875;
   border-radius: 6px;
   outline: none;
 }
 .legacy-root input:focus,
 .legacy-root textarea:focus,
 .legacy-root select:focus {
-  border-color: #bbb;
+  border-color: #cdbfdf;
   box-shadow: 0 0 0 2px #ffffff12;
 }
 .legacy-root textarea {
@@ -97,7 +97,7 @@ body {
 }
 .legacy-root label {
   display: block;
-  color: #bbb;
+  color: #cdbfdf;
   font-size: 12px;
   font-weight: 500;
   margin: 0 0 8px;
@@ -106,7 +106,7 @@ body {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 1.8px;
-  color: #9b9b9b;
+  color: #b7a7ce;
   margin-bottom: 12px;
 }
 .legacy-root h1 {
@@ -139,7 +139,7 @@ body {
 }
 .legacy-root .small-note {
   font-size: 11px;
-  color: #969696;
+  color: #b7aac9;
   line-height: 1.7;
 }
 .legacy-root .app-shell {
@@ -150,7 +150,7 @@ body {
   position: fixed;
   inset: 0 auto 0 0;
   width: 224px;
-  background: #0d0d0d;
+  background: #201936;
   border-right: 1px solid var(--border);
   padding: 32px 20px;
   display: flex;
@@ -169,8 +169,8 @@ body {
   height: 29px;
   display: grid;
   place-items: center;
-  background: #efefef;
-  color: #0b0b0b;
+  background: #c3aaf6;
+  color: #17132b;
   border-radius: 6px;
   font-size: 18px;
   font-weight: 600;
@@ -178,7 +178,7 @@ body {
 .legacy-root .sidebar-caption {
   font-size: 9px;
   letter-spacing: 1.7px;
-  color: #727272;
+  color: #b1a1c5;
   margin-top: 36px;
 }
 .legacy-root .sidebar nav {
@@ -193,19 +193,19 @@ body {
   border: 1px solid transparent;
 }
 .legacy-root .sidebar nav a.active {
-  background: #1b1b1b;
+  background: #3a2e52;
   color: #eee;
-  border-color: #303030;
+  border-color: #56426b;
 }
 .legacy-root .sidebar nav a:hover {
   color: white;
-  background: #151515;
+  background: #302446;
 }
 .legacy-root .sidebar-bottom {
   margin-top: auto;
   padding-top: 36px;
   font-size: 10px;
-  color: #999;
+  color: #beafd1;
   overflow-wrap: anywhere;
 }
 .legacy-root .sidebar-bottom p {
@@ -220,7 +220,7 @@ body {
   display: inline-block;
   width: 5px;
   height: 5px;
-  background: #bdbdbd;
+  background: #75b9a4;
   border-radius: 50%;
   margin-right: 7px;
 }
@@ -244,20 +244,20 @@ body {
   border: 1px solid #3a3a3a;
   border-radius: 4px;
   padding: 4px 9px;
-  color: #bbb;
+  color: #cdbfdf;
   white-space: nowrap;
   display: inline-block;
 }
 .legacy-root .demo-note {
   font-size: 10px;
-  color: #969696;
+  color: #b7aac9;
   margin-top: 18px;
 }
 .legacy-root .page-heading {
   padding: 42px 0 24px;
 }
 .legacy-root .page-heading p {
-  color: #a0a0a0;
+  color: #bbb0cd;
   max-width: 660px;
   font-size: 13px;
 }
@@ -271,7 +271,7 @@ body {
 .legacy-root .back-link {
   font-size: 11px;
   display: inline-block;
-  color: #aaa;
+  color: #c2b5d4;
   margin-bottom: 23px;
 }
 .legacy-root .card {
@@ -290,7 +290,7 @@ body {
 }
 .legacy-root .section-heading > a {
   font-size: 10px;
-  color: #aaa;
+  color: #c2b5d4;
   white-space: nowrap;
 }
 .legacy-root .section-heading h2 {
@@ -306,7 +306,7 @@ body {
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 28px;
-  background: #101010;
+  background: #241c39;
 }
 .legacy-root .stats > div {
   padding: 22px 25px;
@@ -318,7 +318,7 @@ body {
 .legacy-root .stats span {
   font-size: 10px;
   display: block;
-  color: #969696;
+  color: #b7aac9;
 }
 .legacy-root .stats strong {
   display: block;
@@ -350,11 +350,11 @@ body {
 }
 .legacy-root .empty-state > span {
   font-size: 25px;
-  color: #999;
+  color: #beafd1;
 }
 .legacy-root .empty-state p {
   font-size: 11px;
-  color: #999;
+  color: #beafd1;
   max-width: 310px;
   margin: 0 auto 20px;
 }
@@ -380,7 +380,7 @@ body {
   font:
     11px ui-monospace,
     monospace;
-  color: #777;
+  color: #b1a1c5;
   padding-top: 4px;
 }
 .legacy-root .flow-list strong {
@@ -389,7 +389,7 @@ body {
 }
 .legacy-root .flow-list p {
   font-size: 11px;
-  color: #929292;
+  color: #b5a4cb;
   margin: 5px 0 0;
 }
 .legacy-root .run-row {
@@ -412,7 +412,7 @@ body {
 .legacy-root .run-row small {
   font-size: 10px;
   display: block;
-  color: #8f8f8f;
+  color: #ad9cc3;
   margin-top: 6px;
 }
 .legacy-root .form-grid {
@@ -431,10 +431,10 @@ body {
 }
 .legacy-root .example {
   border: 0;
-  border-bottom: 1px solid #292929;
+  border-bottom: 1px solid #493b60;
   border-radius: 0;
   background: none;
-  color: #ccc;
+  color: #c3b1df;
   padding: 16px 0;
   display: flex;
   justify-content: space-between;
@@ -451,7 +451,7 @@ body {
 }
 .legacy-root .example span {
   padding-left: 14px;
-  color: #999;
+  color: #beafd1;
 }
 .legacy-root .run-layout {
   display: grid;
@@ -498,13 +498,13 @@ body {
 .legacy-root td,
 .legacy-root th {
   padding: 13px 12px;
-  border-bottom: 1px solid #292929;
+  border-bottom: 1px solid #493b60;
   text-align: left;
   white-space: nowrap;
 }
 .legacy-root th {
   font-weight: 500;
-  color: #8f8f8f;
+  color: #ad9cc3;
 }
 .legacy-root .timeline {
   list-style: none;
@@ -522,7 +522,7 @@ body {
   left: -18px;
   top: 6px;
   border-radius: 50%;
-  background: #ccc;
+  background: #c3b1df;
   width: 5px;
   height: 5px;
 }
@@ -533,7 +533,7 @@ body {
 }
 .legacy-root .timeline small {
   display: block;
-  color: #8c8c8c;
+  color: #ad9cc3;
   font-size: 10px;
   margin-top: 3px;
 }
@@ -555,7 +555,7 @@ body {
   margin: 15px 0;
 }
 .legacy-root .bar-track {
-  background: #252525;
+  background: #423056;
   height: 6px;
   border-radius: 2px;
   overflow: hidden;
@@ -573,7 +573,7 @@ body {
 .legacy-root pre,
 .legacy-root .sql-block {
   display: block;
-  background: #0b0b0b;
+  background: #17132b;
   border: 1px solid #2d2d2d;
   padding: 20px;
   font-size: 11px;
@@ -595,11 +595,11 @@ body {
   font-size: 10px;
 }
 .legacy-root .metric-meta > span {
-  color: #777;
+  color: #b1a1c5;
 }
 .legacy-root .metric-meta strong {
   font-weight: 400;
-  color: #bbb;
+  color: #cdbfdf;
   overflow-wrap: anywhere;
 }
 .legacy-root .settings-row {
@@ -623,7 +623,7 @@ body {
 .legacy-root .callout {
   background: #1a1a1a;
   border: 1px solid #444;
-  border-left: 2px solid #ccc;
+  border-left: 2px solid #c3b1df;
   padding: 14px;
   color: #ddd;
   font-size: 12px;
@@ -639,7 +639,7 @@ body {
 }
 .legacy-root .login-story {
   padding: 55px 70px;
-  background: #101010;
+  background: #241c39;
   border-right: 1px solid #2c2c2c;
   position: relative;
 }
@@ -653,14 +653,14 @@ body {
   margin: 25px 0;
 }
 .legacy-root .login-story p {
-  color: #8e8e8e;
+  color: #b1a1c5;
   max-width: 390px;
   margin-top: 32px;
   font-size: 13px;
 }
 .legacy-root .login-footer {
   font-size: 10px;
-  color: #797979;
+  color: #b1a1c5;
   margin-top: 85px;
 }
 .legacy-root .login-panel {
@@ -690,7 +690,7 @@ body {
   margin-top: 35px;
   display: grid;
   gap: 10px;
-  border-top: 1px solid #303030;
+  border-top: 1px solid #56426b;
   padding-top: 26px;
 }
 .legacy-root .demo-buttons .eyebrow {
@@ -699,7 +699,7 @@ body {
 .legacy-root .loading-page {
   padding: 70px;
   text-align: center;
-  color: #aaa;
+  color: #c2b5d4;
   font-size: 13px;
 }
 .legacy-root .drawer-backdrop {
@@ -712,7 +712,7 @@ body {
 }
 .legacy-root .drawer {
   width: min(520px, 100vw);
-  background: #111;
+  background: #27203e;
   border-left: 1px solid #444;
   padding: 32px;
   overflow: auto;
@@ -802,7 +802,7 @@ body {
     border-right: 0;
   }
   .legacy-root .stats > div:nth-child(-n + 2) {
-    border-bottom: 1px solid #292929;
+    border-bottom: 1px solid #493b60;
   }
   .legacy-root .card {
     padding: 20px;
@@ -884,7 +884,7 @@ body {
 }
 .legacy-root legend {
   padding: 0 8px;
-  color: #bbb;
+  color: #cdbfdf;
   font-size: 13px;
 }
 .legacy-root .comparison-report {
@@ -901,7 +901,7 @@ body {
 }
 .legacy-root .contribution-track {
   height: 6px;
-  background: #252525;
+  background: #423056;
   margin-top: 10px;
 }
 .legacy-root .contribution-track > div {
@@ -909,13 +909,13 @@ body {
   min-width: 1px;
 }
 .legacy-root .contribution-track .positive {
-  background: #e8e8e8;
+  background: #c3aaf6;
 }
 .legacy-root .contribution-track .negative {
   background: repeating-linear-gradient(
     135deg,
-    #999,
-    #999 3px,
+    #beafd1,
+    #beafd1 3px,
     #333 3px,
     #333 6px
   );
@@ -976,4 +976,109 @@ body {
   .legacy-root .contribution-row .section-heading {
     flex-wrap: wrap;
   }
+}
+
+/* Investigation studio: deep plum canvas, task colours and readable evidence. */
+.legacy-root {
+  font-family: "IBM Plex Sans", sans-serif;
+  --surface: #27203e;
+  --border: #493b60;
+  --muted: #bbb0cd;
+}
+.legacy-root .sidebar {
+  background: #201933;
+  border-right-color: #49365e;
+}
+.legacy-root .sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.legacy-root .sidebar nav a.active {
+  background: #4c3670;
+  border-color: #795797;
+}
+.legacy-root .brand-mark {
+  background: #bda0f0;
+  color: #271c3b;
+  border-radius: 10px;
+}
+.legacy-root .workspace-header {
+  background: #211a34;
+}
+.legacy-root .demo-note {
+  background: #293e3c;
+  border-color: #49665d;
+  color: #c1e2d4;
+}
+.legacy-root .card {
+  border-radius: 13px;
+}
+.legacy-root .comparison-entry {
+  background: #36294f;
+  border-color: #80639e;
+}
+.legacy-root .bar-fill {
+  background: #ac89e1;
+  border-radius: 3px;
+}
+.legacy-root .contribution-track .positive {
+  background: #82bfa9;
+}
+.legacy-root .contribution-track .negative {
+  background: #d69382;
+}
+.legacy-root .pill {
+  color: #d9cbed;
+  border-color: #7b5b93;
+  background: #39294f;
+}
+.legacy-root .stats > div:nth-child(2) strong {
+  color: #c6a5f3;
+}
+.legacy-root .stats > div:nth-child(3) strong {
+  color: #8fc9b6;
+}
+.legacy-root .stats > div:nth-child(4) strong {
+  color: #e8b297;
+}
+.legacy-root .tabs button.active {
+  color: #d5baf9;
+  border-bottom-color: #bf94ed;
+}
+.legacy-root :focus-visible {
+  outline: 2px solid #c4a1ff;
+  outline-offset: 3px;
+}
+
+.legacy-root .comparison-totals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.legacy-root .comparison-totals strong {
+  font-size: clamp(18px, 2vw, 25px);
+  font-variant-numeric: tabular-nums;
+}
+.legacy-root .factor-grid strong {
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+.legacy-root .callout {
+  background: #243e3c;
+  border-color: #679787;
+  color: #cde5da;
+}
+@media (max-width: 1100px) {
+  .legacy-root .factor-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 500px) {
+  .legacy-root .comparison-totals {
+    grid-template-columns: 1fr;
+  }
+}
+.legacy-root .button:not(.secondary),
+.legacy-root .button:not(.secondary):hover {
+  color: #291d40;
 }
