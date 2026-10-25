@@ -92,6 +92,8 @@ jobs:
         run: python scripts/demos/product_browser.py --url http://127.0.0.1:3007 --axe /tmp/product-a11y/node_modules/axe-core/axe.min.js
       - name: Real multi-format uploads and worksheet accessibility
         run: python scripts/demos/import_browser.py --url http://127.0.0.1:3007 --axe /tmp/product-a11y/node_modules/axe-core/axe.min.js
+      - name: Studio routes, responsive layouts and accessibility
+        run: python scripts/demos/studio_browser.py --url http://127.0.0.1:3007 --axe /tmp/product-a11y/node_modules/axe-core/axe.min.js
       - run: python scripts/demos/browser_smoke.py
       - name: API restart and persisted run smoke
         run: python scripts/deployment/restart_smoke.py
