@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 import {
   BrowserRouter,
   Navigate,
@@ -22,7 +22,7 @@ import {
 import { api } from "../lib/api";
 import ProductApp from "../features/product/ProductApp";
 import { ProductProvider } from "../features/product/context";
-function PrivateRoute({ children }: { children: JSX.Element }) {
+function PrivateRoute({ children }: { children: ReactElement }) {
   const [state, setState] = useState<"loading" | "ready" | "login">("loading");
   const location = useLocation();
   useEffect(() => {

@@ -39,12 +39,26 @@ class Media(HTMLParser):
                 self.targets.append(value)
 
 
-def main():
-    # Vercel installs root uv.lock; runtime requirements alone do not update it.
+def check_dependency_parity(root):
+    """Reject backend, test and Vercel locks that disagree on installed versions."""
     import tomllib
-    project = tomllib.loads((ROOT / "pyproject.toml").read_text())["project"]
-    packages = tomllib.loads((ROOT / "uv.lock").read_text())["package"]
+    project = tomllib.loads((root / "pyproject.toml").read_text())["project"]
+    packages = tomllib.loads((root / "uv.lock").read_text())["package"]
     normalize = lambda name: re.sub(r"[-_.]+", "-", name).lower()
+
+    def pins(path):
+        result = {}
+        for name, version in re.findall(
+            r"^([A-Za-z0-9_.-]+)(?:\[[^]]+\])?==([^;\s\\]+)",
+            path.read_text(), re.MULTILINE,
+        ):
+            name = normalize(name)
+            assert name not in result or result[name] == version, "Conflicting lock pins: " + name
+            result[name] = version
+        return result
+
+    runtime = pins(root / "backend/requirements/runtime.txt")
+    development = pins(root / "backend/requirements/development.txt")
     versions = {normalize(p["name"]): p.get("version") for p in packages}
     root_package = next(p for p in packages if p["name"] == project["name"])
     included = {normalize(p["name"]) for p in root_package.get("dependencies", [])}
@@ -53,6 +67,14 @@ def main():
         assert match, "Pin root deployment dependencies exactly"
         name, version = normalize(match[1]), match[2]
         assert name in included and versions.get(name) == version, "Stale deployment uv.lock: " + name
+        assert runtime.get(name) == version, "Backend/Vercel version mismatch: " + name
+    for name, version in runtime.items():
+        assert development.get(name) == version, "Runtime/development version mismatch: " + name
+
+
+def main():
+    # Vercel installs root uv.lock; backend-only updates must not pass unnoticed.
+    check_dependency_parity(ROOT)
     assert (ROOT / "backend").is_dir()
     assert (ROOT / "frontend").is_dir()
     for name in ("HANDOFF", "PLAN", "PROGRESS"):
