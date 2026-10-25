@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-25",
+  "scope": "Current-source UI and deterministic execution; no live-model quality claim",
+  "agent_interactions": [
+    "prompt-review-and-sign-in-preserve-question-without-auto-execution",
+    "keyboard-submission-produces-real-guarded-result",
+    "trace-events-and-filtered-payload-equal-exported-backend-evidence",
+    "plan-link-selects-actual-published-plan",
+    "followup-links-preserve-question-reference-and-reviewed-metric",
+    "comparison-inspector-shows-real-reconciliation-events",
+    "mobile-trace-and-brief-without-overflow",
+    "sign-in-return-rejects-external-api-and-backslash-destinations"
+  ],
+  "product_groups": 11,
+  "import_groups": 8,
+  "accessibility_views": {
+    "agent": 10,
+    "product": 14,
+    "imports": 2,
+    "studio": 16
+  },
+  "axe_violations": 0,
+  "page_errors": [],
+  "paid_model_calls": 0,
+  "warehouse": {
+    "metric_contracts": 5,
+    "contribution_segments": 5,
+    "shapley_factors": 3,
+    "deterministic_comparison_checks": 15,
+    "offline_report_recheck": true
+  },
+  "source_manifests": [
+    "../demos/uploads-recording.json",
+    "../demos/interactive-recording.json"
+  ]
+}

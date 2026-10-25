@@ -8,6 +8,14 @@ Reports use labelled source/rules/review/result stages, exact-value metric cards
 
 Design implementation: `frontend/src/features/product/studio.css`, `frontend/src/components/layout/StudioIcon.tsx` and the scoped warehouse theme in `frontend/src/styles/index.css`. Continuous demos use the actual built product. The additional `scripts/demos/studio_browser.py` checks both route surfaces, inter-workspace navigation and mobile accessibility.
 
+## Prompt-led warehouse interaction
+
+A question composer on the landing and warehouse overview links to `/new?question=…`. Reviewed starters populate text; the investigator runs only after explicit submission on the question brief. Sign-in retains the intended internal route and query. An allowlist restricts return destinations to known UI routes and rejects external/API/backslash targets.
+
+The brief shows actual configured round/query/row budgets and guided/live availability. Ctrl/Command+Enter submits the same validated form. The execution explorer provides observed sequence numbers, tool and verification filters, selected public JSON, cumulative event timestamps, reported token usage and a link to the published plan. Guided mode remains explicit. Follow-ups reference the previous run while starting independent execution; comparison links preselect supported reviewed metrics.
+
+Mobile query tabs scroll within the viewport. Executed-row tables and selected JSON are keyboard focusable. `scripts/demos/agent_desk_browser.py` checks actual prompt/auth/tool/evidence/follow-up behavior and ten accessible desktop/mobile views.
+
 ## Multiple tabular formats — October16
 
 CSV, TSV, Excel .xlsx, JSON and JSONL are accepted through the guided product. [Formats, worksheet selection, exact conversion and limits](FILE-IMPORTS.md). Existing domain contracts and result/approval checks remain applicable; PDFs/images are unsupported. Earlier CSV-specific implementation descriptions below remain historical context for the normalized analysis engine.

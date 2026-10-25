@@ -49,6 +49,14 @@ sequenceDiagram
 
 The public guided investigator uses deterministic actions within the same application authority. The deployed function handles the request directly; the persistent queue/worker sequence belongs to the private Compose/PostgreSQL runtime.
 
+## Investigation desk and execution inspection
+
+The [question composer](../frontend/src/features/investigations/PromptComposer.tsx) opens an explicit review screen before execution. Reviewed starters populate the question; submission and investigator selection remain separate actions. The brief displays limits from `/api/config`, and the question survives sign-in through an [internal-route return guard](../frontend/src/lib/navigation.ts).
+
+The [execution explorer](../frontend/src/features/investigations/ExecutionExplorer.tsx) renders actual backend events. Tool and verification filters preserve original sequence numbers; selected JSON is the exact public event payload. Timestamps mean elapsed time from run start. Recorded start events remain historical observations after completion. Input/output usage is shown only when reported for live mode; guided mode names its absence of provider use.
+
+Plan navigation opens the published structured plan. Follow-up links start a fresh investigation with an explicit reference; they do not silently append previous results to model context. Reviewed comparison links select only catalog-supported metrics/dimensions. The browser rehearsal compares rendered event payloads with independently downloaded evidence, exercises question-preserving authentication, and rejects external/API/backslash return destinations.
+
 ## Numerical verification
 
 File analysis converts supported decimal values to integer micro-units before SQL aggregation. Independently grouped `Decimal` values provide a separate reference. Both sum and count must match; an unequal-group average is computed as total included value divided by included record count. No missing numeric measure is imputed, and no repeated record is silently removed.
@@ -87,6 +95,8 @@ Optional OpenTelemetry spans expose investigation/model/query timing and operati
 - **Explicit retained snapshots:** preserves analytical context with consent and avoids presenting a historical report as a fresh source-system check.
 
 ## Observed results
+
+The investigation-desk increment exercises eight prompt/auth/trace/follow-up groups and ten additional accessible views. Combined with the file/import/studio journeys, 42 views report zero axe A/AA violations. Tool counts and selected event payloads are compared with downloaded backend evidence. [Current UI execution summary](evaluation/agent-desk-results.json).
 
 The October 25 current-source run passes 200 backend tests, the TypeScript/Vite build, 11 grouped product journeys and 8 grouped import journeys. Across 32 automated accessibility views, axe reports zero WCAG A/AA violations. The warehouse journey executes all five metric contracts and inspects five segments, three accounting factors and fifteen comparison checks; its downloaded report passes offline recomputation. These are deterministic implementation results with zero provider calls. [Machine-readable summary](evaluation/studio-results.json).
 
