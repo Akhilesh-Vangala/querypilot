@@ -1,31 +1,44 @@
 import { FormEvent, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { api, RuntimeConfig } from "../../lib/api";
-const EXAMPLES = [
-  "What explains the change in claims paid between Q1 and Q2 2026?",
-  "Claims paid by specialty",
-  "Declined referral rate by specialty",
-  "Which region had the most referrals?",
-  "What is total claims paid last 12 months?",
-  "Which employer groups had any closed panel weeks?",
-  "Average care coordination cost per case by region and employer",
-];
+import StudioIcon from "../../components/layout/StudioIcon";
+import { STARTERS } from "./questions";
+
 export default function Ask() {
-  const navigate = useNavigate();
-  const [question, setQuestion] = useState("Claims paid by specialty"),
-    [mode, setMode] = useState("baseline"),
+  const navigate = useNavigate(),
+    [params] = useSearchParams();
+  const [question, setQuestion] = useState(() =>
+    (params.get("question") || "Claims paid by specialty").slice(0, 4000),
+  );
+  const [mode, setMode] = useState("baseline"),
     [busy, setBusy] = useState(false),
-    [error, setError] = useState(""),
-    [config, setConfig] = useState<RuntimeConfig | null>(null);
+    [error, setError] = useState("");
+  const [config, setConfig] = useState<RuntimeConfig | null>(null),
+    [configError, setConfigError] = useState(false);
+  const reference = params.get("reference") || "";
+  const safeReference = /^[a-zA-Z0-9_-]{1,128}$/.test(reference)
+    ? reference
+    : "";
+  function loadConfig() {
+    setConfigError(false);
+    api
+      .config()
+      .then(setConfig)
+      .catch(() => setConfigError(true));
+  }
+  useEffect(loadConfig, []);
   useEffect(() => {
-    api.config().then(setConfig);
-  }, []);
+    setQuestion(
+      (params.get("question") || "Claims paid by specialty").slice(0, 4000),
+    );
+  }, [params]);
   async function submit(event: FormEvent) {
     event.preventDefault();
+    if (busy || !question.trim() || !config) return;
     setBusy(true);
     setError("");
     try {
-      const run = await api.createAnalysis(question, mode);
+      const run = await api.createAnalysis(question.trim(), mode);
       navigate("/runs/" + run.id);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Investigation failed");
@@ -34,37 +47,90 @@ export default function Ask() {
   }
   return (
     <>
-      <div className="page-heading">
-        <Link className="back-link" to="/">
-          ← Overview
+      <div className="page-heading agent-question-heading">
+        <Link className="back-link" to="/demo">
+          ← Investigation desk
         </Link>
-        <div className="eyebrow">QUESTION TO EVIDENCE</div>
+        <div className="eyebrow">QUESTION → PLAN → TOOLS → EVIDENCE</div>
         <h1>Start an investigation.</h1>
         <p>
-          Define the metric and scope. Inspect the query and its evidence before
-          using the answer.
+          Give the investigator a precise question. Keep its execution,
+          assumptions and verification in view.
         </p>
       </div>
-      <div className="two-columns">
-        <section className="card">
-          <h2>Your analytical question</h2>
+      <div className="agent-compose-layout">
+        <section className="card agent-question-card">
+          <div className="agent-card-heading">
+            <span className="agent-orbit" aria-hidden="true">
+              <StudioIcon name="query" />
+            </span>
+            <div>
+              <span className="eyebrow">INVESTIGATION BRIEF</span>
+              <h2>Your analytical question</h2>
+            </div>
+            <span className="pill">
+              {mode === "live" ? "Live model" : "Guided baseline"}
+            </span>
+          </div>
+          {safeReference && (
+            <p className="agent-reference">
+              New investigation referencing{" "}
+              <Link to={"/runs/" + safeReference}>
+                {safeReference.slice(0, 8)} ↗
+              </Link>
+              . Previous results are not automatically added to model context.
+            </p>
+          )}
           <form onSubmit={submit}>
             <label htmlFor="question">Question</label>
             <textarea
               id="question"
-              rows={6}
+              rows={5}
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
               required
               maxLength={4000}
+              placeholder="Describe the metric, period and breakdown you want to investigate…"
+              onKeyDown={(e) => {
+                if (
+                  (e.metaKey || e.ctrlKey) &&
+                  e.key === "Enter" &&
+                  !e.nativeEvent.isComposing
+                ) {
+                  e.preventDefault();
+                  e.currentTarget.form?.requestSubmit();
+                }
+              }}
             />
-            <div className="form-grid">
+            <div className="agent-question-hints">
+              <span>Include a metric, time window and grouping.</span>
+              <span>{question.length.toLocaleString()} / 4,000</span>
+            </div>
+            <div
+              className="agent-prompt-options"
+              aria-label="Reviewed question starters"
+            >
+              {STARTERS.map((s) => (
+                <button
+                  type="button"
+                  className="secondary"
+                  key={s.label}
+                  onClick={() => setQuestion(s.question)}
+                  disabled={busy}
+                >
+                  <StudioIcon name={s.icon} />
+                  {s.label}
+                </button>
+              ))}
+            </div>
+            <div className="agent-mode-field">
               <div>
                 <label htmlFor="mode">Investigator</label>
                 <select
                   id="mode"
                   value={mode}
                   onChange={(e) => setMode(e.target.value)}
+                  disabled={busy}
                 >
                   <option value="baseline">Guided development baseline</option>
                   <option value="live" disabled={!config?.live_available}>
@@ -73,58 +139,79 @@ export default function Ask() {
                   </option>
                 </select>
               </div>
-              <div className="small-note">
-                Read-only queries
-                <br />
-                Up to {config?.max_rows || 500} returned rows
-              </div>
+              <p>
+                {mode === "live"
+                  ? "Uses the configured model and records reported token usage."
+                  : "Deterministic investigator over reviewed synthetic questions. No provider calls."}
+              </p>
             </div>
+            {configError && (
+              <div className="error" role="alert">
+                Execution limits could not be loaded.{" "}
+                <button
+                  type="button"
+                  className="secondary"
+                  onClick={loadConfig}
+                >
+                  Retry configuration
+                </button>
+              </div>
+            )}
             {error && (
               <p role="alert" className="error">
                 {error}
               </p>
             )}
-            <div className="form-actions">
-              <button disabled={busy}>
+            <div className="agent-submit-row">
+              <span>
+                <StudioIcon name="data" /> Synthetic claims warehouse
+              </span>
+              <button disabled={busy || !question.trim() || !config}>
                 {busy ? "Creating investigation…" : "Investigate question ↗"}
               </button>
+              <span className="agent-keyhint">⌘ / Ctrl + Enter</span>
             </div>
           </form>
         </section>
-        <aside>
-          <Link className="card comparison-entry" to="/compare">
-            <div className="eyebrow">EXECUTABLE COMPARISONS</div>
-            <h3>Investigate what changed →</h3>
-            <p>
-              Choose dates and a reviewed metric. Inspect reconciled
-              contributions and verification checks.
-            </p>
-          </Link>
-          <div className="card">
-            <div className="eyebrow">START WITH A KNOWN METRIC</div>
-            <h2>Questions to explore</h2>
-            <div className="example-list">
-              {EXAMPLES.map((q) => (
-                <button
-                  className="example"
-                  key={q}
-                  onClick={() => setQuestion(q)}
-                >
-                  {q}
-                  <span>↗</span>
-                </button>
-              ))}
-            </div>
+        <aside className="agent-policy-panel">
+          <div className="agent-policy-title">
+            <StudioIcon name="settings" />
+            <h2>Execution contract</h2>
           </div>
-          <div className="card muted">
-            <h3>Useful scope</h3>
-            <p>
-              Include the time window, grouping and denominator. Separate
-              metrics have different grains; combining them requires a
-              deliberate join.
-            </p>
-            <Link to="/metrics">Review metric definitions →</Link>
-          </div>
+          <p>
+            Application-enforced limits, independent of the investigator’s
+            proposal.
+          </p>
+          <dl>
+            {[
+              ["Model rounds", config?.max_rounds],
+              ["SQL executions", config?.max_sql_attempts],
+              ["Returned rows", config?.max_rows],
+            ].map(([label, value]) => (
+              <div key={String(label)}>
+                <dt>{label}</dt>
+                <dd>{value ?? "Loading…"}</dd>
+              </div>
+            ))}
+          </dl>
+          <ol className="agent-policy-flow">
+            {[
+              ["Scope", "Reviewed metrics and authorized relations"],
+              ["Execute", "Typed actions and read-only SQL policy"],
+              ["Check", "Reviewed comparison checks; scoped query receipts"],
+              ["Publish", "Inspectable result, SQL and provenance"],
+            ].map(([title, detail], i) => (
+              <li key={title}>
+                <span>{i + 1}</span>
+                <div>
+                  <strong>{title}</strong>
+                  <p>{detail}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <Link to="/metrics">Review the metric catalog →</Link>
+          <Link to="/compare">Define a period comparison →</Link>
         </aside>
       </div>
     </>

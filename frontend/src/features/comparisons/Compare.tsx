@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { api, Metric } from "../../lib/api";
 
 const labels: Record<string, string> = {
@@ -12,6 +12,7 @@ const labels: Record<string, string> = {
 
 export default function Compare() {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
   const [metrics, setMetrics] = useState<Metric[]>([]);
   const [metric, setMetric] = useState("claims_paid"),
     [dimension, setDimension] = useState("specialty");
@@ -27,6 +28,17 @@ export default function Compare() {
       .then((r) => setMetrics(r.metrics))
       .catch(() => setError("Unable to load reviewed metrics."));
   }, []);
+  useEffect(() => {
+    const selection = metrics.find((m) => m.id === params.get("metric"));
+    if (selection) {
+      setMetric(selection.id);
+      setDimension(
+        selection.comparison_dimensions.includes(params.get("dimension") || "")
+          ? params.get("dimension")!
+          : selection.comparison_dimensions[0],
+      );
+    }
+  }, [metrics, params]);
   const selected = metrics.find((m) => m.id === metric);
   async function submit(event: FormEvent) {
     event.preventDefault();

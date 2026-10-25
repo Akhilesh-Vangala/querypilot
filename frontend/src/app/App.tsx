@@ -42,7 +42,15 @@ function PrivateRoute({ children }: { children: JSX.Element }) {
   }, [location.pathname]);
   if (state === "loading")
     return <div className="loading-page">Opening your workspace…</div>;
-  return state === "ready" ? children : <Navigate to="/login" replace />;
+  return state === "ready" ? (
+    children
+  ) : (
+    <Navigate
+      to="/login"
+      state={{ from: location.pathname + location.search }}
+      replace
+    />
+  );
 }
 export default function App() {
   return (
