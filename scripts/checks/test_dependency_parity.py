@@ -7,7 +7,7 @@ import pytest
 
 
 SPEC = importlib.util.spec_from_file_location(
-    "repository_check", Path(__file__).resolve().parents[3] / "scripts/checks/check_repository.py"
+    "repository_check", Path(__file__).resolve().parents[2] / "scripts/checks/check_repository.py"
 )
 CHECK = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CHECK)
