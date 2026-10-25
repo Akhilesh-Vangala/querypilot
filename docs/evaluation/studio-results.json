@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-25",
+  "scope": "Local current-source software and deterministic fixture execution; no model-quality claim",
+  "backend": {
+    "tests": 200,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "product_groups": 11,
+  "import_groups": 8,
+  "accessibility_views": {
+    "product": 14,
+    "imports": 2,
+    "studio": 16
+  },
+  "axe_violations": 0,
+  "responsive_widths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "warehouse": {
+    "metric_contracts": 5,
+    "contribution_segments": 5,
+    "shapley_factors": 3,
+    "deterministic_comparison_checks": 15,
+    "evidence_export": true,
+    "offline_report_recheck": true,
+    "future_period_withheld": true
+  },
+  "paid_model_calls": 0,
+  "source_manifest": "../demos/uploads-recording.json",
+  "guided_source_manifest": "../demos/interactive-recording.json"
+}

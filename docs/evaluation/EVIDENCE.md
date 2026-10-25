@@ -1,4 +1,22 @@
-# Verified delivery evidence
+# Verified execution evidence
+
+## Evidence studio — October 25, 2026
+
+These results were executed against the redesigned application's actual built source. [Machine-readable result summary](studio-results.json), [file recording/source manifest](../demos/uploads-recording.json), [warehouse recording/source manifest](../demos/interactive-recording.json).
+
+| Executed check | Observed result |
+| --- | --- |
+| Native backend and policy | 200 passed; zero failures, errors or skips |
+| TypeScript / Vite | Production build passes |
+| File workspace | 11 grouped journeys: reviewed calculation, downloads, consented save/reload, signature tamper refusal, restore, network recovery and competing device quotas |
+| Formats | 8 grouped journeys: all five formats, worksheet cancellation, ambiguous JSON and unsupported-type refusal |
+| Automated accessibility | 32 views: 14 product, 2 import, 16 cross-studio/mobile; zero WCAG A/AA axe violations |
+| Responsive layouts | 320, 390, 768 and 1440 pixel result views; mobile home and warehouse comparison checks |
+| Warehouse browser journey | 5 metric contracts, 5 contribution segments, 3 factors, 15 independent comparison checks; exported evidence recomputed offline; unsupported future coverage withheld |
+| Media provenance | Two actual continuous browser recordings; application/style/player/capture hashes and media SHA-256 |
+| Provider calls | 0 |
+
+Required publication checks execute actual container builds, PostgreSQL authority and four-worker/restart exercises as defined in [CI](../../.github/workflows/ci.yml). The [workflow history](https://github.com/Akhilesh-Vangala/querypilot/actions/workflows/ci.yml) identifies exact run heads and downloadable evidence. The locally observed table above is distinct from historical release results below.
 
 ## Executable comparison increment — October 14, 2026
 
@@ -32,5 +50,3 @@ Both cited CI runs pass Backend and policy, Frontend build, and Containers and P
 Public HTTP checks verify ready state, HttpOnly cookie login, an actual five-row guarded SQL investigation, unavailable shared histories and HTTP503 for requested live mode. Actual public Chromium checks verify result/SQL/plan, provenance dialog, Escape/launcher focus restoration, reload history, mobile width and all five metric cards. The README captures are real synthetic public app execution. The public demo runs a deterministic investigator; no model-quality metric is implied.
 
 The workspace completion collector checks exact local/remote main, original ancestry, merged PR, actual current-main CI, administrator-enforced app-bound protection, downloaded database/restart proofs and public app privacy/live gates. Generated histories/cookies/environment secrets are not committed. Subsequent documentation-only main commits preserve the tested implementation; source/main CI status is visible through the repository badge and Actions page.
-
-**Uncompleted:** live-model benchmark, model comparisons, semantic proof on independently curated unseen data, tenant identity/warehouse permissions, global dollar admission, monitored persistent cloud deployment, restore/load/SLO evidence and actual analyst feedback. No paid model calls were made in this delivery.

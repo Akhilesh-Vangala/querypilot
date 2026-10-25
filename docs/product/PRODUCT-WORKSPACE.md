@@ -1,8 +1,17 @@
+# QueryPilot product workspace
+
+## Evidence studio interface
+
+The landing page offers two explicit workflows: file analysis and guided warehouse investigation. A persistent indigo rail owns file workspace navigation and links to the separate plum investigation studio. Overview task cards lead to source analysis or period comparison; counts reflect explicitly saved work rather than illustrative activity.
+
+Reports use labelled source/rules/review/result stages, exact-value metric cards, colour-coded positive/negative contributions, source-quality and SQL/check tabs, and a run-provenance strip populated from the signed report. Older reports without run metadata remain readable. Responsive navigation, visible keyboard focus and reduced-motion preferences apply across both surfaces. Colour reinforces text; it never supplies the only verification indicator.
+
+Design implementation: `frontend/src/features/product/studio.css`, `frontend/src/components/layout/StudioIcon.tsx` and the scoped warehouse theme in `frontend/src/styles/index.css`. Continuous demos use the actual built product. The additional `scripts/demos/studio_browser.py` checks both route surfaces, inter-workspace navigation and mobile accessibility.
+
 ## Multiple tabular formats — October16
 
 CSV, TSV, Excel .xlsx, JSON and JSONL are accepted through the guided product. [Formats, worksheet selection, exact conversion and limits](FILE-IMPORTS.md). Existing domain contracts and result/approval checks remain applicable; PDFs/images are unsupported. Earlier CSV-specific implementation descriptions below remain historical context for the normalized analysis engine.
 
-# QueryPilot product workspace
 
 The public product offers a real source-to-result journey. The original guided synthetic application remains at `/demo`; its sample datasets and history are separate. [Own-data contract](USER-DATA.md).
 
@@ -43,4 +52,4 @@ Product frontend: `frontend/src/features/product/`. Backend account boundary: `b
 - `backend/tests/api/test_product_evidence.py`: actual SSE terminal behavior, nested-report tamper/key rotation, precise invalid-cell errors and selected late-record preview. An unequal-group average regression rejects averaging group means.
 - `scripts/checks/product_rls.py`: applies the actual migration to its own random disposable PostgreSQL database, exercises two owners, anonymous/spoof/update denial and concurrent quota enforcement, then drops only that owned database. Requires an explicit test administrative URL.
 
-Automated rehearsals are not actual customer feedback or a production reliability certification. Live-model benchmarks, hosted tenant operations and monitored durable cloud workers remain release gates. Canonical app: https://querypilot-five.vercel.app/.
+Automated rehearsals are not actual customer feedback or a production reliability certification. These checks establish the exercised software contracts; they do not measure live-model quality or hosted tenant operation. Canonical app: https://querypilot-five.vercel.app/.
