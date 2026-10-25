@@ -34,7 +34,7 @@ jobs:
           cache-dependency-path: backend/requirements/development.txt
       - run: pip install --require-hashes -r backend/requirements/development.txt
       - run: python scripts/checks/check_repository.py
-      - run: python -m pytest -q backend/tests --junitxml=artifacts/generated/pytest.xml
+      - run: python -m pytest -q backend/tests scripts/checks/test_dependency_parity.py --junitxml=artifacts/generated/pytest.xml
       - name: Actual product owner policies and concurrency quotas
         env:
           QUERY_PRODUCT_TEST_ADMIN_URL: postgresql://product_owner:local-test-password@127.0.0.1:5432/product_test

@@ -105,3 +105,7 @@ The October 25 current-source run passes 200 backend tests, the TypeScript/Vite 
 The required CI runs backend/policy regressions, TypeScript/production build, actual containers, PostgreSQL roles and four-worker recovery exercises. Browser rehearsals perform real file selection, reviewed rules, SQL/Decimal results, report authentication, export, save/reload, restore, network errors, keyboard navigation and responsive/accessibility checks. Continuous recordings identify source and media hashes.
 
 [Commands and results](evaluation/EVIDENCE.md) · [Evaluation protocol](evaluation/README.md) · [Deployment](operations/DEPLOYMENT.md) · [Continuous recordings](DEMO.md).
+
+## Dependency and deployment consistency
+
+The frontend uses React19 with an explicitly imported React element type at its protected-route boundary. Runtime/renderer/type packages are upgraded together. Python runtime and development locks retain hashes; root `pyproject.toml` and `uv.lock` specify Vercel installation. The repository check rejects version drift between those environments, with negative regression cases for backend-only, deployment-lock and test-lock changes. Actual browser recordings are refreshed when their captured source changes. [Executed release evidence](evaluation/dependency-release-results.json).
