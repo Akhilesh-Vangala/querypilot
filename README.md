@@ -11,7 +11,7 @@ QueryPilot turns analytical questions into bounded SQL investigations and eviden
 | Workflow | Input | Executed result |
 | --- | --- | --- |
 | File analysis | CSV, TSV, Excel `.xlsx`, JSON or JSONL; reviewed measure, group and filter | Sum, count or weighted overall average; SQL/Decimal reconciliation; signed evidence; CSV/JSON/SQL exports |
-| Warehouse investigation | Claims/provider-network question and reviewed metric scope | Bounded tool trajectory, guarded read-only SQL, execution receipt, source-derived summary |
+| Warehouse investigation | Prompt-led question brief, reviewed metric scope and explicit investigator | Inspectable tool/verification events, published plan, guarded SQL, execution receipt and source-derived summary |
 | Period comparison | Metric, dimension, baseline and comparison windows | Reconciled totals, weighted segment contributions, volume/mix/unit-cost accounting and independent checks |
 
 The public Vercel app runs real file processing and a deterministic warehouse investigator. Its model mode is explicitly disabled. The private runtime includes the OpenAI Responses SDK integration and PostgreSQL workers. Verification results below measure software and known-case execution; they are not live-model accuracy claims.

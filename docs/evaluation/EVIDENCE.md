@@ -1,5 +1,23 @@
 # Verified execution evidence
 
+## Investigation desk — October 25, 2026
+
+[Machine-readable UI result](agent-desk-results.json) · [Current actual file capture](../demos/uploads-recording.json) · [Current actual warehouse capture](../demos/interactive-recording.json).
+
+| Executed interaction | Result |
+| --- | --- |
+| Question, authentication and keyboard submission | Landing template → review → sign-in → retained question → actual guarded query |
+| Tool and verification inspection | Rendered event counts and selected JSON match independently downloaded backend evidence |
+| Published plan and follow-ups | Actual plan opens; new run retains reference/question; supported comparison is preselected |
+| Return-path authority | External, protocol-relative, API and backslash destinations fall back to the internal desk |
+| Agent UI accessibility | 10 desktop/mobile views; zero axe A/AA violations |
+| Existing product/import/studio regressions | 11 product groups, 8 import groups, 14+2+16 accessible views |
+| Combined accessibility | 42 views, zero reported violations; 320px trace and390px brief fit the viewport |
+| Actual warehouse execution | Five metric contracts, five segments, three factors, fifteen comparison checks and exported offline recomputation |
+| Model calls | 0; public guided mode remains explicit |
+
+The changes are in frontend routing, interaction and inspection plus browser/CI evidence. Existing backend SQL, numerical reconciliation, signatures and worker authority remain the same code. [Required CI](../../.github/workflows/ci.yml) executes their regression and actual Docker/PostgreSQL/restart checks alongside the new interaction journey.
+
 ## Evidence studio — October 25, 2026
 
 These results were executed against the redesigned application's actual built source. [Machine-readable result summary](studio-results.json), [file recording/source manifest](../demos/uploads-recording.json), [warehouse recording/source manifest](../demos/interactive-recording.json).

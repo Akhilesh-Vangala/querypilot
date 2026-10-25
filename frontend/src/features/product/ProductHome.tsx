@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PromptComposer from "../investigations/PromptComposer";
 import { useProduct } from "./context";
 import StudioIcon from "../../components/layout/StudioIcon";
 export function Brand() {
@@ -60,79 +61,7 @@ export default function ProductHome({ sample }: { sample: () => void }) {
               No account needed. Save only when you choose.
             </p>
           </div>
-          <div
-            className="studio-canvas"
-            aria-label="Illustrative calculation: 0.10 plus 0.20 equals 0.30, checked independently"
-          >
-            <div className="canvas-heading">
-              <span className="canvas-dots">
-                <i />
-                <i />
-                <i />
-              </span>
-              <span>THE EVIDENCE DESK</span>
-              <StudioIcon name="data" />
-            </div>
-            <div className="canvas-question">
-              <span className="canvas-avatar">Q</span>
-              <div>
-                <small>YOUR QUESTION</small>
-                <p>What is our total for completed records?</p>
-              </div>
-            </div>
-            <div className="canvas-columns">
-              <div className="canvas-source">
-                <span className="eyebrow">01 / SOURCE</span>
-                <div className="mini-table">
-                  <div>
-                    <b>region</b>
-                    <b>amount</b>
-                  </div>
-                  <div>
-                    <span>North</span>
-                    <span>0.10</span>
-                  </div>
-                  <div>
-                    <span>North</span>
-                    <span>0.20</span>
-                  </div>
-                  <div className="excluded">
-                    <span>South</span>
-                    <span>5.00</span>
-                  </div>
-                </div>
-                <small>
-                  Filter: status = done
-                  <br />
-                  Illustrative data · 2 included rows
-                </small>
-              </div>
-              <div className="canvas-result">
-                <span className="eyebrow">02 / CHECKED RESULT</span>
-                <strong>0.30</strong>
-                <div className="sample-bars" aria-hidden="true">
-                  <i />
-                  <i />
-                </div>
-                <span className="canvas-verified">
-                  <StudioIcon name="check" /> SQL = Decimal reference
-                </span>
-              </div>
-            </div>
-            <div className="canvas-code">
-              <span>03 / EXECUTION</span>
-              <code>SUM(amount) WHERE status = 'done'</code>
-              <span className="canvas-caption">
-                Illustrative expression · inspect executed SQL in your report
-              </span>
-            </div>
-            <div className="canvas-footer">
-              <span className="canvas-label">
-                SOURCE → DEFINITION → EVIDENCE
-              </span>
-              <span>Every step, inspectable.</span>
-            </div>
-          </div>
+          <PromptComposer surface="landing" />
         </section>
         <section
           className="studio-paths"

@@ -1,8 +1,10 @@
 import { FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { investigationReturn } from "../../lib/navigation";
 import { api, login, RuntimeConfig } from "../../lib/api";
 export default function Login() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(),
+    location = useLocation();
   const [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
     [error, setError] = useState(""),
@@ -17,7 +19,7 @@ export default function Login() {
     try {
       await login(e, p);
       await api.me();
-      navigate("/demo");
+      navigate(investigationReturn(location.state?.from), { replace: true });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign-in failed");
       setBusy(false);
@@ -53,10 +55,10 @@ export default function Login() {
         <div className="login-card">
           <div className="eyebrow">YOUR ANALYTICS WORKSPACE</div>
           <h2>Welcome to QueryPilot.</h2>
-          <p className="muted">
-            Sign in to inspect the sample investigations.
+          <p className="muted">Sign in to inspect the sample investigations.</p>
+          <p>
+            <a href="/uploads">Use your own CSV — no account required ↗</a>
           </p>
-          <p><a href="/uploads">Use your own CSV — no account required ↗</a></p>
           <form onSubmit={submit}>
             <label htmlFor="email">Email address</label>
             <input

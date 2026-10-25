@@ -7,7 +7,7 @@ Both videos are continuous Chromium recordings of real interactions and server r
 | Recording | Captured execution | Provenance |
 | --- | --- | --- |
 | File workspace | Upload, source preview, reviewed rules, independently checked result, actual run identity, downloads, explicit device save and history | [Source/media manifest](demos/uploads-recording.json), [WebM](../frontend/public/uploads/walkthrough.webm) |
-| Warehouse studio | Investigation, executed SQL, plan, period comparison, independent checks and exported evidence | [Source/media manifest](demos/interactive-recording.json), [WebM](../frontend/public/recordings/querypilot.webm) |
+| Warehouse studio | Prompt-led investigation, actual tool payload, executed SQL, public plan, period comparison, independent checks and exported evidence | [Source/media manifest](demos/interactive-recording.json), [WebM](../frontend/public/recordings/querypilot.webm) |
 
 The [six-frame colour preview](assets/demos/querypilot-demo.gif) is quantized from the actual captured browser pixels. Continuous videos remain the full interaction record. Manifests hash application source, styles, static players and capture scripts; each video has a SHA-256 digest. Older capture manifests are retained under `demos/history/`.
 

@@ -18,40 +18,40 @@
   "page_errors": [],
   "paid_model_calls": 0,
   "recording_player": true,
-  "url": "http://127.0.0.1:50242",
+  "url": "http://127.0.0.1:51999",
   "frames": [
     {
       "stage": "overview",
       "path": "00-overview.png",
-      "sha256": "cf64ec9257fa79e18d20ec4b35382ac5c5d86385a8d31db4358be5e95b091f42"
+      "sha256": "dd4b996b4ab7c4cfd4ad0a835925d26d328009090ef3004f40fa36d06b1cb474"
     },
     {
       "stage": "executed-investigation",
       "path": "01-executed-investigation.png",
-      "sha256": "6ecf6da80cb734c68c4a6a7a4d6104103b2a7b25bea621ec8b8a22d0c831dca0"
+      "sha256": "b037a87ccfed945748334a111a662669898f01a3d92689a3983bae3f05a43cbb"
     },
     {
       "stage": "guarded-sql",
       "path": "02-guarded-sql.png",
-      "sha256": "52916b678c6829295b17058e68ea1a41bcf6005b3d58814e0216bc97dfc773df"
+      "sha256": "13bca55672ad616fb8f7134cfc382ac1b64288988596cb14b69e462ee397ddf3"
     },
     {
       "stage": "reconciled-periods",
       "path": "03-reconciled-periods.png",
-      "sha256": "cb369ac6a46d8d422e1307f0c3efa077b026c24436fa64e63b577e22dc986c04"
+      "sha256": "b9cad57a0226087872f785edb58f2a2515eeec23546b6ad1e5ff04ece00aef34"
     },
     {
       "stage": "independent-checks",
       "path": "04-independent-checks.png",
-      "sha256": "92cd2c21fca81653b21618f64ce63a70336464bab61418385f4264c475cce45b"
+      "sha256": "fc3347076d0c7ba05fe59d620c0872c1b95d128c81834d9fac7b5da7aa156082"
     },
     {
       "stage": "exported-evidence",
       "path": "05-exported-evidence.png",
-      "sha256": "a63a24dd025eaad98b43ff6dc2c15606ee79cccd5e858d01f9aeac385ded008b"
+      "sha256": "064c150efacec80c8b641acc17e38779d47da64b05e62bc9b1ec953b345c2bbc"
     }
   ],
-  "video_sha256": "c6cac16e7ff83f4d3217ed73f87ced4f9dee42ac65000e3433ca2627eb3266ec",
+  "video_sha256": "b1d7c2f5e865e4e036b95cf9d791cf101ae30b537eb78cb14281d3b5901b6c4a",
   "recording": "Continuous actual Chromium capture; guided synthetic data, automated interactions, no live model inference",
   "captured_deployment_source": null,
   "source_sha256": {
@@ -60,19 +60,23 @@
     "frontend/package.json": "57e6cde9e33d6cd43f9ae1cb57a19a3c23ae85205e97886fe4845c9398709b97",
     "frontend/package-lock.json": "f8220c8bd3c36be2779868f0ae942eee48c00f5ce2d6bc4bd25b89ac1baa7438",
     "frontend/vite.config.ts": "a2eab42310631cf8cd1308e3a15fbf0f8fdde24224d68252be9a4641567c2606",
-    "frontend/src/app/App.tsx": "a97babd17a02eaca603a38202698b228f8bd9b92b337825110f3e8b877df01ab",
+    "frontend/src/app/App.tsx": "5583f9e34424c01a0b4580144e5e6b12eae287be4698aef0775af07818a77427",
     "frontend/src/components/charts/BarChart.tsx": "7fe078a6320fbc1fa4a22ebf622b350560543a8f99719175c1d432ee04ab59f4",
     "frontend/src/components/layout/Layout.tsx": "cacf653ce20099c505be6d7530a5616cbbd4d5a23c96cef5cdfa4e7dd7bf73f0",
     "frontend/src/components/layout/StudioIcon.tsx": "6faef85d76495b0f42fe740fbee40dcd1194b2bb60aeea8c6ed3b0ace18518bf",
     "frontend/src/components/reports/ComparisonReport.tsx": "fb7b63345d1d460f9899c2e7322a6642f99b65bf04c0a8f608d03648506d3c98",
-    "frontend/src/features/auth/Login.tsx": "b53b2f099dc881f0616749abc8c39ab583aa7de33b1c828032cf12bc82c864a7",
+    "frontend/src/features/auth/Login.tsx": "e8ea6a40ecea39c3b1d347d1123284b0c58eb4341c268db180dc83da89e5f7c0",
     "frontend/src/features/catalog/Schema.tsx": "8bb710ed8843c87d4fcc450cd0bf8f6fde4a7dcb2e0d78235d2040b139e55774",
-    "frontend/src/features/comparisons/Compare.tsx": "c379dcd97b76e5e33f956b533c3d4100fd061504e1239b47148fca1d7031d26b",
+    "frontend/src/features/comparisons/Compare.tsx": "9f5d4485dde2d601cafeea723c77c9a8517052f031c3ba3da6c305b09b8cbaf3",
     "frontend/src/features/evaluation/EvalPage.tsx": "63035b5290199f188a1cf39faba482516831eae1b75ce2976fbab3784d006059",
     "frontend/src/features/history/History.tsx": "0609253100c239d31b9d32e2423b607584f71401f5b364a3dc2fe3794fc2f8cd",
-    "frontend/src/features/investigations/Ask.tsx": "6f5d4d09092af35c2dc32234f8b141a8ff1d0bcb8b40647b476d219b9ab7b43c",
+    "frontend/src/features/investigations/Ask.tsx": "9a5f860b5839de4498c8835d1757df7f0fff6b0ac72d431ba0053d006d8dc278",
+    "frontend/src/features/investigations/ExecutionExplorer.tsx": "9a673bbb760f0489bfb1ccb6ee6c9bbea186dcf00250ab46f157d581a9b1db03",
+    "frontend/src/features/investigations/PromptComposer.tsx": "d4023c6d700c47b8cf29117cda4f77e5192cd7b1c24123407f61fef501b59b13",
+    "frontend/src/features/investigations/agent-desk.css": "5219823a1d80ee47ebd7f84ad7e2dbc876a77ea3a21ec65af9ebb262b8c0db7a",
+    "frontend/src/features/investigations/questions.ts": "a939958b44bbc0015b1f71aa1e7b138ed5cb7606267c157b658f501a83a5bf8b",
     "frontend/src/features/product/ProductApp.tsx": "4e275a4afd206409dda30d9d133b34a3f9b682123ae7cebcd3b21640d9eb7b22",
-    "frontend/src/features/product/ProductHome.tsx": "ad0fe102132506c5c8793900b6eb797792a3e7b0d21b7ffe057f848dd27a2ebe",
+    "frontend/src/features/product/ProductHome.tsx": "78c6f8b34c1fee93ef308d92b31a2c7ca3b898d2023108bacc656d062986927c",
     "frontend/src/features/product/ProductIntake.tsx": "8f05e82a3db400a46bfc18691659b3a690e3b1ec23e257968479776a755abdf8",
     "frontend/src/features/product/ProductReport.tsx": "dae29333c05ff2c3f387e6e8da4a6a2fd3b7549655ac415aafe30c9fe594bc3a",
     "frontend/src/features/product/components.tsx": "712992956b7c0b9e83cdf93eda2280ce4ff711dfbae19e939ef222c4d8b33b75",
@@ -85,9 +89,10 @@
     "frontend/src/features/product/studio.css": "6034eab66dd344a7d89ff3e5c3e574c2f8f135513bc8580ee7d88c3314dcffc8",
     "frontend/src/features/product/styles.css": "7b1d81457a70f01b442b039de2a5e45e8fd95560f59b436338ccf425bd0bc737",
     "frontend/src/features/product/types.ts": "436f2731a8246553484c9d48807fcb58870f6de949e11f1fd30300a16175c10e",
-    "frontend/src/features/workbench/Workbench.tsx": "92fd8a9e681d876d6af56f43421caf3e45fd577ebd1644ebfbed3d35786547f0",
+    "frontend/src/features/workbench/Workbench.tsx": "5c0ef2081c9d8d30aa2561517ab7d0097475f789de2381c5f479184f98d4cade",
     "frontend/src/lib/api.ts": "0d21bfd52c04ca9cdae04d634f7d312b31e245296ead41bff6517df726027eb8",
-    "frontend/src/main.tsx": "0302a9f1d2daa8a744074dc07fdef8e7d58777c76e9c6599979d56038de6498f",
+    "frontend/src/lib/navigation.ts": "6086514950aac129cc45ec2843f6972fd29f37d115b3c629d3b5c667756c6260",
+    "frontend/src/main.tsx": "bf386a9dda062c0d4b5d8689f10d1839c9c7eda00cad5931d9f9d6c29b845279",
     "frontend/src/styles/index.css": "a1ec7e03f067b73db76ca4278ef08c91549c09d60384064e8afc73eded63292a",
     "frontend/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
     "frontend/public/recordings/index.html": "ca2ade1ee48aa77997a664b48ac0901305f4e280d1bcb5b89945ef920fe241ba",
@@ -147,7 +152,8 @@
     "backend/app/warehouse/service.py": "f1da56e8eccf9be25db00dfd597934d9422f870fe9c610f7da2b4ba0be0ce1ee",
     "backend/app/workers/__init__.py": "8bf0670a840fdf42a71b598ea2086b7cae8c2dde307f3c7eb4118e968761e911",
     "backend/app/workers/worker.py": "c0afb6041c529b44e5500840c24e00eb678f22aa6dde430626e0d393a2fed33c",
-    "scripts/demos/browser_smoke.py": "f397508f5302f67a0da2f4b8ebf0060ad01acc45e6b7254b9871a098478bf4c7",
+    "scripts/demos/agent_desk_browser.py": "fbc14d6948656238afb1713130d3781fe6351c02398789078b54c604f922e7c9",
+    "scripts/demos/browser_smoke.py": "fa469780207f122421cafa320eaac44b3108de80bd5d642a0ccb1a057db29044",
     "scripts/demos/import_browser.py": "77d381239a0fb63625cde756ac91007d04cb40ae38edd73bfa095854c4bef361",
     "scripts/demos/product_browser.py": "1780d1be0ff4c63645b3b92710b41a9b9e770c81d49ab8b12a47e4debd29069e",
     "scripts/demos/studio_browser.py": "f548589df94186d62fa7e5106fcc38db7faa5a3fa4eb43e5ec18ee5d4d8408f9",

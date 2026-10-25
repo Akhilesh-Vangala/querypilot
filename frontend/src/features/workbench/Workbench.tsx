@@ -1,6 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api, Run, Metric, RuntimeConfig } from "../../lib/api";
+import PromptComposer from "../investigations/PromptComposer";
+import ExecutionExplorer from "../investigations/ExecutionExplorer";
+import { investigationLink } from "../investigations/questions";
 import BarChart from "../../components/charts/BarChart";
 import {
   ComparisonSummary,
@@ -36,6 +39,7 @@ export function Home() {
           New investigation ↗
         </Link>
       </div>
+      <PromptComposer />
       <div className="stats">
         <div>
           <span>Investigations</span>
@@ -294,7 +298,12 @@ export function RunDetail() {
                       <BarChart columns={result.columns} rows={result.rows} />
                     )}
                     {result.columns.length > 0 && (
-                      <div className="table-wrap">
+                      <div
+                        className="table-wrap"
+                        tabIndex={0}
+                        role="region"
+                        aria-label="Executed query rows"
+                      >
                         <table>
                           <thead>
                             <tr>
@@ -370,6 +379,42 @@ export function RunDetail() {
                   </>
                 )}
               </div>
+              <section
+                className="card agent-next"
+                aria-label="Continue investigating"
+              >
+                <div>
+                  <span className="eyebrow">CONTINUE THE INVESTIGATION</span>
+                  <h2>Keep a question moving.</h2>
+                  <p>
+                    Each action opens a new, independently executed
+                    investigation. Review its scope before running.
+                  </p>
+                </div>
+                <div className="agent-next-actions">
+                  <Link
+                    className="secondary"
+                    to={investigationLink(run.question, run.id)}
+                  >
+                    Refine this question →
+                  </Link>
+                  <Link
+                    className="secondary"
+                    to={
+                      "/compare?" +
+                      new URLSearchParams({
+                        metric:
+                          comparison?.request.metric_id ||
+                          result.plan?.metric_ids?.[0] ||
+                          "claims_paid",
+                        dimension: comparison?.request.dimension || "",
+                      })
+                    }
+                  >
+                    Compare a reviewed metric →
+                  </Link>
+                </div>
+              </section>
               {result.validation && (
                 <div className="card">
                   <div className="section-heading">
@@ -399,19 +444,20 @@ export function RunDetail() {
             </>
           )}
         </section>
-        <aside className="card activity-card">
-          <div className="eyebrow">PUBLIC WORKFLOW EVENTS</div>
-          <h2>Investigation activity</h2>
-          <ol className="timeline">
-            {events.map((e, i) => (
-              <li key={i}>
-                <strong>{e.stage.replaceAll("_", " ")}</strong>
-                <small>
-                  {e.tool || e.status} · {(e.elapsed_ms / 1000).toFixed(1)}s
-                </small>
-              </li>
-            ))}
-          </ol>
+        <aside className="agent-sidecar">
+          <ExecutionExplorer
+            key={run.id}
+            events={events}
+            result={result}
+            mode={run.mode}
+            status={run.status}
+            onPlan={() => {
+              setTab("plan");
+              document
+                .querySelector<HTMLElement>(".result-card")
+                ?.scrollIntoView({ block: "start" });
+            }}
+          />
         </aside>
       </div>
       {drawer && (
