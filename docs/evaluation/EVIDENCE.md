@@ -1,5 +1,11 @@
 # Verified execution evidence
 
+## Coordinated dependency release — October 25, 2026
+
+[Executed dependency results](dependency-release-results.json). Clean React19.3.1/React DOM19.3.1/types19.3.0 and Vite8.3.5 installation, peer validation, production build and zero-vulnerability npm audit pass. The upgraded backend passes204native cases, including4dependency-parity regressions. All shared pinned and transitive versions agree between the tested backend and Vercel locks at this release.
+
+Actual file11groups/import8groups/agent8groups and studio navigation pass across42axe views with zero violations. Both continuous demonstrations are recaptured from the upgraded runtime and their source hashes match. Public model execution remains disabled; these results measure software execution.
+
 ## Investigation desk — October 25, 2026
 
 [Machine-readable UI result](agent-desk-results.json) · [Current actual file capture](../demos/uploads-recording.json) · [Current actual warehouse capture](../demos/interactive-recording.json).

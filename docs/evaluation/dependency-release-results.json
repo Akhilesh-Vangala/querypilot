@@ -1,0 +1,40 @@
+{
+  "scope": "Executed local regression of the coordinated dependency release; public model inference disabled.",
+  "native": {
+    "tests": 204,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontend": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-types": "19.3.0",
+    "vite": "8.3.5",
+    "clean_install": true,
+    "peer_tree": true,
+    "production_build": true,
+    "npm_audit_vulnerabilities": 0
+  },
+  "runtime": {
+    "langgraph": "1.2.16",
+    "openai": "3.37.0",
+    "pydantic": "2.14.1",
+    "pydantic-settings": "2.16.1",
+    "sqlalchemy": "2.1.6"
+  },
+  "dependency_guards": [
+    "root manifest versus Vercel lock",
+    "root manifest versus backend lock",
+    "backend runtime versus test environment"
+  ],
+  "parity_regressions": 4,
+  "product_groups": 11,
+  "import_groups": 8,
+  "agent_groups": 8,
+  "automated_accessibility_views": 42,
+  "axe_violations": 0,
+  "actual_recordings_refreshed": true,
+  "paid_model_calls": 0,
+  "actual_user_feedback": false
+}

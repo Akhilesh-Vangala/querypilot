@@ -18,49 +18,49 @@
   "page_errors": [],
   "paid_model_calls": 0,
   "recording_player": true,
-  "url": "http://127.0.0.1:51999",
+  "url": "http://127.0.0.1:53970",
   "frames": [
     {
       "stage": "overview",
       "path": "00-overview.png",
-      "sha256": "dd4b996b4ab7c4cfd4ad0a835925d26d328009090ef3004f40fa36d06b1cb474"
+      "sha256": "f27de9277a70af6d347cfb3757bc32005fdc8db6b06a01ee01fcfbe1eed2597b"
     },
     {
       "stage": "executed-investigation",
       "path": "01-executed-investigation.png",
-      "sha256": "b037a87ccfed945748334a111a662669898f01a3d92689a3983bae3f05a43cbb"
+      "sha256": "26f054269c40e910a01309ccee7d9c8ea7e539049b05a5191eb9cbb2545ec22a"
     },
     {
       "stage": "guarded-sql",
       "path": "02-guarded-sql.png",
-      "sha256": "13bca55672ad616fb8f7134cfc382ac1b64288988596cb14b69e462ee397ddf3"
+      "sha256": "ee3169ee4537892d75b39595fcc25fb099a429ccd2f97cf4863679b76b0acc32"
     },
     {
       "stage": "reconciled-periods",
       "path": "03-reconciled-periods.png",
-      "sha256": "b9cad57a0226087872f785edb58f2a2515eeec23546b6ad1e5ff04ece00aef34"
+      "sha256": "ce1cd86962d86285c88da91ee2ad22a0005f3fd5c742ab77ad63561c64facdcf"
     },
     {
       "stage": "independent-checks",
       "path": "04-independent-checks.png",
-      "sha256": "fc3347076d0c7ba05fe59d620c0872c1b95d128c81834d9fac7b5da7aa156082"
+      "sha256": "0f6223abed2c7e1be62d60002ec4650fd2bf63770e72a33c4b52f85a333c1023"
     },
     {
       "stage": "exported-evidence",
       "path": "05-exported-evidence.png",
-      "sha256": "064c150efacec80c8b641acc17e38779d47da64b05e62bc9b1ec953b345c2bbc"
+      "sha256": "0705f1be931e857bddc6050fdfcbad95b2e5154eaecac6495dc9b75000aa3dcf"
     }
   ],
-  "video_sha256": "b1d7c2f5e865e4e036b95cf9d791cf101ae30b537eb78cb14281d3b5901b6c4a",
+  "video_sha256": "94b40550e66406820b294cbafe1a354594f887b6ade0e81b3832c8492d9c4338",
   "recording": "Continuous actual Chromium capture; guided synthetic data, automated interactions, no live model inference",
   "captured_deployment_source": null,
   "source_sha256": {
     "index.py": "56b4d66d03bb49eeb247a34d4a4d3ec422225f06975baf8bd2ee9b830551e921",
     "frontend/index.html": "f49f41e9b7cd34cb35c3f281e414a88118221c1a567bc9f3e02558529781f0bd",
-    "frontend/package.json": "57e6cde9e33d6cd43f9ae1cb57a19a3c23ae85205e97886fe4845c9398709b97",
-    "frontend/package-lock.json": "f8220c8bd3c36be2779868f0ae942eee48c00f5ce2d6bc4bd25b89ac1baa7438",
+    "frontend/package.json": "2f1e88ad59a0ac9434f4b8c518603ee2eea5b6fd6982ef83f4cb545146056335",
+    "frontend/package-lock.json": "8db96c7149fddb8d17f6051fa65de591b737d350325392002c57342853120b0d",
     "frontend/vite.config.ts": "a2eab42310631cf8cd1308e3a15fbf0f8fdde24224d68252be9a4641567c2606",
-    "frontend/src/app/App.tsx": "5583f9e34424c01a0b4580144e5e6b12eae287be4698aef0775af07818a77427",
+    "frontend/src/app/App.tsx": "bfa3778e4c9aa0a115d1565d15423fb4e9b9c567833618d5ae8b48ebd811bb8b",
     "frontend/src/components/charts/BarChart.tsx": "7fe078a6320fbc1fa4a22ebf622b350560543a8f99719175c1d432ee04ab59f4",
     "frontend/src/components/layout/Layout.tsx": "cacf653ce20099c505be6d7530a5616cbbd4d5a23c96cef5cdfa4e7dd7bf73f0",
     "frontend/src/components/layout/StudioIcon.tsx": "6faef85d76495b0f42fe740fbee40dcd1194b2bb60aeea8c6ed3b0ace18518bf",
