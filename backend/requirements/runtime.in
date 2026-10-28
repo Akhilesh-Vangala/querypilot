@@ -9,7 +9,7 @@ bcrypt==4.2.1
 python-multipart>=0.0.22,<0.1
 httpx==0.28.1
 openai>=3.36.1,<4
-langgraph==1.2.16
+langgraph==1.2.17
 sqlglot==30.21.0
 opentelemetry-api>=1.39,<2
 opentelemetry-sdk>=1.39,<2
